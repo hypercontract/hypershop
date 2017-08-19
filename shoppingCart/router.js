@@ -23,17 +23,32 @@ router.get('/', (request, response) => {
 });
 
 router.post('/items', (request, response) => {
-    productStore.findOne(request.body.product)
-        .then(product => {
-            shoppingCartItemsStore.insert({
-                name: product.name,
-                price: product.price,
-                quantity: request.body.quantity,
-                product: request.body.product
-            })
-                .then(() => {
-                    response.redirect(201, `${basePath}`);
+    Promise.all([
+        productStore.findOne(request.body.product),
+        shoppingCartItemsStore.find({
+            product: request.body.product
+        })
+    ])
+        .then(([product, shoppingCartItems]) => {
+            if (shoppingCartItems.length > 0) {
+                const shoppingCartItem = shoppingCartItems[0];
+                return shoppingCartItemsStore.update(
+                    shoppingCartItem._id,
+                    {
+                        quantity: shoppingCartItem.quantity + request.body.quantity
+                    }
+                );
+            } else {
+                return shoppingCartItemsStore.insert({
+                    name: product.name,
+                    price: product.price,
+                    quantity: request.body.quantity,
+                    product: request.body.product
                 });
+            }
+        })
+        .then(() => {
+            response.redirect(201, `${basePath}`);
         });
 });
 
