@@ -1,0 +1,326 @@
+{
+	"variables": [],
+	"info": {
+		"name": "CFHA REST API",
+		"_postman_id": "911754d8-e797-ffa9-491d-2394f5af0cb1",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Search Catalog for Products",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"postman.setEnvironmentVariable(\"productId1\", jsonData[0]._id);\r",
+							"postman.setEnvironmentVariable(\"productId2\", jsonData[1]._id);"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": {
+					"raw": "http://localhost:3000/catalog/products?query=nostrum",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"catalog",
+						"products"
+					],
+					"query": [
+						{
+							"key": "query",
+							"value": "nostrum",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Add Product to Shopping Cart #1",
+			"request": {
+				"url": "http://localhost:3000/shoppingCart/items",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"product\": \"{{productId1}}\",\n\t\"quantity\": 1\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Add Product to Shopping Cart #2",
+			"request": {
+				"url": "http://localhost:3000/shoppingCart/items",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"product\": \"{{productId2}}\",\n\t\"quantity\": 1\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "View Shopping Cart",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"postman.setEnvironmentVariable(\"shoppingCartItemId1\", jsonData.items[0]._id);\r",
+							"postman.setEnvironmentVariable(\"shoppingCartItemId2\", jsonData.items[1]._id);"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "http://localhost:3000/shoppingCart/",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Update quantity of Shopping Cart Item",
+			"request": {
+				"url": "http://localhost:3000/shoppingCart/items/{{shoppingCartItemId1}}",
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"quantity\": 2\n}"
+				},
+				"description": "\t"
+			},
+			"response": []
+		},
+		{
+			"name": "Remove Item from Shopping Cart",
+			"request": {
+				"url": "http://localhost:3000/shoppingCart/items/{{shoppingCartItemId2}}",
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\n"
+				},
+				"description": "\t"
+			},
+			"response": []
+		},
+		{
+			"name": "View updated Shopping Cart",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"postman.setEnvironmentVariable(\"lineItems\", JSON.stringify(jsonData.items));\r",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "http://localhost:3000/shoppingCart/",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Select Billing/Shipping Address, Payment",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"postman.setEnvironmentVariable(\"payment\", JSON.stringify(jsonData.paymentOptions[0]));\r",
+							"postman.setEnvironmentVariable(\"billingAddress\", JSON.stringify(jsonData.addresses[0]));\r",
+							"postman.setEnvironmentVariable(\"shippingAddress\", JSON.stringify(jsonData.addresses[1]));"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "http://localhost:3000/userProfile",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Place Order",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"postman.setEnvironmentVariable(",
+							"    \"orderId\", ",
+							"    postman.getResponseHeader(\"Location\").replace(\"/orders/\", \"\")",
+							");"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "http://localhost:3000/orders/",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"items\": {{lineItems}},\n\t\"billingAddress\": {{billingAddress}},\n\t\"shippingAddress\": {{shippingAddress}},\n\t\"payment\": {{payment}}\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "View Order status",
+			"request": {
+				"url": "http://localhost:3000/orders/{{orderId}}",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"items\": {{lineItems}},\n\t\"billingAddress\": {{billingAddress}},\n\t\"shippingAddress\": {{shippingAddress}},\n\t\"payment\": {{payment}}\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Cancel Order",
+			"request": {
+				"url": "http://localhost:3000/orders/{{orderId}}",
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"items\": {{lineItems}},\n\t\"billingAddress\": {{billingAddress}},\n\t\"shippingAddress\": {{shippingAddress}},\n\t\"payment\": {{payment}}\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
