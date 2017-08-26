@@ -1,11 +1,11 @@
 const express = require('express');
 const config = require('config');
 
-const basePath = '/';
+const { getRootPath } = require('./uris');
 
 const router = express.Router();
 
-router.get('/', (request, response) => {
+router.get(getRootPath(), (request, response) => {
     response
         .json({
             version: config.get('app.version')
@@ -13,6 +13,5 @@ router.get('/', (request, response) => {
 });
 
 module.exports = {
-    basePath,
     router
 };

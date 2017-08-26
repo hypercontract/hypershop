@@ -8,6 +8,33 @@
 	},
 	"item": [
 		{
+			"name": "Check API Root",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var apiRoot = JSON.parse(responseBody);",
+							"",
+							"tests['status code is 200 OK'] = responseCode.code === 200;",
+							"tests['response body contains the API version'] = apiRoot.version === '1.0';",
+							"tests['Content-Type header is application/json'] = postman.getResponseHeader('Content-Type').indexOf('application/json') > -1;",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "http://localhost:3000/",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
 			"name": "Search Catalog for Products",
 			"event": [
 				{
@@ -58,14 +85,15 @@
 			],
 			"request": {
 				"url": {
-					"raw": "http://localhost:3000/products?query=nostrum",
+					"raw": "http://localhost:3000/products/?query=nostrum",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "3000",
 					"path": [
-						"products"
+						"products",
+						""
 					],
 					"query": [
 						{
@@ -99,7 +127,7 @@
 						"type": "text/javascript",
 						"exec": [
 							"tests['status code is 201 Created'] = responseCode.code === 201;\r",
-							"tests['Location header redirects to /shoppingCart'] = postman.getResponseHeader('Location') === '/shoppingCart'; \r",
+							"tests['Location header redirects to /shoppingCart'] = postman.getResponseHeader('Location') === '/shoppingCart/'; \r",
 							"tests['response body is empty'] = responseBody === '';\r",
 							""
 						]
@@ -107,7 +135,7 @@
 				}
 			],
 			"request": {
-				"url": "http://localhost:3000/shoppingCart/items",
+				"url": "http://localhost:3000/shoppingCart/items/",
 				"method": "POST",
 				"header": [
 					{
@@ -138,7 +166,7 @@
 						"type": "text/javascript",
 						"exec": [
 							"tests['status code is 201 Created'] = responseCode.code === 201;\r",
-							"tests['Location header redirects to /shoppingCart'] = postman.getResponseHeader('Location') === '/shoppingCart'; \r",
+							"tests['Location header redirects to /shoppingCart'] = postman.getResponseHeader('Location') === '/shoppingCart/'; \r",
 							"tests['response body is empty'] = responseBody === '';\r",
 							""
 						]
@@ -146,7 +174,7 @@
 				}
 			],
 			"request": {
-				"url": "http://localhost:3000/shoppingCart/items",
+				"url": "http://localhost:3000/shoppingCart/items/",
 				"method": "POST",
 				"header": [
 					{
@@ -250,7 +278,7 @@
 						"type": "text/javascript",
 						"exec": [
 							"tests['status code is 204 No Content'] = responseCode.code === 204;\r",
-							"tests['Location header redirects to /shoppingCart'] = postman.getResponseHeader('Location') === '/shoppingCart'; \r",
+							"tests['Location header redirects to /shoppingCart'] = postman.getResponseHeader('Location') === '/shoppingCart/'; \r",
 							"tests['response body is empty'] = responseBody === '';\r",
 							""
 						]
@@ -258,7 +286,7 @@
 				}
 			],
 			"request": {
-				"url": "http://localhost:3000/shoppingCart/items/{{shoppingCartItemId1}}",
+				"url": "http://localhost:3000/shoppingCart/items/{{shoppingCartItemId1}}/",
 				"method": "PATCH",
 				"header": [
 					{
@@ -289,7 +317,7 @@
 						"type": "text/javascript",
 						"exec": [
 							"tests['status code is 204 No Content'] = responseCode.code === 204;\r",
-							"tests['Location header redirects to /shoppingCart'] = postman.getResponseHeader('Location') === '/shoppingCart'; \r",
+							"tests['Location header redirects to /shoppingCart'] = postman.getResponseHeader('Location') === '/shoppingCart/'; \r",
 							"tests['response body is empty'] = responseBody === '';\r",
 							""
 						]
@@ -297,7 +325,7 @@
 				}
 			],
 			"request": {
-				"url": "http://localhost:3000/shoppingCart/items/{{shoppingCartItemId2}}",
+				"url": "http://localhost:3000/shoppingCart/items/{{shoppingCartItemId2}}/",
 				"method": "DELETE",
 				"header": [
 					{
@@ -482,7 +510,7 @@
 				}
 			],
 			"request": {
-				"url": "http://localhost:3000/userProfile",
+				"url": "http://localhost:3000/userProfile/",
 				"method": "GET",
 				"header": [
 					{
@@ -504,10 +532,10 @@
 					"script": {
 						"type": "text/javascript",
 						"exec": [
-							"var orderId = postman.getResponseHeader('Location').replace('/orders/', '');",
+							"var orderId = postman.getResponseHeader('Location').replace(/^\\/orders\\/(.*)\\/$/, '$1');",
 							"",
 							"tests['status code is 201 Created'] = responseCode.code === 201;",
-							"tests['Location header redirects to /orders/{orderId}'] = postman.getResponseHeader('Location') === '/orders/' + orderId; ",
+							"tests['Location header redirects to /orders/{orderId}'] = postman.getResponseHeader('Location') === '/orders/' + orderId + '/'; ",
 							"tests['response body is empty'] = responseBody === '';",
 							"",
 							"postman.setEnvironmentVariable(",
@@ -702,7 +730,7 @@
 				}
 			],
 			"request": {
-				"url": "http://localhost:3000/orders/{{orderId}}",
+				"url": "http://localhost:3000/orders/{{orderId}}/",
 				"method": "GET",
 				"header": [
 					{
@@ -738,7 +766,7 @@
 				}
 			],
 			"request": {
-				"url": "http://localhost:3000/orders/{{orderId}}",
+				"url": "http://localhost:3000/orders/{{orderId}}/",
 				"method": "PATCH",
 				"header": [
 					{
@@ -919,7 +947,7 @@
 				}
 			],
 			"request": {
-				"url": "http://localhost:3000/orders/{{orderId}}",
+				"url": "http://localhost:3000/orders/{{orderId}}/",
 				"method": "GET",
 				"header": [
 					{

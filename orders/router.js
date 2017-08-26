@@ -1,35 +1,34 @@
 const express = require('express');
 
 const orderService = require('./service');
-
-const basePath = '/orders';
+const { getBasePath, getRootPath, getOrderPath, getOrderUri } = require('./uris');
 
 const router = express.Router();
 
-router.get('/', (request, response) => {
+router.get(getRootPath(), (request, response) => {
     orderService.getOrders()
         .then(orders => response.json(orders));
 });
 
-router.post('/', (request, response) => {
+router.post(getRootPath(), (request, response) => {
     orderService.createOrder(request.body)
-        .then(orderId => response.redirect(201, `${basePath}/${orderId}`));
+        .then(orderId => response.redirect(201, getOrderUri(orderId)));
 });
 
-router.get('/:orderId', (request, response) => {
+router.get(getOrderPath(), (request, response) => {
     orderService.getOrder(request.params.orderId)
         .then(order => response.json(order));
 });
 
-router.patch('/:orderId', (request, response) => {
+router.patch(getOrderPath(), (request, response) => {
     orderService.updateOrder(
         request.params.orderId,
         request.body
     )
-        .then(() => response.redirect(204, `${basePath}/${request.params.orderId}`));
+        .then(() => response.redirect(204, getOrderUri(request.params.orderId)));
 });
 
 module.exports = {
-    basePath,
+    basePath: getBasePath(),
     router
 };

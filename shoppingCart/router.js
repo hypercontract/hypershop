@@ -1,40 +1,39 @@
 const express = require('express');
 
 const shoppingCartService = require('./service');
-
-const basePath = '/shoppingCart';
+const { getBasePath, getRootPath, getRootUri, getShoppingCartItemsPath, getShoppingCartItemPath } = require('./uris');
 
 const router = express.Router();
 
-router.get('/', (request, response) => {
+router.get(getRootPath(), (request, response) => {
     shoppingCartService.getShoppingCart()
         .then(shoppingCart => response.json(shoppingCart));
 });
 
-router.post('/items', (request, response) => {
+router.post(getShoppingCartItemsPath(), (request, response) => {
     shoppingCartService.addShoppingCartItem(
         request.body.product,
         request.body.quantity
     )
-        .then(() => response.redirect(201, `${basePath}`));
+        .then(() => response.redirect(201, getRootUri()));
 });
 
-router.patch('/items/:shoppingCartItemId', (request, response) => {
+router.patch(getShoppingCartItemPath(), (request, response) => {
     shoppingCartService.updateShoppingCartItemQuantity(
         request.params.shoppingCartItemId,
         request.body.quantity
     )
-        .then(() => response.redirect(204, '/shoppingCart'));
+        .then(() => response.redirect(204, getRootUri()));
 });
 
-router.delete('/items/:shoppingCartItemId', (request, response) => {
+router.delete(getShoppingCartItemPath(), (request, response) => {
     shoppingCartService.deleteShoppingCartItem(
         request.params.shoppingCartItemId
     )
-        .then(() => response.redirect(204, '/shoppingCart'));
+        .then(() => response.redirect(204, getRootUri()));
 });
 
 module.exports = {
-    basePath,
+    basePath: getBasePath(),
     router
 };

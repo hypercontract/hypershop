@@ -14,7 +14,7 @@ const app = express();
 app.use(morgan('combined'));
 app.use(bodyParser.json());
 
-app.use(root.basePath, root.router);
+app.use(root.router);
 
 endpoints.forEach(
     endpoint => app.use(endpoint.basePath, endpoint.router)
