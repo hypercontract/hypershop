@@ -10,6 +10,7 @@ const router = express.Router();
 router.get('/', (request, response) => {
     ordersStore.find()
         .then(orders => {
+            orders.sort((date1, date2) => new Date(date2.date) - new Date(date1.date));
             response
                 .status(200)
                 .json(orders);
@@ -38,10 +39,13 @@ router.get('/:orderId', (request, response) => {
         });
 });
 
-router.delete('/:orderId', (request, response) => {
-    ordersStore.remove(request.params.orderId)
+router.patch('/:orderId', (request, response) => {
+    ordersStore.update(
+        request.params.orderId,
+        request.body
+    )
         .then(() => {
-            response.redirect(204, basePath);
+            response.redirect(204, `${basePath}/${request.params.orderId}`);
         });
 });
 
