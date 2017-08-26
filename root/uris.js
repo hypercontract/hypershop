@@ -1,3 +1,5 @@
+const config = require('config');
+
 module.exports = {
     getBaseUri,
     getRootPath,
@@ -5,7 +7,10 @@ module.exports = {
 };
 
 function getBaseUri() {
-    return '';
+    const scheme = config.get('http.scheme');
+    const hostname = config.get('http.hostname');
+    const port = config.get('http.port');
+    return `${scheme}://${hostname}:${port}`;
 }
 
 function getRootPath() {

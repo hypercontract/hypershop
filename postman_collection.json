@@ -127,7 +127,7 @@
 						"type": "text/javascript",
 						"exec": [
 							"tests['status code is 201 Created'] = responseCode.code === 201;\r",
-							"tests['Location header redirects to /shoppingCart'] = postman.getResponseHeader('Location') === '/shoppingCart/'; \r",
+							"tests['Location header redirects to /shoppingCart'] = postman.getResponseHeader('Location') === 'http://localhost:3000/shoppingCart/'; \r",
 							"tests['response body is empty'] = responseBody === '';\r",
 							""
 						]
@@ -166,7 +166,7 @@
 						"type": "text/javascript",
 						"exec": [
 							"tests['status code is 201 Created'] = responseCode.code === 201;\r",
-							"tests['Location header redirects to /shoppingCart'] = postman.getResponseHeader('Location') === '/shoppingCart/'; \r",
+							"tests['Location header redirects to /shoppingCart'] = postman.getResponseHeader('Location') === 'http://localhost:3000/shoppingCart/'; \r",
 							"tests['response body is empty'] = responseBody === '';\r",
 							""
 						]
@@ -278,7 +278,7 @@
 						"type": "text/javascript",
 						"exec": [
 							"tests['status code is 204 No Content'] = responseCode.code === 204;\r",
-							"tests['Location header redirects to /shoppingCart'] = postman.getResponseHeader('Location') === '/shoppingCart/'; \r",
+							"tests['Location header redirects to /shoppingCart'] = postman.getResponseHeader('Location') === 'http://localhost:3000/shoppingCart/'; \r",
 							"tests['response body is empty'] = responseBody === '';\r",
 							""
 						]
@@ -317,7 +317,7 @@
 						"type": "text/javascript",
 						"exec": [
 							"tests['status code is 204 No Content'] = responseCode.code === 204;\r",
-							"tests['Location header redirects to /shoppingCart'] = postman.getResponseHeader('Location') === '/shoppingCart/'; \r",
+							"tests['Location header redirects to /shoppingCart'] = postman.getResponseHeader('Location') === 'http://localhost:3000/shoppingCart/'; \r",
 							"tests['response body is empty'] = responseBody === '';\r",
 							""
 						]
@@ -532,10 +532,10 @@
 					"script": {
 						"type": "text/javascript",
 						"exec": [
-							"var orderId = postman.getResponseHeader('Location').replace(/^\\/orders\\/(.*)\\/$/, '$1');",
+							"var orderId = postman.getResponseHeader('Location').replace(/^http:\\/\\/localhost:3000\\/orders\\/(.*)\\/$/, '$1');",
 							"",
 							"tests['status code is 201 Created'] = responseCode.code === 201;",
-							"tests['Location header redirects to /orders/{orderId}'] = postman.getResponseHeader('Location') === '/orders/' + orderId + '/'; ",
+							"tests['Location header redirects to /orders/{orderId}'] = postman.getResponseHeader('Location') === 'http://localhost:3000/orders/' + orderId + '/'; ",
 							"tests['response body is empty'] = responseBody === '';",
 							"",
 							"postman.setEnvironmentVariable(",
@@ -755,10 +755,10 @@
 					"script": {
 						"type": "text/javascript",
 						"exec": [
-							"var orderId = postman.getResponseHeader('Location').replace('/orders/', '');\r",
+							"var orderId = postman.getResponseHeader('Location').replace(/^http:\\/\\/localhost:3000\\/orders\\/(.*)\\/$/, '$1');\r",
 							"\r",
 							"tests['status code is 204 No Content'] = responseCode.code === 204;\r",
-							"tests['Location header redirects to /orders/{orderId}'] = postman.getResponseHeader('Location') === '/orders/' + orderId; \r",
+							"tests['Location header redirects to /orders/{orderId}'] = postman.getResponseHeader('Location') === 'http://localhost:3000/orders/' + orderId + '/';\r",
 							"tests['response body is empty'] = responseBody === '';\r",
 							""
 						]
