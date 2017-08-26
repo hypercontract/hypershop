@@ -28,7 +28,13 @@
 			"request": {
 				"url": "http://localhost:3000/",
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					}
+				],
 				"body": {},
 				"description": ""
 			},
@@ -1132,7 +1138,13 @@
 			"request": {
 				"url": "http://localhost:3000/orders/",
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					}
+				],
 				"body": {},
 				"description": ""
 			},
