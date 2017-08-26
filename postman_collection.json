@@ -129,6 +129,8 @@
 							"tests['status code is 201 Created'] = responseCode.code === 201;\r",
 							"tests['Location header redirects to /shoppingCart'] = postman.getResponseHeader('Location') === 'http://localhost:3000/shoppingCart/'; \r",
 							"tests['response body is empty'] = responseBody === '';\r",
+							"\r",
+							"postman.setEnvironmentVariable('shoppingCartUrl', postman.getResponseHeader('Location'));\r",
 							""
 						]
 					}
@@ -168,6 +170,8 @@
 							"tests['status code is 201 Created'] = responseCode.code === 201;\r",
 							"tests['Location header redirects to /shoppingCart'] = postman.getResponseHeader('Location') === 'http://localhost:3000/shoppingCart/'; \r",
 							"tests['response body is empty'] = responseBody === '';\r",
+							"\r",
+							"postman.setEnvironmentVariable('shoppingCartUrl', postman.getResponseHeader('Location'));\r",
 							""
 						]
 					}
@@ -255,7 +259,7 @@
 				}
 			],
 			"request": {
-				"url": "http://localhost:3000/shoppingCart/",
+				"url": "{{shoppingCartUrl}}",
 				"method": "GET",
 				"header": [
 					{
@@ -280,6 +284,8 @@
 							"tests['status code is 204 No Content'] = responseCode.code === 204;\r",
 							"tests['Location header redirects to /shoppingCart'] = postman.getResponseHeader('Location') === 'http://localhost:3000/shoppingCart/'; \r",
 							"tests['response body is empty'] = responseBody === '';\r",
+							"\r",
+							"postman.setEnvironmentVariable('shoppingCartUrl', postman.getResponseHeader('Location'));\r",
 							""
 						]
 					}
@@ -319,6 +325,8 @@
 							"tests['status code is 204 No Content'] = responseCode.code === 204;\r",
 							"tests['Location header redirects to /shoppingCart'] = postman.getResponseHeader('Location') === 'http://localhost:3000/shoppingCart/'; \r",
 							"tests['response body is empty'] = responseBody === '';\r",
+							"\r",
+							"postman.setEnvironmentVariable('shoppingCartUrl', postman.getResponseHeader('Location'));\r",
 							""
 						]
 					}
@@ -401,7 +409,7 @@
 				}
 			],
 			"request": {
-				"url": "http://localhost:3000/shoppingCart/",
+				"url": "{{shoppingCartUrl}}",
 				"method": "GET",
 				"header": [
 					{
@@ -538,10 +546,8 @@
 							"tests['Location header redirects to /orders/{orderId}'] = postman.getResponseHeader('Location') === 'http://localhost:3000/orders/' + orderId + '/'; ",
 							"tests['response body is empty'] = responseBody === '';",
 							"",
-							"postman.setEnvironmentVariable(",
-							"    'orderId', ",
-							"    orderId",
-							");",
+							"postman.setEnvironmentVariable('orderId', orderId);",
+							"postman.setEnvironmentVariable('orderUrl', postman.getResponseHeader('Location'));",
 							""
 						]
 					}
@@ -730,7 +736,7 @@
 				}
 			],
 			"request": {
-				"url": "http://localhost:3000/orders/{{orderId}}/",
+				"url": "{{orderUrl}}",
 				"method": "GET",
 				"header": [
 					{
@@ -947,7 +953,7 @@
 				}
 			],
 			"request": {
-				"url": "http://localhost:3000/orders/{{orderId}}/",
+				"url": "{{orderUrl}}",
 				"method": "GET",
 				"header": [
 					{
