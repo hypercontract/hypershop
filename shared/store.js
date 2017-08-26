@@ -1,7 +1,7 @@
 const Datastore = require('nedb');
 const faker = require('faker');
 
-class Database {
+class Store {
 
     constructor(initialData = []) {
         this.db = new Datastore();
@@ -68,6 +68,17 @@ class Database {
         });
     }
 
+    removeAll() {
+        return new Promise((resolve, reject) => {
+            this.db.remove({}, { multi: true }, (error) => {
+                if (error) {
+                    return reject(error);
+                }
+                return resolve();
+            });
+        });
+    }
+
 }
 
 function generateIds(entities) {
@@ -77,4 +88,4 @@ function generateIds(entities) {
     ));
 }
 
-module.exports = Database;
+module.exports = Store;

@@ -7,7 +7,6 @@ const router = express.Router();
 
 router.get('/', (request, response) => {
     response
-        .status(200)
         .json({
             version: config.get('app.version')
         });

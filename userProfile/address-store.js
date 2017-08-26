@@ -1,9 +1,6 @@
-const faker = require('faker');
-const { times } = require('lodash');
+const Store = require('../shared/store');
 
-const Database = require('../shared/database');
-
-const db = new Database(
+const db = new Store(
     times(3, () => generate())
 );
 

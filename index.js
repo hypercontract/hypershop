@@ -5,6 +5,9 @@ var bodyParser = require('body-parser');
 
 const root = require('./root/router');
 const endpoints = require('./endpoints');
+const mockData = require('./mock/mockData');
+
+mockData.create();
 
 const app = express();
 

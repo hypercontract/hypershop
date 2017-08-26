@@ -1,10 +1,10 @@
-const catalog = require('./catalog/router');
+const products = require('./products/router');
 const shoppingCart = require('./shoppingCart/router');
 const userProfile = require('./userProfile/router');
 const orders = require('./orders/router');
 
 module.exports = [
-    catalog,
+    products,
     shoppingCart,
     userProfile,
     orders
