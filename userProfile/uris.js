@@ -1,10 +1,15 @@
+const { isNull } = require('lodash');
 const rootUris = require('../root/uris');
 
 module.exports = {
     getBasePath,
     getBaseUri,
     getRootPath,
-    getRootUri
+    getRootUri,
+    getAddressPath,
+    getAddressUri,
+    getPaymentOptionPath,
+    getPaymentOptionUri
 };
 
 function getBasePath() {
@@ -20,5 +25,33 @@ function getRootPath() {
 }
 
 function getRootUri() {
-    return getBasePath() + getRootPath();
+    return getBaseUri() + getRootPath();
+}
+
+function getAddressPath(id) {
+    const pathTemplate = getRootPath() + 'addresses/:addressId/';
+    
+    if (!isNull(id)) {
+        return pathTemplate.replace(':addressId', id);
+    }
+
+    return pathTemplate;
+}
+
+function getAddressUri(id) {
+    return getBaseUri() + getAddressPath(id);
+}
+
+function getPaymentOptionPath(id) {
+    const pathTemplate = getRootPath() + 'paymentOptions/:paymentOptionId/';
+    
+    if (!isNull(id)) {
+        return pathTemplate.replace(':paymentOptionId', id);
+    }
+
+    return pathTemplate;
+}
+
+function getPaymentOptionUri(id) {
+    return getBaseUri() + getPaymentOptionPath(id);
 }

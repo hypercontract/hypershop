@@ -1,13 +1,17 @@
 const express = require('express');
-
+const hal = require('./hal');
 const orderService = require('./service');
 const { getBasePath, getRootPath, getOrderPath, getOrderUri } = require('./uris');
+const { sendResponse } = require('../shared/util');
 
 const router = express.Router();
 
 router.get(getRootPath(), (request, response) => {
     orderService.getOrders()
-        .then(orders => response.json(orders));
+        .then(orders => sendResponse(response, {
+            'json': orders,
+            'application/hal+json': hal.fromOrders(orders)
+        }));
 });
 
 router.post(getRootPath(), (request, response) => {
@@ -17,7 +21,10 @@ router.post(getRootPath(), (request, response) => {
 
 router.get(getOrderPath(), (request, response) => {
     orderService.getOrder(request.params.orderId)
-        .then(order => response.json(order));
+        .then(order => sendResponse(response, {
+            'json': order,
+            'application/hal+json': hal.fromOrder(order)
+        }));
 });
 
 router.patch(getOrderPath(), (request, response) => {
