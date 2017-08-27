@@ -1,6 +1,7 @@
 const { Resource } = require('hal');
 const { map } = require('lodash');
 const { getRootUri, getShoppingCartItemUri } = require('./uris');
+const orderUris = require('../orders/uris');
 const { cfha } = require('../shared/namespaces');
 
 module.exports = {
@@ -9,7 +10,7 @@ module.exports = {
 };
 
 function fromShoppingCart(shoppingCart) {
-    return Resource(
+    const resource = Resource(
         Object.assign(
             {},
             shoppingCart,
@@ -19,6 +20,12 @@ function fromShoppingCart(shoppingCart) {
         ),
         getRootUri()
     );
+
+    if (shoppingCart.items.length > 0) {
+        resource.link(cfha('place-order'), orderUris.getRootUri());
+    }
+
+    return resource;
 }
 
 function fromShoppingCartItem(shoppingCartItem) {

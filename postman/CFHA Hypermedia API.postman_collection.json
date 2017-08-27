@@ -418,6 +418,48 @@
 			"response": []
 		},
 		{
+			"name": "View empty Shopping Cart",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var schema = JSON.parse(postman.getEnvironmentVariable('shoppingCartSchema'));\r",
+							"var defaultContentType = postman.getEnvironmentVariable('defaultContentType');\r",
+							"var baseUrl = postman.getEnvironmentVariable('baseUrl');\r",
+							"var nsUri = postman.getEnvironmentVariable('nsUri');\r",
+							"var shoppingCart = JSON.parse(responseBody);\r",
+							"\r",
+							"var selfLink = shoppingCart._links.self.href;\r",
+							"\r",
+							"tests['status code is 200 OK'] = responseCode.code === 200;\r",
+							"tests['Content-Type header is ' + defaultContentType] = postman.getResponseHeader('Content-Type').match(_.escapeRegExp(defaultContentType));\r",
+							"tests['response body is a shopping cart'] = tv4.validate(shoppingCart, schema);\r",
+							"tests['response body contains no shopping cart items'] = shoppingCart.items.length === 0;\r",
+							"tests['response body contains self link'] = selfLink === baseUrl + 'shoppingCart/';\r",
+							"tests['response body contains no place order link'] = _.isUndefined(shoppingCart._links[nsUri + 'place-order']);\r",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{baseUrl}}shoppingCart",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "{{defaultContentType}}",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
 			"name": "Search Catalog for Products",
 			"event": [
 				{
@@ -599,6 +641,7 @@
 							"tests['response body is a shopping cart'] = tv4.validate(shoppingCart, schema);\r",
 							"tests['response body contains exactly 2 shopping cart items'] = shoppingCart.items.length === 2;\r",
 							"tests['response body contains self link'] = selfLink === baseUrl + 'shoppingCart/';\r",
+							"tests['response body contains place order link'] = shoppingCart._links[nsUri + 'place-order'].href.match(baseUrl + 'orders/');\r",
 							"\r",
 							"var allItemsHaveSelfLink = true;\r",
 							"var allItemsHaveUpdateLink = true;\r",
@@ -743,6 +786,7 @@
 							"tests['response body contains 1 shopping cart item'] = shoppingCart.items.length === 1;\r",
 							"tests['shopping cart item has a quantity of 2'] = shoppingCart.items[0].quantity === 2;\r",
 							"tests['response body contains self link'] = selfLink === baseUrl + 'shoppingCart/';\r",
+							"tests['response body contains place order link'] = shoppingCart._links[nsUri + 'place-order'].href.match(baseUrl + 'orders/');\r",
 							"\r",
 							"var allItemsHaveSelfLink = true;\r",
 							"var allItemsHaveUpdateLink = true;\r",
