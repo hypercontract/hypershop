@@ -1,0 +1,896 @@
+{
+	"variables": [],
+	"info": {
+		"name": "CFHA REST API",
+		"_postman_id": "911754d8-e797-ffa9-491d-2394f5af0cb1",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Check API Root",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var defaultContentType = postman.getEnvironmentVariable('defaultContentType');",
+							"var apiRoot = JSON.parse(responseBody);",
+							"",
+							"tests['status code is 200 OK'] = responseCode.code === 200;",
+							"tests['Content-Type header is ' + defaultContentType] = postman.getResponseHeader('Content-Type').match(_.escapeRegExp(defaultContentType));",
+							"tests['response body contains the API version'] = apiRoot.version === '1.0';",
+							""
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"postman.clearEnvironmentVariables();",
+							"",
+							"postman.setEnvironmentVariable('defaultContentType', 'application/json');",
+							"postman.setEnvironmentVariable('baseUrl', 'http://localhost:3000/');",
+							"",
+							"postman.setEnvironmentVariable('productsSchema', JSON.stringify({",
+							"    type: 'array',",
+							"    items: {",
+							"        type: 'object',",
+							"        properties: {",
+							"            _id: {",
+							"                type: 'string'",
+							"            },",
+							"            name: {",
+							"                type: 'string'",
+							"            },",
+							"            description: {",
+							"                type: 'string'",
+							"            },",
+							"            price: {",
+							"                type: 'number'",
+							"            }",
+							"        },",
+							"        additionalProperties: false,",
+							"        required: [",
+							"            '_id',",
+							"            'name',",
+							"            'description',",
+							"            'price'",
+							"        ]",
+							"    }",
+							"}));",
+							"",
+							"postman.setEnvironmentVariable('shoppingCartSchema', JSON.stringify({",
+							"    type: 'object',",
+							"    properties: {",
+							"        items: {",
+							"            type: 'array',",
+							"            items: {",
+							"                type: 'object',",
+							"                properties: {",
+							"                    '_id': {",
+							"                        type: 'string'",
+							"                    },",
+							"                    'name': {",
+							"                        type: 'string'",
+							"                    },",
+							"                    'description': {",
+							"                        type: 'string'",
+							"                    },",
+							"                    'price': {",
+							"                        type: 'number'",
+							"                    },",
+							"                    'quantity': {",
+							"                        type: 'number'",
+							"                    },",
+							"                    'product': {",
+							"                        type: 'string'",
+							"                    }",
+							"                },",
+							"                additionalProperties: false,",
+							"                required: [",
+							"                    '_id',",
+							"                    'name',",
+							"                    'description',",
+							"                    'price',",
+							"                    'quantity',",
+							"                    'product'",
+							"                ]",
+							"            }",
+							"        },",
+							"        totalPrice: {",
+							"            type: 'number'",
+							"        }",
+							"    },",
+							"    additionalProperties: false,",
+							"    required: [",
+							"        'items',",
+							"        'totalPrice'",
+							"    ]",
+							"}));",
+							"",
+							"postman.setEnvironmentVariable('userProfileSchema', JSON.stringify({",
+							"    type: 'object',",
+							"    properties: {",
+							"        paymentOptions: {",
+							"            type: 'array',",
+							"            items: {",
+							"                type: 'object',",
+							"                properties: {",
+							"                    _id: {",
+							"                        type: 'string'",
+							"                    },",
+							"                    accountOwner: {",
+							"                        type: 'string'",
+							"                    },",
+							"                    iban: {",
+							"                        type: 'string'",
+							"                    },",
+							"                    bic: {",
+							"                        type: 'string'",
+							"                    },",
+							"                },",
+							"                additionalProperties: false,",
+							"                required: [",
+							"                    '_id',",
+							"                    'accountOwner',",
+							"                    'iban',",
+							"                    'bic'",
+							"                ]",
+							"            }",
+							"        },",
+							"        addresses: {",
+							"            type: 'array',",
+							"            items: {",
+							"                type: 'object',",
+							"                properties: {",
+							"                    _id: {",
+							"                        type: 'string'",
+							"                    },",
+							"                    name: {",
+							"                        type: 'string'",
+							"                    },",
+							"                    street: {",
+							"                        type: 'string'",
+							"                    },",
+							"                    zipCode: {",
+							"                        type: 'string'",
+							"                    },",
+							"                    city: {",
+							"                        type: 'string'",
+							"                    },",
+							"                    country: {",
+							"                        type: 'string'",
+							"                    }",
+							"                },",
+							"                additionalProperties: false,",
+							"                required: [",
+							"                    '_id',",
+							"                    'name',",
+							"                    'street',",
+							"                    'zipCode',",
+							"                    'city',",
+							"                    'country'",
+							"                ]",
+							"            }",
+							"        }",
+							"    },",
+							"    additionalProperties: false,",
+							"    required: [",
+							"        'paymentOptions',",
+							"        'addresses'",
+							"    ]",
+							"}));",
+							"",
+							"postman.setEnvironmentVariable('orderSchema', JSON.stringify({",
+							"    type: 'object',",
+							"    properties: {",
+							"        _id: {",
+							"            type: 'string'",
+							"        },",
+							"        date: {",
+							"            type: 'string'",
+							"        },",
+							"        status: {",
+							"            type: 'string',",
+							"            enum: [",
+							"                'Cancelled',",
+							"                'Delivered',",
+							"                'InTransit',",
+							"                'PaymentDue',",
+							"                'PickupAvailable',",
+							"                'Problem',",
+							"                'Processing',",
+							"                'Returned'",
+							"            ]",
+							"        },",
+							"        items: {",
+							"            type: 'array',",
+							"            items: {",
+							"                type: 'object',",
+							"                properties: {",
+							"                    'name': {",
+							"                        type: 'string'",
+							"                    },",
+							"                    'description': {",
+							"                        type: 'string'",
+							"                    },",
+							"                    'price': {",
+							"                        type: 'number'",
+							"                    },",
+							"                    'quantity': {",
+							"                        type: 'number'",
+							"                    },",
+							"                    'product': {",
+							"                        type: 'string'",
+							"                    },",
+							"                },",
+							"                additionalProperties: false,",
+							"                required: [",
+							"                    'name',",
+							"                    'description',",
+							"                    'price',",
+							"                    'quantity',",
+							"                    'product'",
+							"                ]",
+							"            }",
+							"        },",
+							"        billingAddress: {",
+							"            type: 'object',",
+							"            properties: {",
+							"                name: {",
+							"                    type: 'string'",
+							"                },",
+							"                street: {",
+							"                    type: 'string'",
+							"                },",
+							"                zipCode: {",
+							"                    type: 'string'",
+							"                },",
+							"                city: {",
+							"                    type: 'string'",
+							"                },",
+							"                country: {",
+							"                    type: 'string'",
+							"                }",
+							"            },",
+							"            additionalProperties: false,",
+							"            required: [",
+							"                'name',",
+							"                'street',",
+							"                'zipCode',",
+							"                'city',",
+							"                'country'",
+							"            ]",
+							"        },",
+							"        shippingAddress: {",
+							"            type: 'object',",
+							"            properties: {",
+							"                name: {",
+							"                    type: 'string'",
+							"                },",
+							"                street: {",
+							"                    type: 'string'",
+							"                },",
+							"                zipCode: {",
+							"                    type: 'string'",
+							"                },",
+							"                city: {",
+							"                    type: 'string'",
+							"                },",
+							"                country: {",
+							"                    type: 'string'",
+							"                }",
+							"            },",
+							"            additionalProperties: false,",
+							"            required: [",
+							"                'name',",
+							"                'street',",
+							"                'zipCode',",
+							"                'city',",
+							"                'country'",
+							"            ]",
+							"        },",
+							"        payment: {",
+							"            type: 'object',",
+							"            properties: {",
+							"                accountOwner: {",
+							"                    type: 'string'",
+							"                },",
+							"                iban: {",
+							"                    type: 'string'",
+							"                },",
+							"                bic: {",
+							"                    type: 'string'",
+							"                },",
+							"            },",
+							"            additionalProperties: false,",
+							"            required: [",
+							"                'accountOwner',",
+							"                'iban',",
+							"                'bic'",
+							"            ]",
+							"        }",
+							"    },",
+							"    additionalProperties: false,",
+							"    required: [",
+							"        '_id',",
+							"        'date',",
+							"        'items',",
+							"        'billingAddress',",
+							"        'shippingAddress',",
+							"        'payment'",
+							"    ]",
+							"}));",
+							"",
+							"postman.setEnvironmentVariable('ordersSchema', JSON.stringify({",
+							"    type: 'array',",
+							"    items: JSON.parse(postman.getEnvironmentVariable('orderSchema'))",
+							"}));"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{baseUrl}}",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "{{defaultContentType}}",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Search Catalog for Products",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var schema = JSON.parse(postman.getEnvironmentVariable('productsSchema'));\r",
+							"var defaultContentType = postman.getEnvironmentVariable('defaultContentType');\r",
+							"var products = JSON.parse(responseBody);\r",
+							"\r",
+							"tests['status code is 200 OK'] = responseCode.code === 200;\r",
+							"tests['Content-Type header is ' + defaultContentType] = postman.getResponseHeader('Content-Type').match(_.escapeRegExp(defaultContentType));\r",
+							"tests['response body is a list of products'] = tv4.validate(products, schema);\r",
+							"tests['response body contains at least 2 products'] = products.length >= 2;\r",
+							"\r",
+							"postman.setEnvironmentVariable(\"productId1\", products[0]._id);\r",
+							"postman.setEnvironmentVariable(\"productId2\", products[1]._id);\r",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": {
+					"raw": "{{baseUrl}}products/?query=nostrum",
+					"host": [
+						"{{baseUrl}}products"
+					],
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "query",
+							"value": "nostrum",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "{{defaultContentType}}",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Add Product to Shopping Cart #1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var baseUrl = postman.getEnvironmentVariable('baseUrl');\r",
+							"\r",
+							"tests['status code is 201 Created'] = responseCode.code === 201;\r",
+							"tests['Location header redirects to /shoppingCart'] = postman.getResponseHeader('Location') === baseUrl + 'shoppingCart/'; \r",
+							"tests['response body is empty'] = responseBody === '';\r",
+							"\r",
+							"postman.setEnvironmentVariable('shoppingCartUrl', postman.getResponseHeader('Location'));\r",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{baseUrl}}shoppingCart/items/",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "{{defaultContentType}}",
+						"description": ""
+					},
+					{
+						"key": "Accept",
+						"value": "{{defaultContentType}}",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"product\": \"{{productId1}}\",\n\t\"quantity\": 1\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Add Product to Shopping Cart #2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var baseUrl = postman.getEnvironmentVariable('baseUrl');\r",
+							"\r",
+							"tests['status code is 201 Created'] = responseCode.code === 201;\r",
+							"tests['Location header redirects to /shoppingCart'] = postman.getResponseHeader('Location') === baseUrl + 'shoppingCart/'; \r",
+							"tests['response body is empty'] = responseBody === '';\r",
+							"\r",
+							"postman.setEnvironmentVariable('shoppingCartUrl', postman.getResponseHeader('Location'));\r",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{baseUrl}}shoppingCart/items/",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "{{defaultContentType}}",
+						"description": ""
+					},
+					{
+						"key": "Accept",
+						"value": "{{defaultContentType}}",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"product\": \"{{productId2}}\",\n\t\"quantity\": 1\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "View Shopping Cart",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var schema = JSON.parse(postman.getEnvironmentVariable('shoppingCartSchema'));\r",
+							"var defaultContentType = postman.getEnvironmentVariable('defaultContentType');\r",
+							"var shoppingCart = JSON.parse(responseBody);\r",
+							"\r",
+							"tests['status code is 200 OK'] = responseCode.code === 200;\r",
+							"tests['Content-Type header is ' + defaultContentType] = postman.getResponseHeader('Content-Type').match(_.escapeRegExp(defaultContentType));\r",
+							"tests['response body is a shopping cart'] = tv4.validate(shoppingCart, schema);\r",
+							"tests['response body contains exactly 2 shopping cart items'] = shoppingCart.items.length === 2;\r",
+							"\r",
+							"postman.setEnvironmentVariable(\"shoppingCartItemId1\", shoppingCart.items[0]._id);\r",
+							"postman.setEnvironmentVariable(\"shoppingCartItemId2\", shoppingCart.items[1]._id);\r",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{shoppingCartUrl}}",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "{{defaultContentType}}",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Update quantity of Shopping Cart Item",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var baseUrl = postman.getEnvironmentVariable('baseUrl');\r",
+							"\r",
+							"tests['status code is 204 No Content'] = responseCode.code === 204;\r",
+							"tests['Location header redirects to /shoppingCart'] = postman.getResponseHeader('Location') === baseUrl + 'shoppingCart/'; \r",
+							"tests['response body is empty'] = responseBody === '';\r",
+							"\r",
+							"postman.setEnvironmentVariable('shoppingCartUrl', postman.getResponseHeader('Location'));\r",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{baseUrl}}shoppingCart/items/{{shoppingCartItemId1}}/",
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "{{defaultContentType}}",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "{{defaultContentType}}",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"quantity\": 2\n}"
+				},
+				"description": "\t"
+			},
+			"response": []
+		},
+		{
+			"name": "Remove Item from Shopping Cart",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var baseUrl = postman.getEnvironmentVariable('baseUrl');\r",
+							"\r",
+							"tests['status code is 204 No Content'] = responseCode.code === 204;\r",
+							"tests['Location header redirects to /shoppingCart'] = postman.getResponseHeader('Location') === baseUrl + 'shoppingCart/'; \r",
+							"tests['response body is empty'] = responseBody === '';\r",
+							"\r",
+							"postman.setEnvironmentVariable('shoppingCartUrl', postman.getResponseHeader('Location'));\r",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{baseUrl}}shoppingCart/items/{{shoppingCartItemId2}}/",
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "{{defaultContentType}}",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\n"
+				},
+				"description": "\t"
+			},
+			"response": []
+		},
+		{
+			"name": "View updated Shopping Cart",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var schema = JSON.parse(postman.getEnvironmentVariable('shoppingCartSchema'));\r",
+							"var defaultContentType = postman.getEnvironmentVariable('defaultContentType');\r",
+							"var shoppingCart = JSON.parse(responseBody);\r",
+							"\r",
+							"tests['status code is 200 OK'] = responseCode.code === 200;\r",
+							"tests['Content-Type header is ' + defaultContentType] = postman.getResponseHeader('Content-Type').match(_.escapeRegExp(defaultContentType));\r",
+							"tests['response body is a shopping cart'] = tv4.validate(shoppingCart, schema);\r",
+							"tests['response body contains 1 shopping cart item'] = shoppingCart.items.length === 1;\r",
+							"tests['shopping cart item has a quantity of 2'] = shoppingCart.items[0].quantity === 2;\r",
+							"\r",
+							"postman.setEnvironmentVariable(\"lineItems\", JSON.stringify(shoppingCart.items.map(function (item) {\r",
+							"    return _.omit(item, ['_id']);\r",
+							"})));"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{shoppingCartUrl}}",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "{{defaultContentType}}",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Select Billing/Shipping Address, Payment",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var schema = JSON.parse(postman.getEnvironmentVariable('userProfileSchema'));\r",
+							"var defaultContentType = postman.getEnvironmentVariable('defaultContentType');\r",
+							"var userProfile = JSON.parse(responseBody);\r",
+							"\r",
+							"tests['status code is 200 OK'] = responseCode.code === 200;\r",
+							"tests['Content-Type header is ' + defaultContentType] = postman.getResponseHeader('Content-Type').match(_.escapeRegExp(defaultContentType));\r",
+							"tests['response body is a user profile'] = tv4.validate(userProfile, schema);\r",
+							"tests['response body contains at least 1 payment option'] = userProfile.paymentOptions.length >= 1;\r",
+							"tests['response body contains at least 2 addresses'] = userProfile.addresses.length >= 2;\r",
+							"\r",
+							"postman.setEnvironmentVariable(\"payment\", JSON.stringify(_.omit(userProfile.paymentOptions[0], ['_id'])));\r",
+							"postman.setEnvironmentVariable(\"billingAddress\", JSON.stringify(_.omit(userProfile.addresses[0], ['_id'])));\r",
+							"postman.setEnvironmentVariable(\"shippingAddress\", JSON.stringify(_.omit(userProfile.addresses[1], ['_id'])));\r",
+							"\r",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{baseUrl}}userProfile/",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "{{defaultContentType}}",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Place Order",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var baseUrl = postman.getEnvironmentVariable('baseUrl');",
+							"",
+							"tests['status code is 201 Created'] = responseCode.code === 201;",
+							"tests['Location header redirects to /orders/{orderId}'] = postman.getResponseHeader('Location').match(baseUrl + 'orders/.*/');",
+							"tests['response body is empty'] = responseBody === '';",
+							"",
+							"postman.setEnvironmentVariable('orderUrl', postman.getResponseHeader('Location'));",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{baseUrl}}orders/",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "{{defaultContentType}}",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "{{defaultContentType}}",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"items\": {{lineItems}},\n\t\"billingAddress\": {{billingAddress}},\n\t\"shippingAddress\": {{shippingAddress}},\n\t\"payment\": {{payment}}\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "View Order status",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var schema = JSON.parse(postman.getEnvironmentVariable('orderSchema'));\r",
+							"var defaultContentType = postman.getEnvironmentVariable('defaultContentType');\r",
+							"var order = JSON.parse(responseBody);\r",
+							"\r",
+							"tests['status code is 200 OK'] = responseCode.code === 200;\r",
+							"tests['Content-Type header is ' + defaultContentType] = postman.getResponseHeader('Content-Type').match(_.escapeRegExp(defaultContentType));\r",
+							"tests['response body is a order'] = tv4.validate(order, schema);\r",
+							"tests['response body contains 1 line item'] = order.items.length === 1;\r",
+							"tests['order status is PaymentDue'] = order.status === 'PaymentDue';\r",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{orderUrl}}",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "{{defaultContentType}}",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"items\": {{lineItems}},\n\t\"billingAddress\": {{billingAddress}},\n\t\"shippingAddress\": {{shippingAddress}},\n\t\"payment\": {{payment}}\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Cancel Order",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var baseUrl = postman.getEnvironmentVariable('baseUrl');\r",
+							"\r",
+							"tests['status code is 204 No Content'] = responseCode.code === 204;\r",
+							"tests['Location header redirects to /orders/{orderId}'] = postman.getResponseHeader('Location').match(baseUrl + 'orders/.*/');\r",
+							"tests['response body is empty'] = responseBody === '';\r",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{orderUrl}}",
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "{{defaultContentType}}",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "{{defaultContentType}}",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"status\": \"Cancelled\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "View updated Order status",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var schema = JSON.parse(postman.getEnvironmentVariable('orderSchema'));\r",
+							"var defaultContentType = postman.getEnvironmentVariable('defaultContentType');\r",
+							"var order = JSON.parse(responseBody);\r",
+							"\r",
+							"tests['status code is 200 OK'] = responseCode.code === 200;\r",
+							"tests['Content-Type header is ' + defaultContentType] = postman.getResponseHeader('Content-Type').match(_.escapeRegExp(defaultContentType));\r",
+							"tests['response body is a order'] = tv4.validate(order, schema);\r",
+							"tests['order status is Cancelled'] = order.status === 'Cancelled';\r",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{orderUrl}}",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "{{defaultContentType}}",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"items\": {{lineItems}},\n\t\"billingAddress\": {{billingAddress}},\n\t\"shippingAddress\": {{shippingAddress}},\n\t\"payment\": {{payment}}\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "View Orders",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var schema = JSON.parse(postman.getEnvironmentVariable('ordersSchema'));",
+							"var defaultContentType = postman.getEnvironmentVariable('defaultContentType');",
+							"var orders = JSON.parse(responseBody);",
+							"",
+							"tests['status code is 200 OK'] = responseCode.code === 200;",
+							"tests['Content-Type header is ' + defaultContentType] = postman.getResponseHeader('Content-Type').match(_.escapeRegExp(defaultContentType));",
+							"tests['response body is a list of orders'] = tv4.validate(orders, schema);",
+							"tests['response body contains at least 1 order'] = orders.length >= 1;",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{baseUrl}}orders/",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "{{defaultContentType}}",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
