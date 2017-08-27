@@ -57,6 +57,7 @@ function updateShoppingCartItemQuantity(id, quantity) {
 function createShoppingCartItem(product, quantity) {
     return shoppingCartItemStore.insert({
         name: product.name,
+        description: product.description,
         price: product.price,
         quantity: quantity,
         product: product._id
