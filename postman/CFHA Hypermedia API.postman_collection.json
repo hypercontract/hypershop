@@ -1045,7 +1045,7 @@
 							"tests['response body is a order'] = tv4.validate(order, schema);\r",
 							"tests['order status is Cancelled'] = order.status === 'Cancelled';\r",
 							"tests['response body contains self link'] = selfLink.match(baseUrl + 'orders/.*/');\r",
-							"tests['response body contains cancel link'] = order._links[nsUri + 'cancel'].href.match(baseUrl + 'orders/.*/');\r",
+							"tests['response body contains no cancel link'] = _.isUndefined(order._links[nsUri + 'cancel']);\r",
 							""
 						]
 					}
