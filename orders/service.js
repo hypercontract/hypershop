@@ -1,4 +1,5 @@
 const moment = require('moment');
+const { map, omit } = require('lodash');
 const orderStore = require('./store');
 const shoppingCartService = require('../shoppingCart/service');
 
@@ -6,7 +7,7 @@ module.exports = {
     createOrder,
     getOrder,
     getOrders,
-    updateOrder
+    updateOrderStatus
 };
 
 function createOrder(values) {
@@ -26,10 +27,10 @@ function getOrders() {
         .then(orders => sortOrdersByDate(orders));
 }
 
-function updateOrder(id, values) {
+function updateOrderStatus(id, status) {
     return orderStore.update(
         id,
-        values
+        { status: status }
     );
 }
 
@@ -38,9 +39,12 @@ function getNewOrder(values) {
     return Object.assign(
         {
             date: moment().format(),
-            status: 'PaymentDue'
-        },
-        values
+            status: 'PaymentDue',
+            items: values.items.map(item => omit(item, ['_id'])),
+            billingAddress: omit(values.billingAddress, ['_id']),
+            shippingAddress: omit(values.shippingAddress, ['_id']),
+            payment: omit(values.payment, ['_id'])
+        }
     );
 }
 

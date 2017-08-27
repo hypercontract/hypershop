@@ -21,9 +21,9 @@ router.get(getOrderPath(), (request, response) => {
 });
 
 router.patch(getOrderPath(), (request, response) => {
-    orderService.updateOrder(
+    orderService.updateOrderStatus(
         request.params.orderId,
-        request.body
+        request.body.status
     )
         .then(() => response.redirect(204, getOrderUri(request.params.orderId)));
 });
