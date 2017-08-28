@@ -1,6 +1,7 @@
 const { Resource } = require('hal');
-const { map } = require('lodash');
+const { map, omit } = require('lodash');
 const { getRootUri, getAddressUri, getPaymentOptionUri } = require('./uris');
+const { cfha } = require('../shared/namespaces');
 
 module.exports = {
     fromUserProfile,
@@ -10,16 +11,17 @@ module.exports = {
 
 function fromUserProfile(userProfile) {
     return Resource(
-        Object.assign(
-            {},
-            userProfile,
-            {
-                addresses: map(userProfile.addresses, fromAddress),
-                paymentOptions: map(userProfile.paymentOptions, fromPaymentOption)
-            }
-        ),
+        omit(userProfile, ['addresses', 'paymentOptions']),
         getRootUri()
-    );
+    )
+        .embed(
+            cfha('addresses'),
+            map(userProfile.addresses, fromAddress)
+        )
+        .embed(
+            cfha('payment-options'),
+            map(userProfile.paymentOptions, fromPaymentOption)
+        );
 }
 
 function fromAddress(address) {

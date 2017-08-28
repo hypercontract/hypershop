@@ -10,11 +10,13 @@ module.exports = {
 
 function fromOrders(orders) {
     return Resource(
-        {
-            items: map(orders, fromOrder)
-        },
+        {},
         getRootUri()
-    );
+    )
+        .embed(
+            cfha('orders'),
+            map(orders, fromOrder)
+        );
 }
 
 function fromOrder(order) {

@@ -11,11 +11,13 @@ module.exports = {
 
 function fromProducts(products) {
     return Resource(
-        {
-            items: map(products, fromProduct)
-        },
+        {},
         getRootUri()
-    );
+    )
+        .embed(
+            cfha('products'),
+            map(products, fromProduct)   
+        );
 }
 
 function fromProduct(product) {

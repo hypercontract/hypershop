@@ -1,5 +1,5 @@
 const { Resource } = require('hal');
-const { map } = require('lodash');
+const { omit, map } = require('lodash');
 const { getRootUri, getShoppingCartItemUri } = require('./uris');
 const orderUris = require('../orders/uris');
 const { cfha } = require('../shared/namespaces');
@@ -11,15 +11,13 @@ module.exports = {
 
 function fromShoppingCart(shoppingCart) {
     const resource = Resource(
-        Object.assign(
-            {},
-            shoppingCart,
-            {
-                items: map(shoppingCart.items, fromShoppingCartItem)
-            }
-        ),
+        omit(shoppingCart, ['items']),
         getRootUri()
-    );
+    )
+        .embed(
+            cfha('shopping-cart-items'),
+            map(shoppingCart.items, fromShoppingCartItem)
+        );
 
     if (shoppingCart.items.length > 0) {
         resource.link(cfha('place-order'), orderUris.getRootUri());
