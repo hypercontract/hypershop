@@ -1,6 +1,7 @@
 {
     "app": {
-        "version": "1.0"
+        "version": "1.0",
+        "mediaType": "application/hal+json;profile=\"http://cfha.luchs.org/profile\""
     },
     "http": {
         "scheme": "http",

@@ -1,4 +1,5 @@
 const express = require('express');
+const config = require('config');
 const hal = require('./hal');
 const userProfileService = require('./service');
 const { getBasePath, getRootPath } = require('./uris');
@@ -10,7 +11,7 @@ router.get(getRootPath(), (request, response) => {
     userProfileService.getUserProfile()
         .then(userProfile => sendResponse(response, {
             'json': userProfile,
-            'application/hal+json': hal.fromUserProfile(userProfile)
+            [config.app.mediaType]: hal.fromUserProfile(userProfile)
         }));
 });
 

@@ -12,7 +12,11 @@ mockData.create();
 const app = express();
 
 app.use(morgan('combined'));
+
 app.use(bodyParser.json());
+app.use(bodyParser.json({
+    type: 'application/hal+json'
+}));
 
 app.use(root.router);
 

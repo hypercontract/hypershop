@@ -1,4 +1,5 @@
 const express = require('express');
+const config = require('config');
 const hal = require('./hal');
 const orderService = require('./service');
 const { getBasePath, getRootPath, getOrderPath, getOrderUri } = require('./uris');
@@ -10,7 +11,7 @@ router.get(getRootPath(), (request, response) => {
     orderService.getOrders()
         .then(orders => sendResponse(response, {
             'json': orders,
-            'application/hal+json': hal.fromOrders(orders)
+            [config.app.mediaType]: hal.fromOrders(orders)
         }));
 });
 
@@ -23,7 +24,7 @@ router.get(getOrderPath(), (request, response) => {
     orderService.getOrder(request.params.orderId)
         .then(order => sendResponse(response, {
             'json': order,
-            'application/hal+json': hal.fromOrder(order)
+            [config.app.mediaType]: hal.fromOrder(order)
         }));
 });
 

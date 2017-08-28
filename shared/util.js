@@ -8,6 +8,8 @@ function sendResponse(response, responseBodies) {
     response
         .format(mapValues(
             responseBodies,
-            responseBody => () => response.send(responseBody)
+            (responseBody, mediaType) => () => response
+                .type(mediaType)
+                .send(responseBody)
         ));
 }

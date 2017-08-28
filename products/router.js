@@ -1,4 +1,5 @@
 const express = require('express');
+const config = require('config');
 const hal = require('./hal');
 const productService = require('./service');
 const { getBasePath, getRootPath } = require('./uris');
@@ -10,7 +11,7 @@ router.get(getRootPath(), (request, response) => {
     productService.findProducts(request.query.query)
         .then(products => sendResponse(response, {
             'json': products,
-            'application/hal+json': hal.fromProducts(products)
+            [config.app.mediaType]: hal.fromProducts(products)
         }));
 });
 

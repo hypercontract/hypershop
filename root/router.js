@@ -1,4 +1,5 @@
 const express = require('express');
+const config = require('config');
 const apiRoot = require('./root');
 const hal = require('./hal');
 const { sendResponse } = require('../shared/util');
@@ -9,7 +10,7 @@ const router = express.Router();
 router.get(getRootPath(), (request, response) => {
     sendResponse(response, {
         'json': apiRoot,
-        'application/hal+json': hal.fromApiRoot(apiRoot)
+        [config.app.mediaType]: hal.fromApiRoot(apiRoot)
     });
 });
 
