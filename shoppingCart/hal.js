@@ -1,5 +1,5 @@
 const { Resource } = require('hal');
-const { omit, map } = require('lodash');
+const { map, omit } = require('lodash');
 const { getRootUri, getShoppingCartItemUri } = require('./uris');
 const orderUris = require('../orders/uris');
 const { cfha } = require('../shared/namespaces');
@@ -27,7 +27,10 @@ function fromShoppingCart(shoppingCart) {
 }
 
 function fromShoppingCartItem(shoppingCartItem) {
-    return Resource(shoppingCartItem, getShoppingCartItemUri(shoppingCartItem._id))
+    return Resource(
+        omit(shoppingCartItem, ['_id']),
+        getShoppingCartItemUri(shoppingCartItem._id)
+    )
         .link(cfha('update-quantity'), getShoppingCartItemUri(shoppingCartItem._id))
         .link(cfha('remove'), getShoppingCartItemUri(shoppingCartItem._id));
 }

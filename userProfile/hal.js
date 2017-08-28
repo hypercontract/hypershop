@@ -25,9 +25,15 @@ function fromUserProfile(userProfile) {
 }
 
 function fromAddress(address) {
-    return Resource(address, getAddressUri(address._id));
+    return Resource(
+        omit(address, ['_id']),
+        getAddressUri(address._id)
+    );
 }
 
 function fromPaymentOption(paymentOption) {
-    return Resource(paymentOption, getPaymentOptionUri(paymentOption._id));
+    return Resource(
+        omit(paymentOption, ['_id']),
+        getPaymentOptionUri(paymentOption._id)
+    );
 }
