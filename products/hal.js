@@ -20,5 +20,5 @@ function fromProducts(products) {
 
 function fromProduct(product) {
     return Resource(product, getProductUri(product._id))
-        .link(cfha('add-to-shopping-cart'), shoppingCartUris.getRootUri());
+        .link(cfha('add-to-shopping-cart'), shoppingCartUris.getShoppingCartItemsUri());
 }

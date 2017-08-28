@@ -33,7 +33,14 @@
 							"tests['response body contains link to search catalog'] = searchCatalogLink === baseUrl + 'products/{?query}';",
 							"tests['response body contains link to shopping cart'] = shoppingCartLink === baseUrl + 'shoppingCart/';",
 							"tests['response body contains link to orders'] = ordersLink === baseUrl + 'orders/';",
-							"tests['response body contains link to user profile'] = userProfileLink === baseUrl + 'userProfile/';"
+							"tests['response body contains link to user profile'] = userProfileLink === baseUrl + 'userProfile/';",
+							"",
+							"postman.setEnvironmentVariable('apiRootLink', selfLink);",
+							"postman.setEnvironmentVariable('searchCatalogLink', searchCatalogLink.replace('{?query}', '?query=nostrum'));",
+							"postman.setEnvironmentVariable('shoppingCartLink', shoppingCartLink);",
+							"postman.setEnvironmentVariable('ordersLink', ordersLink);",
+							"postman.setEnvironmentVariable('userProfileLink', userProfileLink);",
+							""
 						]
 					}
 				},
@@ -445,7 +452,7 @@
 				}
 			],
 			"request": {
-				"url": "{{baseUrl}}shoppingCart",
+				"url": "{{shoppingCartLink}}",
 				"method": "GET",
 				"header": [
 					{
@@ -484,9 +491,15 @@
 							"var allProductsHaveSelfLink = true;\r",
 							"var allProductsHaveSCLink = true;\r",
 							"\r",
+							"var addToShoppingCartLinks = [];\r",
+							"\r",
 							"products.items.forEach(function (product) {\r",
 							"    var productHasSelfLink = product._links.self.href.match(baseUrl + 'products/.*/');\r",
-							"    var productHasSCLink = product._links[nsUri + 'add-to-shopping-cart'].href === baseUrl + 'shoppingCart/';\r",
+							"    \r",
+							"    var addToShoppingCartLink = product._links[nsUri + 'add-to-shopping-cart'].href;\r",
+							"    var productHasSCLink = addToShoppingCartLink === baseUrl + 'shoppingCart/items/';\r",
+							"    \r",
+							"    addToShoppingCartLinks.push(addToShoppingCartLink);\r",
 							"    \r",
 							"    allProductsHaveSelfLink = allProductsHaveSelfLink && productHasSelfLink;\r",
 							"    allProductsHaveSCLink = allProductsHaveSCLink && productHasSCLink;\r",
@@ -494,6 +507,9 @@
 							"\r",
 							"tests['all products have self link'] = allProductsHaveSelfLink;\r",
 							"tests['all products have add to shopping cart link'] = allProductsHaveSCLink;\r",
+							"\r",
+							"postman.setEnvironmentVariable(\"addToShoppingCartLink1\", addToShoppingCartLinks[0]);\r",
+							"postman.setEnvironmentVariable(\"addToShoppingCartLink2\", addToShoppingCartLinks[1]);\r",
 							"\r",
 							"postman.setEnvironmentVariable(\"productId1\", products.items[0]._id);\r",
 							"postman.setEnvironmentVariable(\"productId2\", products.items[1]._id);\r",
@@ -503,24 +519,7 @@
 				}
 			],
 			"request": {
-				"url": {
-					"raw": "{{baseUrl}}products/?query=nostrum",
-					"host": [
-						"{{baseUrl}}products"
-					],
-					"path": [
-						""
-					],
-					"query": [
-						{
-							"key": "query",
-							"value": "nostrum",
-							"equals": true,
-							"description": ""
-						}
-					],
-					"variable": []
-				},
+				"url": "{{searchCatalogLink}}",
 				"method": "GET",
 				"header": [
 					{
@@ -548,14 +547,14 @@
 							"tests['Location header redirects to /shoppingCart'] = postman.getResponseHeader('Location') === baseUrl + 'shoppingCart/'; \r",
 							"tests['response body is empty'] = responseBody === '';\r",
 							"\r",
-							"postman.setEnvironmentVariable('shoppingCartUrl', postman.getResponseHeader('Location'));\r",
+							"postman.setEnvironmentVariable('shoppingCartLink', postman.getResponseHeader('Location'));\r",
 							""
 						]
 					}
 				}
 			],
 			"request": {
-				"url": "{{baseUrl}}shoppingCart/items/",
+				"url": "{{addToShoppingCartLink1}}",
 				"method": "POST",
 				"header": [
 					{
@@ -591,14 +590,14 @@
 							"tests['Location header redirects to /shoppingCart'] = postman.getResponseHeader('Location') === baseUrl + 'shoppingCart/'; \r",
 							"tests['response body is empty'] = responseBody === '';\r",
 							"\r",
-							"postman.setEnvironmentVariable('shoppingCartUrl', postman.getResponseHeader('Location'));\r",
+							"postman.setEnvironmentVariable('shoppingCartLink', postman.getResponseHeader('Location'));\r",
 							""
 						]
 					}
 				}
 			],
 			"request": {
-				"url": "{{baseUrl}}shoppingCart/items/",
+				"url": "{{addToShoppingCartLink2}}",
 				"method": "POST",
 				"header": [
 					{
@@ -647,10 +646,19 @@
 							"var allItemsHaveUpdateLink = true;\r",
 							"var allItemsHaveRemoveLink = true;\r",
 							"\r",
+							"var updateQuantityLinks = [];\r",
+							"var removeLinks = [];\r",
+							"\r",
 							"shoppingCart.items.forEach(function (item) {\r",
 							"    var itemHasSelfLink = item._links.self.href.match(baseUrl + 'shoppingCart/items/.*/');\r",
-							"    var itemHasUpdateLink = item._links[nsUri + 'update-quantity'].href.match(baseUrl + 'shoppingCart/items/.*/');\r",
-							"    var itemHasRemoveLink = item._links[nsUri + 'remove'].href.match(baseUrl + 'shoppingCart/items/.*/');\r",
+							"    \r",
+							"    var updateQuantityLink = item._links[nsUri + 'update-quantity'].href;\r",
+							"    var itemHasUpdateLink = updateQuantityLink.match(baseUrl + 'shoppingCart/items/.*/');\r",
+							"    updateQuantityLinks.push(updateQuantityLink);\r",
+							"    \r",
+							"    var removeLink = item._links[nsUri + 'remove'].href;\r",
+							"    var itemHasRemoveLink = removeLink.match(baseUrl + 'shoppingCart/items/.*/');\r",
+							"    removeLinks.push(removeLink);\r",
 							"    \r",
 							"    allItemsHaveSelfLink = allItemsHaveSelfLink && itemHasSelfLink;\r",
 							"    allItemsHaveUpdateLink = allItemsHaveUpdateLink && itemHasUpdateLink;\r",
@@ -661,15 +669,18 @@
 							"tests['all items have update quantity link'] = allItemsHaveUpdateLink;\r",
 							"tests['all items have remove link'] = allItemsHaveRemoveLink;\r",
 							"\r",
-							"postman.setEnvironmentVariable(\"shoppingCartItemId1\", shoppingCart.items[0]._id);\r",
-							"postman.setEnvironmentVariable(\"shoppingCartItemId2\", shoppingCart.items[1]._id);\r",
+							"postman.setEnvironmentVariable('shoppingCartItem1UpdateQuantityLink', updateQuantityLinks[0]);\r",
+							"postman.setEnvironmentVariable('shoppingCartItem2RemoveLink', removeLinks[1]);\r",
+							"\r",
+							"postman.setEnvironmentVariable('shoppingCartItemId1', shoppingCart.items[0]._id);\r",
+							"postman.setEnvironmentVariable('shoppingCartItemId2', shoppingCart.items[1]._id);\r",
 							""
 						]
 					}
 				}
 			],
 			"request": {
-				"url": "{{shoppingCartUrl}}",
+				"url": "{{shoppingCartLink}}",
 				"method": "GET",
 				"header": [
 					{
@@ -697,14 +708,14 @@
 							"tests['Location header redirects to /shoppingCart'] = postman.getResponseHeader('Location') === baseUrl + 'shoppingCart/'; \r",
 							"tests['response body is empty'] = responseBody === '';\r",
 							"\r",
-							"postman.setEnvironmentVariable('shoppingCartUrl', postman.getResponseHeader('Location'));\r",
+							"postman.setEnvironmentVariable('shoppingCartLink', postman.getResponseHeader('Location'));\r",
 							""
 						]
 					}
 				}
 			],
 			"request": {
-				"url": "{{baseUrl}}shoppingCart/items/{{shoppingCartItemId1}}/",
+				"url": "{{shoppingCartItem1UpdateQuantityLink}}",
 				"method": "PATCH",
 				"header": [
 					{
@@ -740,14 +751,14 @@
 							"tests['Location header redirects to /shoppingCart'] = postman.getResponseHeader('Location') === baseUrl + 'shoppingCart/'; \r",
 							"tests['response body is empty'] = responseBody === '';\r",
 							"\r",
-							"postman.setEnvironmentVariable('shoppingCartUrl', postman.getResponseHeader('Location'));\r",
+							"postman.setEnvironmentVariable('shoppingCartLink', postman.getResponseHeader('Location'));\r",
 							""
 						]
 					}
 				}
 			],
 			"request": {
-				"url": "{{baseUrl}}shoppingCart/items/{{shoppingCartItemId2}}/",
+				"url": "{{shoppingCartItem2RemoveLink}}",
 				"method": "DELETE",
 				"header": [
 					{
@@ -779,6 +790,7 @@
 							"var shoppingCart = JSON.parse(responseBody);\r",
 							"\r",
 							"var selfLink = shoppingCart._links.self.href;\r",
+							"var placeOrderLink = shoppingCart._links[nsUri + 'place-order'].href;\r",
 							"\r",
 							"tests['status code is 200 OK'] = responseCode.code === 200;\r",
 							"tests['Content-Type header is ' + defaultContentType] = postman.getResponseHeader('Content-Type').match(_.escapeRegExp(defaultContentType));\r",
@@ -786,7 +798,7 @@
 							"tests['response body contains 1 shopping cart item'] = shoppingCart.items.length === 1;\r",
 							"tests['shopping cart item has a quantity of 2'] = shoppingCart.items[0].quantity === 2;\r",
 							"tests['response body contains self link'] = selfLink === baseUrl + 'shoppingCart/';\r",
-							"tests['response body contains place order link'] = shoppingCart._links[nsUri + 'place-order'].href.match(baseUrl + 'orders/');\r",
+							"tests['response body contains place order link'] = placeOrderLink.match(baseUrl + 'orders/');\r",
 							"\r",
 							"var allItemsHaveSelfLink = true;\r",
 							"var allItemsHaveUpdateLink = true;\r",
@@ -806,7 +818,9 @@
 							"tests['all items have update quantity link'] = allItemsHaveUpdateLink;\r",
 							"tests['all items have remove link'] = allItemsHaveRemoveLink;\r",
 							"\r",
-							"postman.setEnvironmentVariable(\"lineItems\", JSON.stringify(shoppingCart.items.map(function (item) {\r",
+							"postman.setEnvironmentVariable('placeOrderLink', placeOrderLink);\r",
+							"\r",
+							"postman.setEnvironmentVariable('lineItems', JSON.stringify(shoppingCart.items.map(function (item) {\r",
 							"    return _.omit(item, ['_id', '_links']);\r",
 							"})));"
 						]
@@ -814,7 +828,7 @@
 				}
 			],
 			"request": {
-				"url": "{{shoppingCartUrl}}",
+				"url": "{{shoppingCartLink}}",
 				"method": "GET",
 				"header": [
 					{
@@ -880,7 +894,7 @@
 				}
 			],
 			"request": {
-				"url": "{{baseUrl}}userProfile/",
+				"url": "{{userProfileLink}}",
 				"method": "GET",
 				"header": [
 					{
@@ -908,14 +922,14 @@
 							"tests['Location header redirects to /orders/{orderId}'] = postman.getResponseHeader('Location').match(baseUrl + 'orders/.*/');",
 							"tests['response body is empty'] = responseBody === '';",
 							"",
-							"postman.setEnvironmentVariable('orderUrl', postman.getResponseHeader('Location'));",
+							"postman.setEnvironmentVariable('orderLink', postman.getResponseHeader('Location'));",
 							""
 						]
 					}
 				}
 			],
 			"request": {
-				"url": "{{baseUrl}}orders/",
+				"url": "{{placeOrderLink}}",
 				"method": "POST",
 				"header": [
 					{
@@ -952,6 +966,7 @@
 							"var order = JSON.parse(responseBody);\r",
 							"\r",
 							"var selfLink = order._links.self.href;\r",
+							"var cancelOrderLink = order._links[nsUri + 'cancel'].href;\r",
 							"\r",
 							"tests['status code is 200 OK'] = responseCode.code === 200;\r",
 							"tests['Content-Type header is ' + defaultContentType] = postman.getResponseHeader('Content-Type').match(_.escapeRegExp(defaultContentType));\r",
@@ -959,14 +974,15 @@
 							"tests['response body contains 1 line item'] = order.items.length === 1;\r",
 							"tests['order status is PaymentDue'] = order.status === 'PaymentDue';\r",
 							"tests['response body contains self link'] = selfLink.match(baseUrl + 'orders/.*/');\r",
-							"tests['response body contains cancel link'] = order._links[nsUri + 'cancel'].href.match(baseUrl + 'orders/.*/');\r",
-							""
+							"tests['response body contains cancel link'] = cancelOrderLink.match(baseUrl + 'orders/.*/');\r",
+							"\r",
+							"postman.setEnvironmentVariable('cancelOrderLink', cancelOrderLink);"
 						]
 					}
 				}
 			],
 			"request": {
-				"url": "{{orderUrl}}",
+				"url": "{{orderLink}}",
 				"method": "GET",
 				"header": [
 					{
@@ -996,13 +1012,15 @@
 							"tests['status code is 204 No Content'] = responseCode.code === 204;\r",
 							"tests['Location header redirects to /orders/{orderId}'] = postman.getResponseHeader('Location').match(baseUrl + 'orders/.*/');\r",
 							"tests['response body is empty'] = responseBody === '';\r",
+							"\r",
+							"postman.setEnvironmentVariable('orderLink', postman.getResponseHeader('Location'));\r",
 							""
 						]
 					}
 				}
 			],
 			"request": {
-				"url": "{{orderUrl}}",
+				"url": "{{cancelOrderLink}}",
 				"method": "PATCH",
 				"header": [
 					{
@@ -1052,7 +1070,7 @@
 				}
 			],
 			"request": {
-				"url": "{{orderUrl}}",
+				"url": "{{orderLink}}",
 				"method": "GET",
 				"header": [
 					{
@@ -1113,7 +1131,7 @@
 				}
 			],
 			"request": {
-				"url": "{{baseUrl}}orders/",
+				"url": "{{ordersLink}}",
 				"method": "GET",
 				"header": [
 					{
