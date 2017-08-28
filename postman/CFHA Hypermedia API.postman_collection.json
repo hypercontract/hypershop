@@ -1021,7 +1021,7 @@
 			],
 			"request": {
 				"url": "{{cancelOrderLink}}",
-				"method": "PATCH",
+				"method": "DELETE",
 				"header": [
 					{
 						"key": "Accept",
@@ -1036,7 +1036,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"status\": \"Cancelled\"\n}"
+					"raw": ""
 				},
 				"description": ""
 			},

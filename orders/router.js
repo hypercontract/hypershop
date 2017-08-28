@@ -35,6 +35,14 @@ router.patch(getOrderPath(), (request, response) => {
         .then(() => response.redirect(204, getOrderUri(request.params.orderId)));
 });
 
+router.delete(getOrderPath(), (request, response) => {
+    orderService.updateOrderStatus(
+        request.params.orderId,
+        'Cancelled'
+    )
+        .then(() => response.redirect(204, getOrderUri(request.params.orderId)));
+});
+
 module.exports = {
     basePath: getBasePath(),
     router
