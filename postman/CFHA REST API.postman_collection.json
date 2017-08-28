@@ -2,7 +2,7 @@
 	"variables": [],
 	"info": {
 		"name": "CFHA REST API",
-		"_postman_id": "911754d8-e797-ffa9-491d-2394f5af0cb1",
+		"_postman_id": "aaa36fa3-1976-36cd-d14a-d683eb7f252d",
 		"description": "",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
@@ -32,6 +32,7 @@
 						"exec": [
 							"postman.clearEnvironmentVariables();",
 							"",
+							"postman.setEnvironmentVariable('defaultAccept', 'application/json');",
 							"postman.setEnvironmentVariable('defaultContentType', 'application/json');",
 							"postman.setEnvironmentVariable('baseUrl', 'http://localhost:3000/');",
 							"",
@@ -340,7 +341,7 @@
 				"header": [
 					{
 						"key": "Accept",
-						"value": "{{defaultContentType}}",
+						"value": "{{defaultAccept}}",
 						"description": ""
 					}
 				],
@@ -396,7 +397,7 @@
 				"header": [
 					{
 						"key": "Accept",
-						"value": "{{defaultContentType}}",
+						"value": "{{defaultAccept}}",
 						"description": ""
 					}
 				],
@@ -436,7 +437,7 @@
 					},
 					{
 						"key": "Accept",
-						"value": "{{defaultContentType}}",
+						"value": "{{defaultAccept}}",
 						"description": ""
 					}
 				],
@@ -479,7 +480,7 @@
 					},
 					{
 						"key": "Accept",
-						"value": "{{defaultContentType}}",
+						"value": "{{defaultAccept}}",
 						"description": ""
 					}
 				],
@@ -521,7 +522,7 @@
 				"header": [
 					{
 						"key": "Accept",
-						"value": "{{defaultContentType}}",
+						"value": "{{defaultAccept}}",
 						"description": ""
 					}
 				],
@@ -556,7 +557,7 @@
 				"header": [
 					{
 						"key": "Accept",
-						"value": "{{defaultContentType}}",
+						"value": "{{defaultAccept}}",
 						"description": ""
 					},
 					{
@@ -599,7 +600,7 @@
 				"header": [
 					{
 						"key": "Accept",
-						"value": "{{defaultContentType}}",
+						"value": "{{defaultAccept}}",
 						"description": ""
 					}
 				],
@@ -642,7 +643,7 @@
 				"header": [
 					{
 						"key": "Accept",
-						"value": "{{defaultContentType}}",
+						"value": "{{defaultAccept}}",
 						"description": ""
 					}
 				],
@@ -684,7 +685,7 @@
 				"header": [
 					{
 						"key": "Accept",
-						"value": "{{defaultContentType}}",
+						"value": "{{defaultAccept}}",
 						"description": ""
 					}
 				],
@@ -719,7 +720,7 @@
 				"header": [
 					{
 						"key": "Accept",
-						"value": "{{defaultContentType}}",
+						"value": "{{defaultAccept}}",
 						"description": ""
 					},
 					{
@@ -764,7 +765,7 @@
 				"header": [
 					{
 						"key": "Accept",
-						"value": "{{defaultContentType}}",
+						"value": "{{defaultAccept}}",
 						"description": ""
 					}
 				],
@@ -800,7 +801,7 @@
 				"header": [
 					{
 						"key": "Accept",
-						"value": "{{defaultContentType}}",
+						"value": "{{defaultAccept}}",
 						"description": ""
 					},
 					{
@@ -844,7 +845,7 @@
 				"header": [
 					{
 						"key": "Accept",
-						"value": "{{defaultContentType}}",
+						"value": "{{defaultAccept}}",
 						"description": ""
 					}
 				],
@@ -883,7 +884,7 @@
 				"header": [
 					{
 						"key": "Accept",
-						"value": "{{defaultContentType}}",
+						"value": "{{defaultAccept}}",
 						"description": ""
 					}
 				],
