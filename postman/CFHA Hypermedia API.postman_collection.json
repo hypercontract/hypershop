@@ -561,9 +561,6 @@
 							"\r",
 							"postman.setEnvironmentVariable(\"productUri1\", productList[0]._links.self.href);\r",
 							"postman.setEnvironmentVariable(\"productUri2\", productList[1]._links.self.href);\r",
-							"\r",
-							"postman.setEnvironmentVariable(\"productId1\", productList[0]._id);\r",
-							"postman.setEnvironmentVariable(\"productId2\", productList[1]._id);\r",
 							""
 						]
 					}
@@ -621,7 +618,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"product\": \"{{productId1}}\",\n\t\"quantity\": 1\n}"
+					"raw": "{\n\t\"product\": \"{{productUri1}}\",\n\t\"quantity\": 1\n}"
 				},
 				"description": ""
 			},
@@ -664,7 +661,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"product\": \"{{productId2}}\",\n\t\"quantity\": 1\n}"
+					"raw": "{\n\t\"product\": \"{{productUri2}}\",\n\t\"quantity\": 1\n}"
 				},
 				"description": ""
 			},
