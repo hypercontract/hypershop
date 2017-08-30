@@ -52,6 +52,9 @@
 							"            },",
 							"            price: {",
 							"                type: 'number'",
+							"            },",
+							"            image: {",
+							"                type: 'string'",
 							"            }",
 							"        },",
 							"        additionalProperties: false,",
@@ -59,7 +62,8 @@
 							"            '_id',",
 							"            'name',",
 							"            'description',",
-							"            'price'",
+							"            'price',",
+							"            'image'",
 							"        ]",
 							"    }",
 							"}));",
@@ -351,6 +355,42 @@
 			"response": []
 		},
 		{
+			"name": "View empty Shopping Cart",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var schema = JSON.parse(postman.getEnvironmentVariable('shoppingCartSchema'));\r",
+							"var defaultContentType = postman.getEnvironmentVariable('defaultContentType');\r",
+							"var shoppingCart = JSON.parse(responseBody);\r",
+							"\r",
+							"tests['status code is 200 OK'] = responseCode.code === 200;\r",
+							"tests['Content-Type header is ' + defaultContentType] = postman.getResponseHeader('Content-Type').match(_.escapeRegExp(defaultContentType));\r",
+							"tests['response body is a shopping cart'] = tv4.validate(shoppingCart, schema);\r",
+							"tests['response body contains no shopping cart items'] = shoppingCart.items.length === 0;\r",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{baseUrl}}shoppingCart/",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "{{defaultAccept}}",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
 			"name": "Search Catalog for Products",
 			"event": [
 				{
@@ -517,7 +557,7 @@
 				}
 			],
 			"request": {
-				"url": "{{shoppingCartUrl}}",
+				"url": "{{baseUrl}}shoppingCart/",
 				"method": "GET",
 				"header": [
 					{
@@ -539,13 +579,15 @@
 					"script": {
 						"type": "text/javascript",
 						"exec": [
-							"var baseUrl = postman.getEnvironmentVariable('baseUrl');\r",
+							"var schema = JSON.parse(postman.getEnvironmentVariable('shoppingCartSchema'));\r",
+							"var defaultContentType = postman.getEnvironmentVariable('defaultContentType');\r",
+							"var shoppingCart = JSON.parse(responseBody);\r",
 							"\r",
-							"tests['status code is 204 No Content'] = responseCode.code === 204;\r",
-							"tests['Location header redirects to /shoppingCart'] = postman.getResponseHeader('Location') === baseUrl + 'shoppingCart/'; \r",
-							"tests['response body is empty'] = responseBody === '';\r",
+							"tests['status code is 200 OK'] = responseCode.code === 200;\r",
+							"tests['Content-Type header is ' + defaultContentType] = postman.getResponseHeader('Content-Type').match(_.escapeRegExp(defaultContentType));\r",
+							"tests['response body is a shopping cart'] = tv4.validate(shoppingCart, schema);\r",
+							"tests['response body contains exactly 2 shopping cart items'] = shoppingCart.items.length === 2;\r",
 							"\r",
-							"postman.setEnvironmentVariable('shoppingCartUrl', postman.getResponseHeader('Location'));\r",
 							""
 						]
 					}
@@ -582,13 +624,15 @@
 					"script": {
 						"type": "text/javascript",
 						"exec": [
-							"var baseUrl = postman.getEnvironmentVariable('baseUrl');\r",
+							"var schema = JSON.parse(postman.getEnvironmentVariable('shoppingCartSchema'));\r",
+							"var defaultContentType = postman.getEnvironmentVariable('defaultContentType');\r",
+							"var shoppingCart = JSON.parse(responseBody);\r",
 							"\r",
-							"tests['status code is 204 No Content'] = responseCode.code === 204;\r",
-							"tests['Location header redirects to /shoppingCart'] = postman.getResponseHeader('Location') === baseUrl + 'shoppingCart/'; \r",
-							"tests['response body is empty'] = responseBody === '';\r",
+							"tests['status code is 200 OK'] = responseCode.code === 200;\r",
+							"tests['Content-Type header is ' + defaultContentType] = postman.getResponseHeader('Content-Type').match(_.escapeRegExp(defaultContentType));\r",
+							"tests['response body is a shopping cart'] = tv4.validate(shoppingCart, schema);\r",
+							"tests['response body contains exactly 1 shopping cart items'] = shoppingCart.items.length === 1;\r",
 							"\r",
-							"postman.setEnvironmentVariable('shoppingCartUrl', postman.getResponseHeader('Location'));\r",
 							""
 						]
 					}
@@ -630,15 +674,15 @@
 							"tests['response body contains 1 shopping cart item'] = shoppingCart.items.length === 1;\r",
 							"tests['shopping cart item has a quantity of 2'] = shoppingCart.items[0].quantity === 2;\r",
 							"\r",
-							"postman.setEnvironmentVariable(\"lineItems\", JSON.stringify(shoppingCart.items.map(function (item) {\r",
-							"    return _.omit(item, ['_id']);\r",
+							"postman.setEnvironmentVariable(\"lineItemIds\", JSON.stringify(shoppingCart.items.map(function (item) {\r",
+							"    return item._id;\r",
 							"})));"
 						]
 					}
 				}
 			],
 			"request": {
-				"url": "{{shoppingCartUrl}}",
+				"url": "{{baseUrl}}shoppingCart/",
 				"method": "GET",
 				"header": [
 					{
@@ -670,10 +714,9 @@
 							"tests['response body contains at least 1 payment option'] = userProfile.paymentOptions.length >= 1;\r",
 							"tests['response body contains at least 2 addresses'] = userProfile.addresses.length >= 2;\r",
 							"\r",
-							"postman.setEnvironmentVariable(\"payment\", JSON.stringify(_.omit(userProfile.paymentOptions[0], ['_id'])));\r",
-							"postman.setEnvironmentVariable(\"billingAddress\", JSON.stringify(_.omit(userProfile.addresses[0], ['_id'])));\r",
-							"postman.setEnvironmentVariable(\"shippingAddress\", JSON.stringify(_.omit(userProfile.addresses[1], ['_id'])));\r",
-							"\r",
+							"postman.setEnvironmentVariable(\"paymentId\", userProfile.paymentOptions[0]._id);\r",
+							"postman.setEnvironmentVariable(\"billingAddressId\", userProfile.addresses[0]._id);\r",
+							"postman.setEnvironmentVariable(\"shippingAddressId\", userProfile.addresses[1]._id);\r",
 							""
 						]
 					}
@@ -731,7 +774,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"items\": {{lineItems}},\n\t\"billingAddress\": {{billingAddress}},\n\t\"shippingAddress\": {{shippingAddress}},\n\t\"payment\": {{payment}}\n}"
+					"raw": "{\n\t\"items\": {{lineItemIds}},\n\t\"billingAddress\": \"{{billingAddressId}}\",\n\t\"shippingAddress\": \"{{shippingAddressId}}\",\n\t\"payment\": \"{{paymentId}}\"\n}"
 				},
 				"description": ""
 			},
@@ -785,11 +828,15 @@
 					"script": {
 						"type": "text/javascript",
 						"exec": [
-							"var baseUrl = postman.getEnvironmentVariable('baseUrl');\r",
+							"var schema = JSON.parse(postman.getEnvironmentVariable('orderSchema'));\r",
+							"var defaultContentType = postman.getEnvironmentVariable('defaultContentType');\r",
+							"var order = JSON.parse(responseBody);\r",
 							"\r",
-							"tests['status code is 204 No Content'] = responseCode.code === 204;\r",
-							"tests['Location header redirects to /orders/{orderId}'] = postman.getResponseHeader('Location').match(baseUrl + 'orders/.*/');\r",
-							"tests['response body is empty'] = responseBody === '';\r",
+							"tests['status code is 200 OK'] = responseCode.code === 200;\r",
+							"tests['Content-Type header is ' + defaultContentType] = postman.getResponseHeader('Content-Type').match(_.escapeRegExp(defaultContentType));\r",
+							"tests['response body is a order'] = tv4.validate(order, schema);\r",
+							"tests['response body contains 1 line item'] = order.items.length === 1;\r",
+							"tests['order status is Cancelled'] = order.status === 'Cancelled';\r",
 							""
 						]
 					}
