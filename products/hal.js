@@ -22,8 +22,9 @@ function fromProducts(products) {
 
 function fromProduct(product) {
     return Resource(
-        omit(product, ['_id']),
+        omit(product, ['_id', 'image']),
         getProductUri(product._id)
     )
-        .link(cfha('add-to-shopping-cart'), shoppingCartUris.getShoppingCartItemsUri());
+        .link(cfha('add-to-shopping-cart'), shoppingCartUris.getShoppingCartItemsUri())
+        .link(cfha('image'), shoppingCartUris.getShoppingCartItemsUri());
 }

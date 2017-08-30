@@ -60,7 +60,8 @@ function generateProduct() {
     return {
         name: faker.commerce.productName(),
         description: faker.lorem.paragraph(),
-        price: toNumber(random(0.20, 90).toFixed(2))
+        price: toNumber(random(0.20, 90).toFixed(2)),
+        image: faker.image.food() + '?' + faker.random.uuid()
     };
 }
 
