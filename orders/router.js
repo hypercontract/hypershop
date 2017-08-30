@@ -1,8 +1,11 @@
 const express = require('express');
 const config = require('config');
+const { escapeRegExp } = require('lodash');
 const hal = require('./hal');
 const orderService = require('./service');
 const { getBasePath, getRootPath, getOrderPath, getOrderUri } = require('./uris');
+const shoppingCartUris = require('../shoppingCart/uris');
+const userProfileUris = require('../userProfile/uris');
 const { sendResponse } = require('../shared/util');
 
 const router = express.Router();
@@ -16,8 +19,32 @@ router.get(getRootPath(), (request, response) => {
 });
 
 router.post(getRootPath(), (request, response) => {
-    orderService.createOrder(request.body)
-        .then(orderId => response.redirect(201, getOrderUri(orderId)));
+    let items;
+    let billingAddress;
+    let shippingAddress;
+    let payment;
+
+    // // TODO: use mime type matcher
+    if (request.get('Content-Type') === config.app.mediaType) {
+        items = request.body.items.map(
+            item => item.replace(new RegExp(shoppingCartUris.getShoppingCartItemUri('(.*)')), '$1')
+        );
+        billingAddress = request.body.billingAddress.replace(new RegExp(userProfileUris.getAddressUri('(.*)')), '$1');
+        shippingAddress = request.body.shippingAddress.replace(new RegExp(userProfileUris.getAddressUri('(.*)')), '$1');
+        payment = request.body.payment.replace(new RegExp(userProfileUris.getPaymentOptionUri('(.*)')), '$1');
+    } else {
+        items = request.body.items;
+        billingAddress = request.body.billingAddress;
+        shippingAddress = request.body.shippingAddress;
+        payment = request.body.payment;
+    }
+    
+    orderService.createOrder({
+        items,
+        billingAddress,
+        shippingAddress,
+        payment
+    })
 });
 
 router.get(getOrderPath(), (request, response) => {

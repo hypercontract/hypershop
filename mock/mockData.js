@@ -24,14 +24,15 @@ module.exports = {
         const paymentOptions = times(2, () => generatePaymentOption());
         const products = times(100, () => generateProduct());
 
-        addressStore.bulkInsert(addresses);
-        paymentOptionStore.bulkInsert(paymentOptions);
-
-        return productStore.bulkInsert(products)
-            .then(productIds => repeatInSequence(
+        return Promise.all([
+            productStore.bulkInsert(products),
+            addressStore.bulkInsert(addresses),
+            paymentOptionStore.bulkInsert(paymentOptions)
+        ])
+            .then(([productIds, addressIds, paymentOptionIds]) => repeatInSequence(
                 5,
                 () => createShoppingCart(productIds)
-                    .then(shoppingCart => createOrder(shoppingCart, addresses, paymentOptions))
+                    .then(shoppingCart => createOrder(shoppingCart, addressIds, paymentOptionIds))
             ));
     }
 };
@@ -80,12 +81,12 @@ function createShoppingCartItem(productIds) {
     );
 }
 
-function createOrder(shoppingCart, addresses, paymentOptions) {
+function createOrder(shoppingCart, addressIds, paymentOptionIds) {
     return orderService.createOrder({
-        items: shoppingCart.items,
-        billingAddress: sample(addresses),
-        shippingAddress: sample(addresses),
-        payment: sample(paymentOptions)
+        items: shoppingCart.items.map(item => item._id),
+        billingAddress: sample(addressIds),
+        shippingAddress: sample(addressIds),
+        payment: sample(paymentOptionIds)
     })
         .then(orderId => orderService.updateOrderStatus(
             orderId,

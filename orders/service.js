@@ -1,7 +1,8 @@
 const moment = require('moment');
-const { map, omit } = require('lodash');
+const { omit } = require('lodash');
 const orderStore = require('./store');
 const shoppingCartService = require('../shoppingCart/service');
+const userProfileService = require('../userProfile/service');
 
 module.exports = {
     createOrder,
@@ -11,11 +12,21 @@ module.exports = {
 };
 
 function createOrder(values) {
-    return orderStore.insert(
-        getNewOrder(values)
-    )
-        .then(orderId => shoppingCartService.emptyShoppingCart()
-            .then(() => orderId));
+    return Promise.all([
+        Promise.all(values.items.map(
+            lineItemId => shoppingCartService.getShoppingCartItem(lineItemId)
+        )),
+        userProfileService.getAddress(values.billingAddress),
+        userProfileService.getAddress(values.shippingAddress),
+        userProfileService.getPaymentOption(values.payment)
+    ])
+        .then(([lineItems, billingAddress, shippingAddress, payment]) => {
+            return orderStore.insert(
+                getNewOrder(lineItems, billingAddress, shippingAddress, payment)
+            )
+                .then(orderId => shoppingCartService.emptyShoppingCart()
+                    .then(() => orderId));
+        });
 }
 
 function getOrder(id) {
@@ -35,15 +46,15 @@ function updateOrderStatus(id, status) {
 }
 
 
-function getNewOrder(values) {
+function getNewOrder(lineItems, billingAddress, shippingAddress, payment) {
     return Object.assign(
         {
             date: moment().format(),
             status: 'PaymentDue',
-            items: values.items.map(item => omit(item, ['_id'])),
-            billingAddress: omit(values.billingAddress, ['_id']),
-            shippingAddress: omit(values.shippingAddress, ['_id']),
-            payment: omit(values.payment, ['_id'])
+            items: lineItems.map(item => omit(item, ['_id'])),
+            billingAddress: omit(billingAddress, ['_id']),
+            shippingAddress: omit(shippingAddress, ['_id']),
+            payment: omit(payment, ['_id'])
         }
     );
 }
