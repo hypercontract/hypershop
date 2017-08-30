@@ -19,6 +19,7 @@ router.get(getRootPath(), (request, response) => {
 });
 
 router.post(getRootPath(), (request, response) => {
+    let statusCode = 201;
     let items;
     let billingAddress;
     let shippingAddress;
@@ -45,6 +46,7 @@ router.post(getRootPath(), (request, response) => {
         shippingAddress,
         payment
     })
+        .then(orderId => response.redirect(statusCode, getOrderUri(orderId)));
 });
 
 router.get(getOrderPath(), (request, response) => {
@@ -60,7 +62,7 @@ router.patch(getOrderPath(), (request, response) => {
         request.params.orderId,
         request.body.status
     )
-        .then(() => response.redirect(204, getOrderUri(request.params.orderId)));
+        .then(() => response.redirect(303, getOrderUri(request.params.orderId)));
 });
 
 router.delete(getOrderPath(), (request, response) => {
@@ -68,7 +70,7 @@ router.delete(getOrderPath(), (request, response) => {
         request.params.orderId,
         'Cancelled'
     )
-        .then(() => response.redirect(204, getOrderUri(request.params.orderId)));
+        .then(() => response.redirect(303, getOrderUri(request.params.orderId)));
 });
 
 module.exports = {

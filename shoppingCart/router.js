@@ -26,11 +26,12 @@ router.post(getShoppingCartItemsPath(), (request, response) => {
         product = request.body.product;
     }
 
+    let statusCode = 201;
     shoppingCartService.addShoppingCartItem(
         product,
         request.body.quantity
     )
-        .then(() => response.redirect(201, getRootUri()));
+        .then(() => response.redirect(statusCode, getRootUri()));
 });
 
 router.patch(getShoppingCartItemPath(), (request, response) => {
@@ -38,14 +39,14 @@ router.patch(getShoppingCartItemPath(), (request, response) => {
         request.params.shoppingCartItemId,
         request.body.quantity
     )
-        .then(() => response.redirect(204, getRootUri()));
+        .then(() => response.redirect(303, getRootUri()));
 });
 
 router.delete(getShoppingCartItemPath(), (request, response) => {
     shoppingCartService.deleteShoppingCartItem(
         request.params.shoppingCartItemId
     )
-        .then(() => response.redirect(204, getRootUri()));
+        .then(() => response.redirect(303, getRootUri()));
 });
 
 module.exports = {
