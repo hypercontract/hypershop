@@ -28,7 +28,7 @@ function getRootUri() {
     return getBaseUri() + getRootPath();
 }
 
-function getAddressPath(id) {
+function getAddressPath(id = null) {
     const pathTemplate = getRootPath() + 'addresses/:addressId/';
     
     if (!isNull(id)) {
@@ -38,7 +38,7 @@ function getAddressPath(id) {
     return pathTemplate;
 }
 
-function getAddressUri(id) {
+function getAddressUri(id = null) {
     return getBaseUri() + getAddressPath(id);
 }
 

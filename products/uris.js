@@ -31,7 +31,7 @@ function getRootUriTemplate() {
     return getRootUri() + '{?query}';
 }
 
-function getProductPath(id) {
+function getProductPath(id = null) {
     const pathTemplate = getRootPath() + ':productId/';
     
     if (!isNull(id)) {
