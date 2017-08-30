@@ -2,7 +2,9 @@ const addressStore = require('./addresses/store');
 const paymentOptionStore = require('./paymentOptions/store');
 
 module.exports = {
-    getUserProfile
+    getUserProfile,
+    getAddress,
+    getPaymentOption
 };
 
 function getUserProfile() {
@@ -18,4 +20,12 @@ function getUserProfile() {
                 addresses
             };
         });
+}
+
+function getAddress(id) {
+    return addressStore.findOne(id);
+}
+
+function getPaymentOption(id) {
+    return paymentOptionStore.findOne(id);
 }

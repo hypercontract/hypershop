@@ -4,6 +4,7 @@ const productService = require('../products/service');
 
 module.exports = {
     getShoppingCart,
+    getShoppingCartItem,
     addShoppingCartItem,
     deleteShoppingCartItem,
     emptyShoppingCart,
@@ -18,6 +19,10 @@ function getShoppingCart() {
                 totalPrice: getTotalPrice(shoppingCartItems)
             };
         });
+}
+
+function getShoppingCartItem(id) {
+    return shoppingCartItemStore.findOne(id);
 }
 
 function addShoppingCartItem(productId, quantity) {
