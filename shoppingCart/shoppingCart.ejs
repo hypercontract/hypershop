@@ -1,0 +1,87 @@
+<%- include('../shared/head') %>
+
+<h1 class="mb-5">Shopping Cart</h1>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Item</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <% shoppingCart.items.forEach(function (shoppingCartItem, index) { %>
+        <tr>
+            <td>
+                <a href="<%= links.product[index] %>"><%= shoppingCartItem.name %></a><br />
+                <small><%= shoppingCartItem.description %></small>
+            </td>
+            <td class="text-right"><%= shoppingCartItem.price.toFixed(2) %></td>
+            <td style="width: 15%">
+                <form action="<%= links.updateQuantity[index] %>" method="POST" class="input-group">
+                    <input type="hidden" name="_method" value="PATCH" />
+                    <input type="text" name="quantity" value="<%= shoppingCartItem.quantity %>" class="form-control text-right">
+                    <span class="input-group-btn">
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </span>
+                </form>
+            </td>
+            <td>
+                <form action="<%= links.remove[index] %>" method="POST">
+                    <input type="hidden" name="_method" value="DELETE" />
+                    <button type="submit" class="btn btn-danger">Remove</button>
+                </form>
+            </td>
+        </tr>
+        <% }) %>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="2" class="text-right"><strong><%= shoppingCart.totalPrice.toFixed(2) %></strong></td>
+            <td colspan="2"></td>
+        </tr>
+    </tfoot>
+</table>
+
+<% if (links.placeOrder) { %>
+<form action="<%= links.placeOrder %>" method="POST" class="mt-5 row align-items-end">
+    <% shoppingCart.items.forEach(function (shoppingCartItem, index) { %>
+        <input type="hidden" name="items[]" value="<%= shoppingCartItem._id %>" />
+    <% }) %>
+
+    <h2 class="col-12 h3 mb-4">Place Order</h2>
+
+    <div class="form-group col-4">
+        <label class="form-control-label" for="billingAddress">Billing Address</label>
+        <select class="form-control custom-select" name="billingAddress" id="billingAddress">
+            <% userProfile.addresses.forEach(function (address, index) { %>
+            <option value="<%= address._id %>"<%= (index === 0) ? ' selected' : '' %>><%= address.name %>, <%= address.street %>, <%= address.city %></option>
+            <% }) %>
+        </select>
+    </div>
+    <div class="form-group col-4">
+        <label class="form-control-label" for="shippingAddress">Shipping Address</label>
+        <select class="form-control custom-select" name="shippingAddress" id="shippingAddress">
+            <% userProfile.addresses.forEach(function (address, index) { %>
+            <option value="<%= address._id %>"<%= (index === 1) ? ' selected' : '' %>><%= address.name %>, <%= address.street %>, <%= address.city %></option>
+            <% }) %>
+        </select>
+    </div>
+    <div class="form-group col-3">
+        <label class="form-control-label" for="payment">Payment</label>
+        <select class="form-control custom-select" name="payment" id="payment">
+            <% userProfile.paymentOptions.forEach(function (paymentOption) { %>
+            <option value="<%= paymentOption._id %>"><%= paymentOption.accountOwner %>, <%= paymentOption.iban %></option>
+            <% }) %>
+        </select>
+    </div>
+    
+    <div class="form-group col-1">
+        <button type="submit" class="btn btn-primary">Place Order</button>
+    </div>
+</form>
+<% } %>
+
+<%- include('../shared/foot') %>

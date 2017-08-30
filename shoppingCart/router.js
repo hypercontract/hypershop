@@ -1,7 +1,10 @@
 const express = require('express');
 const config = require('config');
+const { escapeRegExp } = require('lodash');
 const hal = require('./hal');
+const html = require('./html');
 const shoppingCartService = require('./service');
+const userProfileService = require('../userProfile/service');
 const { getBasePath, getRootPath, getRootUri, getShoppingCartItemsPath, getShoppingCartItemPath } = require('./uris');
 const { getProductUri } = require('../products/uris');
 const { sendResponse } = require('../shared/util');
@@ -9,9 +12,13 @@ const { sendResponse } = require('../shared/util');
 const router = express.Router();
 
 router.get(getRootPath(), (request, response) => {
-    shoppingCartService.getShoppingCart()
-        .then(shoppingCart => sendResponse(response, {
+    Promise.all([
+        shoppingCartService.getShoppingCart(),
+        userProfileService.getUserProfile()
+    ])
+        .then(([shoppingCart, userProfile]) => sendResponse(response, {
             'json': shoppingCart,
+            'html': html.fromShoppingCart(shoppingCart, userProfile),
             [config.app.mediaType]: hal.fromShoppingCart(shoppingCart)
         }));
 });
@@ -25,7 +32,7 @@ router.post(getShoppingCartItemsPath(), (request, response) => {
     } else {
         product = request.body.product;
     }
-
+    
     let statusCode = 201;
     shoppingCartService.addShoppingCartItem(
         product,

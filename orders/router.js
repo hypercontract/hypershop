@@ -2,6 +2,7 @@ const express = require('express');
 const config = require('config');
 const { escapeRegExp } = require('lodash');
 const hal = require('./hal');
+const html = require('./html');
 const orderService = require('./service');
 const { getBasePath, getRootPath, getOrderPath, getOrderUri } = require('./uris');
 const shoppingCartUris = require('../shoppingCart/uris');
@@ -14,6 +15,7 @@ router.get(getRootPath(), (request, response) => {
     orderService.getOrders()
         .then(orders => sendResponse(response, {
             'json': orders,
+            'html': html.fromOrders(orders),
             [config.app.mediaType]: hal.fromOrders(orders)
         }));
 });
@@ -53,6 +55,7 @@ router.get(getOrderPath(), (request, response) => {
     orderService.getOrder(request.params.orderId)
         .then(order => sendResponse(response, {
             'json': order,
+            'html': html.fromOrder(order),
             [config.app.mediaType]: hal.fromOrder(order)
         }));
 });

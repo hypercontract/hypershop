@@ -1,0 +1,31 @@
+<%- include('../shared/head') %>
+
+<h1 class="mb-5"><%= product.name %></h1>
+
+<div class="row align-items-start">
+
+    <div class="col-4">
+        <figure class="figure">
+            <img src="<%= product.image %>" class="figure-img img-fluid rounded" alt="Product Image">
+        </figure>
+    </div>
+
+    <div class="col-8 row align-items-center">
+        <p class="col-8 mb-0"><strong>Price: <%= product.price %></strong></p>
+
+        <form action="<%= links.addToShoppingCart %>" method="POST" class="form-inline col-4">
+            <input type="hidden" name="product" value="<%= product._id %>" />
+
+            <div class="input-group float-right">
+                <input type="text" name="quantity" value="1" class="form-control text-right">
+                <span class="input-group-btn">
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </span>
+            </div>
+        </form>
+
+        <p class="col mt-5"><%= product.description %></p>
+    </div>
+</div>
+
+<%- include('../shared/foot') %>

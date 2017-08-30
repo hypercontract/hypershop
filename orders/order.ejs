@@ -1,0 +1,65 @@
+<%- include('../shared/head') %>
+
+<h1 class="mb-5"><%= new Date(order.date).toLocaleDateString() %> <%= new Date(order.date).toLocaleTimeString() %></h1>
+
+<div class="row align-items-center mb-5">
+    <p class="col-6"><span class="badge badge-secondary"><%= order.status %></span></p>
+
+    <% if (links.cancel) { %>
+    <form action="<%= links.cancel %>" method="POST" class="col-6 text-right">
+        <input type="hidden" name="_method" value="DELETE" />
+        <button type="submit" class="btn btn-danger btn-small">Cancel</button>
+    </form>
+    <% } %>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Item</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <% order.items.forEach(function (lineItem, index) { %>
+        <tr>
+            <td>
+                <%= lineItem.name %><br />
+                <small><%= lineItem.description %></small>
+            </td>
+            <td class="text-right"><%= lineItem.price.toFixed(2) %></td>
+            <td class="text-right"><%= lineItem.quantity %></td>
+        </tr>
+        <% }) %>
+    </tbody>
+</table>
+
+<div class="col-12 mt-5 row">
+    <address class="col-3">
+        <h3 class="h6">Billing Address</h3>
+        <%= order.billingAddress.name %><br />
+        <%= order.billingAddress.street %><br />
+        <%= order.billingAddress.zipCode %>
+        <%= order.billingAddress.city %><br />
+        <%= order.billingAddress.country %>
+    </address>
+    <address class="col-3">
+        <h3 class="h6">Shipping Address</h3>
+        <%= order.shippingAddress.name %><br />
+        <%= order.shippingAddress.street %><br />
+        <%= order.shippingAddress.zipCode %>
+        <%= order.shippingAddress.city %><br />
+        <%= order.shippingAddress.country %>
+    </address>
+    <div class="payment col-3">
+        <h3 class="h6">Payment</h3>
+        <%= order.payment.accountOwner %><br />
+        IBAN: <%= order.payment.iban %><br />
+        BIC: <%= order.payment.bic %>
+    </div>
+</div>
+
+
+<%- include('../shared/foot') %>
