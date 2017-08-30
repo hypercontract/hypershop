@@ -25,8 +25,7 @@ router.get(getRootPath(), (request, response) => {
 
 router.post(getShoppingCartItemsPath(), (request, response) => {
     let product;
-
-    // TODO: extract into separate method
+    // TODO: use mime type matcher
     if (request.get('Content-Type') === config.app.mediaType) {
         product = request.body.product.replace(new RegExp(getProductUri('(.*)')), '$1');
     } else {
@@ -34,6 +33,11 @@ router.post(getShoppingCartItemsPath(), (request, response) => {
     }
     
     let statusCode = 201;
+    // TODO: use mime type matcher
+    if (request.get('Accept').match(escapeRegExp('text/html'))) {
+        statusCode = 303;
+    }
+
     shoppingCartService.addShoppingCartItem(
         product,
         request.body.quantity

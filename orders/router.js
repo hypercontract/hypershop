@@ -22,6 +22,11 @@ router.get(getRootPath(), (request, response) => {
 
 router.post(getRootPath(), (request, response) => {
     let statusCode = 201;
+    // TODO: use mime type matcher
+    if (request.get('Accept').match(escapeRegExp('text/html'))) {
+        statusCode = 303;
+    }
+
     let items;
     let billingAddress;
     let shippingAddress;
