@@ -2,7 +2,7 @@ const { Resource } = require('hal');
 const { map, omit } = require('lodash');
 const { getRootUri, getProductUri } = require('./uris');
 const shoppingCartUris = require('../shoppingCart/uris');
-const { cfha } = require('../shared/namespaces');
+const { shop } = require('../shared/namespaces');
 
 module.exports = {
     fromProducts,
@@ -15,7 +15,7 @@ function fromProducts(products) {
         getRootUri()
     )
         .embed(
-            cfha('products'),
+            shop('products'),
             map(products, fromProduct)   
         );
 }
@@ -25,6 +25,6 @@ function fromProduct(product) {
         omit(product, ['_id', 'image']),
         getProductUri(product._id)
     )
-        .link(cfha('add-to-shopping-cart'), shoppingCartUris.getShoppingCartItemsUri())
-        .link(cfha('image'), shoppingCartUris.getShoppingCartItemsUri());
+        .link(shop('addToShoppingCart'), shoppingCartUris.getShoppingCartItemsUri())
+        .link(shop('image'), product.image);
 }

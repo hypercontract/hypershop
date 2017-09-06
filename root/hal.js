@@ -1,6 +1,6 @@
 const { Resource } = require('hal');
 const { getRootUri } = require('./uris');
-const { cfha } = require('../shared/namespaces');
+const { shop } = require('../shared/namespaces');
 const productUris = require('../products/uris');
 const shoppingCartUris = require('../shoppingCart/uris');
 const orderUris = require('../orders/uris');
@@ -12,11 +12,11 @@ module.exports = {
 
 function fromApiRoot(apiRoot) {
     return Resource(apiRoot, getRootUri())
-        .link(cfha('search-catalog'), {
+        .link(shop('searchCatalog'), {
             href: productUris.getRootUriTemplate(),
             templated: true
         })
-        .link(cfha('shopping-cart'), shoppingCartUris.getRootUri())
-        .link(cfha('orders'), orderUris.getRootUri())
-        .link(cfha('user-profile'), userProfileUris.getRootUri());
+        .link(shop('shoppingCart'), shoppingCartUris.getRootUri())
+        .link(shop('orders'), orderUris.getRootUri())
+        .link(shop('userProfile'), userProfileUris.getRootUri());
 }

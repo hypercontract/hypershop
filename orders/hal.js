@@ -1,7 +1,7 @@
 const { Resource } = require('hal');
 const { map, omit } = require('lodash');
 const { getRootUri, getOrderUri } = require('./uris');
-const { cfha } = require('../shared/namespaces');
+const {shop } = require('../shared/namespaces');
 
 module.exports = {
     fromOrders,
@@ -14,7 +14,7 @@ function fromOrders(orders) {
         getRootUri()
     )
         .embed(
-            cfha('orders'),
+            shop('orders'),
             map(orders, fromOrder)
         );
 }
@@ -26,7 +26,7 @@ function fromOrder(order) {
     );
 
     if (['PaymentDue', 'Processing'].includes(order.status)) {
-        resource.link(cfha('cancel'), getOrderUri(order._id));
+        resource.link(shop('cancel'), getOrderUri(order._id));
     }
     
     return resource;

@@ -46,6 +46,7 @@ function updateOrderStatus(id, status) {
 }
 
 
+
 function getNewOrder(lineItems, billingAddress, shippingAddress, payment) {
     return Object.assign(
         {

@@ -1,7 +1,7 @@
 const { Resource } = require('hal');
 const { map, omit } = require('lodash');
 const { getRootUri, getAddressUri, getPaymentOptionUri } = require('./uris');
-const { cfha } = require('../shared/namespaces');
+const { shop } = require('../shared/namespaces');
 
 module.exports = {
     fromUserProfile,
@@ -15,11 +15,11 @@ function fromUserProfile(userProfile) {
         getRootUri()
     )
         .embed(
-            cfha('addresses'),
+            shop('addresses'),
             map(userProfile.addresses, fromAddress)
         )
         .embed(
-            cfha('payment-options'),
+            shop('paymentOptions'),
             map(userProfile.paymentOptions, fromPaymentOption)
         );
 }

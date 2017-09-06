@@ -1,4 +1,9 @@
 {
+    "app": {
+        "version": "1.0",
+        "namespace": "http://shop.luchs.org/profile/",
+        "mediaType": "application/hal+json;profile=\"http://shop.luchs.org/profile/\""
+    },
     "http": {
         "hostname": "shop.luchs.org"
     }

@@ -3,7 +3,7 @@ const { map, omit } = require('lodash');
 const { getRootUri, getShoppingCartItemUri } = require('./uris');
 const orderUris = require('../orders/uris');
 const productUris = require('../products/uris');
-const { cfha } = require('../shared/namespaces');
+const { shop } = require('../shared/namespaces');
 
 module.exports = {
     fromShoppingCart,
@@ -16,12 +16,12 @@ function fromShoppingCart(shoppingCart) {
         getRootUri()
     )
         .embed(
-            cfha('shopping-cart-items'),
+            shop('shoppingCartItems'),
             map(shoppingCart.items, fromShoppingCartItem)
         );
 
     if (shoppingCart.items.length > 0) {
-        resource.link(cfha('place-order'), orderUris.getRootUri());
+        resource.link(shop('placeOrder'), orderUris.getRootUri());
     }
 
     return resource;
@@ -32,7 +32,7 @@ function fromShoppingCartItem(shoppingCartItem) {
         omit(shoppingCartItem, ['_id', 'product']),
         getShoppingCartItemUri(shoppingCartItem._id)
     )
-        .link(cfha('product'), productUris.getProductUri(shoppingCartItem.product))
-        .link(cfha('update-quantity'), getShoppingCartItemUri(shoppingCartItem._id))
-        .link(cfha('remove'), getShoppingCartItemUri(shoppingCartItem._id));
+        .link(shop('product'), productUris.getProductUri(shoppingCartItem.product))
+        .link(shop('updateQuantity'), getShoppingCartItemUri(shoppingCartItem._id))
+        .link(shop('remove'), getShoppingCartItemUri(shoppingCartItem._id));
 }
