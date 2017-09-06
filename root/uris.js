@@ -10,7 +10,8 @@ function getBaseUri() {
     const scheme = config.get('http.scheme');
     const hostname = config.get('http.hostname');
     const port = config.get('http.port');
-    return `${scheme}://${hostname}:${port}`;
+    const uri = `${scheme}://${hostname}`;
+    return omitPort(scheme, port) ? uri : `${uri}:${port}`;
 }
 
 function getRootPath() {
@@ -19,4 +20,9 @@ function getRootPath() {
 
 function getRootUri() {
     return getBaseUri() + getRootPath();
+}
+
+function omitPort(scheme, port) {
+    return (scheme === 'http' && port === 80) ||
+        (scheme === 'https' && port === 443);
 }
