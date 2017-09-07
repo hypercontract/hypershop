@@ -36,6 +36,23 @@
         ]
     },
     {
+        "@id": "http://localhost/",
+        "@type": [
+            "http://cfha.luchs.org/#EntryPoint"
+        ],
+        "http://cfha.luchs.org/#defaultMediaType": [
+            {
+                "@value": "application/hal+json"
+            },
+            {
+                "@value": "application/json"
+            },
+            {
+                "@value": "text/html"
+            }
+        ]
+    },
+    {
         "@id": "http://localhost/profile/AdditionToShoppingCart",
         "@type": [
             "http://www.w3.org/2002/07/owl#Class"

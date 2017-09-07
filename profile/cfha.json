@@ -1,97 +1,165 @@
 [
-  {
-    "@id": "_:genid9",
-    "@type": [
-      "http://www.w3.org/2000/01/rdf-schema#Datatype"
-    ],
-    "http://www.w3.org/2002/07/owl#oneOf": [
-      {
-        "@list": [
-          {
-            "@value": "DELETE"
-          },
-          {
-            "@value": "GET"
-          },
-          {
-            "@value": "HEAD"
-          },
-          {
-            "@value": "OPTIONS"
-          },
-          {
-            "@value": "PATCH"
-          },
-          {
-            "@value": "POST"
-          },
-          {
-            "@value": "PUT"
-          }
+    {
+        "@id": "_:genid9",
+        "@type": [
+            "http://www.w3.org/2000/01/rdf-schema#Datatype"
+        ],
+        "http://www.w3.org/2002/07/owl#oneOf": [
+            {
+                "@list": [
+                    {
+                        "@value": "DELETE"
+                    },
+                    {
+                        "@value": "GET"
+                    },
+                    {
+                        "@value": "HEAD"
+                    },
+                    {
+                        "@value": "OPTIONS"
+                    },
+                    {
+                        "@value": "PATCH"
+                    },
+                    {
+                        "@value": "POST"
+                    },
+                    {
+                        "@value": "PUT"
+                    }
+                ]
+            }
         ]
-      }
-    ]
-  },
-  {
-    "@id": "http://cfha.luchs.org/#",
-    "@type": [
-      "http://www.w3.org/2002/07/owl#Ontology"
-    ]
-  },
-  {
-    "@id": "http://cfha.luchs.org/#Operation",
-    "@type": [
-      "http://www.w3.org/2002/07/owl#Class"
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
-      {
-        "@id": "http://www.w3.org/2002/07/owl#ObjectProperty"
-      }
-    ]
-  },
-  {
-    "@id": "http://cfha.luchs.org/#expectedType",
-    "@type": [
-      "http://www.w3.org/2002/07/owl#ObjectProperty"
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#domain": [
-      {
-        "@id": "http://cfha.luchs.org/#Operation"
-      }
-    ]
-  },
-  {
-    "@id": "http://cfha.luchs.org/#method",
-    "@type": [
-      "http://www.w3.org/2000/01/rdf-schema#Datatype",
-      "http://www.w3.org/2002/07/owl#DatatypeProperty",
-      "http://www.w3.org/2002/07/owl#FunctionalProperty"
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#domain": [
-      {
-        "@id": "http://cfha.luchs.org/#Operation"
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#range": [
-      {
-        "@id": "http://cfha.luchs.org/#method"
-      }
-    ],
-    "http://www.w3.org/2002/07/owl#equivalentClass": [
-      {
-        "@id": "_:genid9"
-      }
-    ]
-  },
-  {
-    "@id": "http://cfha.luchs.org/#returnedType",
-    "@type": [
-      "http://www.w3.org/2002/07/owl#ObjectProperty"
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#domain": [
-      {
-        "@id": "http://cfha.luchs.org/#Operation"
-      }
-    ]
-  }
+    },
+    {
+        "@id": "http://cfha.luchs.org/#",
+        "@type": [
+            "http://www.w3.org/2002/07/owl#Ontology"
+        ]
+    },
+    {
+        "@id": "http://cfha.luchs.org/#EntryPoint",
+        "@type": [
+            "http://www.w3.org/2002/07/owl#Class"
+        ]
+    },
+    {
+        "@id": "http://cfha.luchs.org/#Operation",
+        "@type": [
+            "http://www.w3.org/2002/07/owl#Class"
+        ],
+        "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
+            {
+                "@id": "http://www.w3.org/2002/07/owl#ObjectProperty"
+            }
+        ]
+    },
+    {
+        "@id": "http://cfha.luchs.org/#expectedType",
+        "@type": [
+            "http://www.w3.org/2002/07/owl#ObjectProperty"
+        ],
+        "http://www.w3.org/2000/01/rdf-schema#domain": [
+            {
+                "@id": "http://cfha.luchs.org/#Operation"
+            }
+        ]
+    },
+    {
+        "@id": "http://cfha.luchs.org/#method",
+        "@type": [
+            "http://www.w3.org/2000/01/rdf-schema#Datatype",
+            "http://www.w3.org/2002/07/owl#DatatypeProperty",
+            "http://www.w3.org/2002/07/owl#FunctionalProperty"
+        ],
+        "http://www.w3.org/2000/01/rdf-schema#domain": [
+            {
+                "@id": "http://cfha.luchs.org/#Operation"
+            }
+        ],
+        "http://www.w3.org/2000/01/rdf-schema#range": [
+            {
+                "@id": "http://cfha.luchs.org/#method"
+            }
+        ],
+        "http://www.w3.org/2002/07/owl#equivalentClass": [
+            {
+                "@id": "_:genid9"
+            }
+        ]
+    },
+    {
+        "@id": "http://cfha.luchs.org/#returnedType",
+        "@type": [
+            "http://www.w3.org/2002/07/owl#ObjectProperty"
+        ],
+        "http://www.w3.org/2000/01/rdf-schema#domain": [
+            {
+                "@id": "http://cfha.luchs.org/#Operation"
+            }
+        ]
+    },
+    {
+        "@id": "http://cfha.luchs.org/#defaultMediaType",
+        "@type": [
+            "http://www.w3.org/2000/01/rdf-schema#Datatype",
+            "http://www.w3.org/2002/07/owl#DatatypeProperty"
+        ],
+        "http://www.w3.org/2000/01/rdf-schema#domain": [
+            {
+                "@id": "http://cfha.luchs.org/#EntryPoint"
+            }
+        ],
+        "http://www.w3.org/2000/01/rdf-schema#range": [
+            {
+                "@id": "http://cfha.luchs.org/#mediaType"
+            }
+        ]
+    },
+    {
+        "@id": "http://cfha.luchs.org/#returnedMediaType",
+        "@type": [
+            "http://www.w3.org/2000/01/rdf-schema#Datatype",
+            "http://www.w3.org/2002/07/owl#DatatypeProperty"
+        ],
+        "http://www.w3.org/2000/01/rdf-schema#domain": [
+            {
+                "@id": "http://cfha.luchs.org/#Operation"
+            }
+        ],
+        "http://www.w3.org/2000/01/rdf-schema#range": [
+            {
+                "@id": "http://cfha.luchs.org/#mediaType"
+            }
+        ]
+    },
+    {
+        "@id": "http://cfha.luchs.org/#expectedMediaType",
+        "@type": [
+            "http://www.w3.org/2000/01/rdf-schema#Datatype",
+            "http://www.w3.org/2002/07/owl#DatatypeProperty"
+        ],
+        "http://www.w3.org/2000/01/rdf-schema#domain": [
+            {
+                "@id": "http://cfha.luchs.org/#Operation"
+            }
+        ],
+        "http://www.w3.org/2000/01/rdf-schema#range": [
+            {
+                "@id": "http://cfha.luchs.org/#mediaType"
+            }
+        ]
+    },
+    {
+        "@id": "http://cfha.luchs.org/#mediaType",
+        "@type": [
+            "http://www.w3.org/2000/01/rdf-schema#Datatype"
+        ],
+        "http://www.w3.org/2002/07/owl#equivalentClass": [
+            {
+                "@id": "http://www.w3.org/2001/XMLSchema#string"
+            }
+        ]
+    }
 ]
