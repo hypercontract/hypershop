@@ -30,7 +30,7 @@ module.exports = {
             paymentOptionStore.bulkInsert(paymentOptions)
         ])
             .then(([productIds, addressIds, paymentOptionIds]) => repeatInSequence(
-                5,
+                20,
                 () => createShoppingCart(productIds)
                     .then(shoppingCart => createOrder(shoppingCart, addressIds, paymentOptionIds))
             ));
