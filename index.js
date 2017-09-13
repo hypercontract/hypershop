@@ -1,5 +1,6 @@
 const express = require('express');
 const morgan = require('morgan');
+const cors = require('cors');
 const config = require('config');
 const methodOverride = require('method-override');
 const bodyParser = require('body-parser');
@@ -21,7 +22,7 @@ app.locals = {
 };
 
 app.use(morgan('combined'));
-
+app.use(cors());
 app.use(bodyParser.urlencoded({
     extended: true
 })); 
