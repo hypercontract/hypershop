@@ -1,10 +1,8 @@
 {
-	"variables": [],
 	"info": {
+		"_postman_id": "a640ac8b-e626-48de-8af6-8a4299fb0371",
 		"name": "CFHA REST API",
-		"_postman_id": "aaa36fa3-1976-36cd-d14a-d683eb7f252d",
-		"description": "",
-		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
@@ -13,6 +11,7 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "aebb6592-c851-4129-8e8a-7b7c0051c400",
 						"type": "text/javascript",
 						"exec": [
 							"var defaultContentType = postman.getEnvironmentVariable('defaultContentType');",
@@ -28,13 +27,14 @@
 				{
 					"listen": "prerequest",
 					"script": {
+						"id": "73367c1c-dba2-4fdf-b963-7e0e8a1f89c6",
 						"type": "text/javascript",
 						"exec": [
 							"postman.clearEnvironmentVariables();",
 							"",
 							"postman.setEnvironmentVariable('defaultAccept', 'application/json');",
 							"postman.setEnvironmentVariable('defaultContentType', 'application/json');",
-							"postman.setEnvironmentVariable('baseUrl', 'http://localhost:3000/');",
+							"postman.setEnvironmentVariable('baseUrl', 'http://localhost/');",
 							"",
 							"postman.setEnvironmentVariable('productsSchema', JSON.stringify({",
 							"    type: 'array',",
@@ -340,17 +340,23 @@
 				}
 			],
 			"request": {
-				"url": "{{baseUrl}}",
 				"method": "GET",
 				"header": [
 					{
 						"key": "Accept",
-						"value": "{{defaultAccept}}",
-						"description": ""
+						"value": "{{defaultAccept}}"
 					}
 				],
-				"body": {},
-				"description": ""
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{baseUrl}}",
+					"host": [
+						"{{baseUrl}}"
+					]
+				}
 			},
 			"response": []
 		},
@@ -376,17 +382,26 @@
 				}
 			],
 			"request": {
-				"url": "{{baseUrl}}shoppingCart/",
 				"method": "GET",
 				"header": [
 					{
 						"key": "Accept",
-						"value": "{{defaultAccept}}",
-						"description": ""
+						"value": "{{defaultAccept}}"
 					}
 				],
-				"body": {},
-				"description": ""
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{baseUrl}}shoppingCart/",
+					"host": [
+						"{{baseUrl}}shoppingCart"
+					],
+					"path": [
+						""
+					]
+				}
 			},
 			"response": []
 		},
@@ -415,6 +430,17 @@
 				}
 			],
 			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "{{defaultAccept}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
 					"raw": "{{baseUrl}}products/?query=nostrum",
 					"host": [
@@ -426,23 +452,10 @@
 					"query": [
 						{
 							"key": "query",
-							"value": "nostrum",
-							"equals": true,
-							"description": ""
+							"value": "nostrum"
 						}
-					],
-					"variable": []
-				},
-				"method": "GET",
-				"header": [
-					{
-						"key": "Accept",
-						"value": "{{defaultAccept}}",
-						"description": ""
-					}
-				],
-				"body": {},
-				"description": ""
+					]
+				}
 			},
 			"response": []
 		},
@@ -467,25 +480,31 @@
 				}
 			],
 			"request": {
-				"url": "{{baseUrl}}shoppingCart/items/",
 				"method": "POST",
 				"header": [
 					{
 						"key": "Content-Type",
-						"value": "{{defaultContentType}}",
-						"description": ""
+						"value": "{{defaultContentType}}"
 					},
 					{
 						"key": "Accept",
-						"value": "{{defaultAccept}}",
-						"description": ""
+						"value": "{{defaultAccept}}"
 					}
 				],
 				"body": {
 					"mode": "raw",
 					"raw": "{\n\t\"product\": \"{{productId1}}\",\n\t\"quantity\": 1\n}"
 				},
-				"description": ""
+				"url": {
+					"raw": "{{baseUrl}}shoppingCart/items/",
+					"host": [
+						"{{baseUrl}}shoppingCart"
+					],
+					"path": [
+						"items",
+						""
+					]
+				}
 			},
 			"response": []
 		},
@@ -510,25 +529,31 @@
 				}
 			],
 			"request": {
-				"url": "{{baseUrl}}shoppingCart/items/",
 				"method": "POST",
 				"header": [
 					{
 						"key": "Content-Type",
-						"value": "{{defaultContentType}}",
-						"description": ""
+						"value": "{{defaultContentType}}"
 					},
 					{
 						"key": "Accept",
-						"value": "{{defaultAccept}}",
-						"description": ""
+						"value": "{{defaultAccept}}"
 					}
 				],
 				"body": {
 					"mode": "raw",
 					"raw": "{\n\t\"product\": \"{{productId2}}\",\n\t\"quantity\": 1\n}"
 				},
-				"description": ""
+				"url": {
+					"raw": "{{baseUrl}}shoppingCart/items/",
+					"host": [
+						"{{baseUrl}}shoppingCart"
+					],
+					"path": [
+						"items",
+						""
+					]
+				}
 			},
 			"response": []
 		},
@@ -557,17 +582,26 @@
 				}
 			],
 			"request": {
-				"url": "{{baseUrl}}shoppingCart/",
 				"method": "GET",
 				"header": [
 					{
 						"key": "Accept",
-						"value": "{{defaultAccept}}",
-						"description": ""
+						"value": "{{defaultAccept}}"
 					}
 				],
-				"body": {},
-				"description": ""
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{baseUrl}}shoppingCart/",
+					"host": [
+						"{{baseUrl}}shoppingCart"
+					],
+					"path": [
+						""
+					]
+				}
 			},
 			"response": []
 		},
@@ -594,23 +628,31 @@
 				}
 			],
 			"request": {
-				"url": "{{baseUrl}}shoppingCart/items/{{shoppingCartItemId1}}/",
 				"method": "PATCH",
 				"header": [
 					{
 						"key": "Accept",
-						"value": "{{defaultAccept}}",
-						"description": ""
+						"value": "{{defaultAccept}}"
 					},
 					{
 						"key": "Content-Type",
-						"value": "{{defaultContentType}}",
-						"description": ""
+						"value": "{{defaultContentType}}"
 					}
 				],
 				"body": {
 					"mode": "raw",
 					"raw": "{\n\t\"quantity\": 2\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}shoppingCart/items/{{shoppingCartItemId1}}/",
+					"host": [
+						"{{baseUrl}}shoppingCart"
+					],
+					"path": [
+						"items",
+						"{{shoppingCartItemId1}}",
+						""
+					]
 				},
 				"description": "\t"
 			},
@@ -639,18 +681,27 @@
 				}
 			],
 			"request": {
-				"url": "{{baseUrl}}shoppingCart/items/{{shoppingCartItemId2}}/",
 				"method": "DELETE",
 				"header": [
 					{
 						"key": "Accept",
-						"value": "{{defaultAccept}}",
-						"description": ""
+						"value": "{{defaultAccept}}"
 					}
 				],
 				"body": {
 					"mode": "raw",
 					"raw": "\n"
+				},
+				"url": {
+					"raw": "{{baseUrl}}shoppingCart/items/{{shoppingCartItemId2}}/",
+					"host": [
+						"{{baseUrl}}shoppingCart"
+					],
+					"path": [
+						"items",
+						"{{shoppingCartItemId2}}",
+						""
+					]
 				},
 				"description": "\t"
 			},
@@ -682,17 +733,26 @@
 				}
 			],
 			"request": {
-				"url": "{{baseUrl}}shoppingCart/",
 				"method": "GET",
 				"header": [
 					{
 						"key": "Accept",
-						"value": "{{defaultAccept}}",
-						"description": ""
+						"value": "{{defaultAccept}}"
 					}
 				],
-				"body": {},
-				"description": ""
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{baseUrl}}shoppingCart/",
+					"host": [
+						"{{baseUrl}}shoppingCart"
+					],
+					"path": [
+						""
+					]
+				}
 			},
 			"response": []
 		},
@@ -723,17 +783,26 @@
 				}
 			],
 			"request": {
-				"url": "{{baseUrl}}userProfile/",
 				"method": "GET",
 				"header": [
 					{
 						"key": "Accept",
-						"value": "{{defaultAccept}}",
-						"description": ""
+						"value": "{{defaultAccept}}"
 					}
 				],
-				"body": {},
-				"description": ""
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{baseUrl}}userProfile/",
+					"host": [
+						"{{baseUrl}}userProfile"
+					],
+					"path": [
+						""
+					]
+				}
 			},
 			"response": []
 		},
@@ -758,25 +827,30 @@
 				}
 			],
 			"request": {
-				"url": "{{baseUrl}}orders/",
 				"method": "POST",
 				"header": [
 					{
 						"key": "Accept",
-						"value": "{{defaultAccept}}",
-						"description": ""
+						"value": "{{defaultAccept}}"
 					},
 					{
 						"key": "Content-Type",
-						"value": "{{defaultContentType}}",
-						"description": ""
+						"value": "{{defaultContentType}}"
 					}
 				],
 				"body": {
 					"mode": "raw",
 					"raw": "{\n\t\"items\": {{lineItemIds}},\n\t\"billingAddress\": \"{{billingAddressId}}\",\n\t\"shippingAddress\": \"{{shippingAddressId}}\",\n\t\"payment\": \"{{paymentId}}\"\n}"
 				},
-				"description": ""
+				"url": {
+					"raw": "{{baseUrl}}orders/",
+					"host": [
+						"{{baseUrl}}orders"
+					],
+					"path": [
+						""
+					]
+				}
 			},
 			"response": []
 		},
@@ -803,20 +877,23 @@
 				}
 			],
 			"request": {
-				"url": "{{orderUrl}}",
 				"method": "GET",
 				"header": [
 					{
 						"key": "Accept",
-						"value": "{{defaultAccept}}",
-						"description": ""
+						"value": "{{defaultAccept}}"
 					}
 				],
 				"body": {
 					"mode": "raw",
 					"raw": "{\n\t\"items\": {{lineItems}},\n\t\"billingAddress\": {{billingAddress}},\n\t\"shippingAddress\": {{shippingAddress}},\n\t\"payment\": {{payment}}\n}"
 				},
-				"description": ""
+				"url": {
+					"raw": "{{orderUrl}}",
+					"host": [
+						"{{orderUrl}}"
+					]
+				}
 			},
 			"response": []
 		},
@@ -843,25 +920,27 @@
 				}
 			],
 			"request": {
-				"url": "{{orderUrl}}",
 				"method": "PATCH",
 				"header": [
 					{
 						"key": "Accept",
-						"value": "{{defaultAccept}}",
-						"description": ""
+						"value": "{{defaultAccept}}"
 					},
 					{
 						"key": "Content-Type",
-						"value": "{{defaultContentType}}",
-						"description": ""
+						"value": "{{defaultContentType}}"
 					}
 				],
 				"body": {
 					"mode": "raw",
 					"raw": "{\n\t\"status\": \"Cancelled\"\n}"
 				},
-				"description": ""
+				"url": {
+					"raw": "{{orderUrl}}",
+					"host": [
+						"{{orderUrl}}"
+					]
+				}
 			},
 			"response": []
 		},
@@ -887,20 +966,23 @@
 				}
 			],
 			"request": {
-				"url": "{{orderUrl}}",
 				"method": "GET",
 				"header": [
 					{
 						"key": "Accept",
-						"value": "{{defaultAccept}}",
-						"description": ""
+						"value": "{{defaultAccept}}"
 					}
 				],
 				"body": {
 					"mode": "raw",
 					"raw": "{\n\t\"items\": {{lineItems}},\n\t\"billingAddress\": {{billingAddress}},\n\t\"shippingAddress\": {{shippingAddress}},\n\t\"payment\": {{payment}}\n}"
 				},
-				"description": ""
+				"url": {
+					"raw": "{{orderUrl}}",
+					"host": [
+						"{{orderUrl}}"
+					]
+				}
 			},
 			"response": []
 		},
@@ -926,17 +1008,26 @@
 				}
 			],
 			"request": {
-				"url": "{{baseUrl}}orders/",
 				"method": "GET",
 				"header": [
 					{
 						"key": "Accept",
-						"value": "{{defaultAccept}}",
-						"description": ""
+						"value": "{{defaultAccept}}"
 					}
 				],
-				"body": {},
-				"description": ""
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{baseUrl}}orders/",
+					"host": [
+						"{{baseUrl}}orders"
+					],
+					"path": [
+						""
+					]
+				}
 			},
 			"response": []
 		}

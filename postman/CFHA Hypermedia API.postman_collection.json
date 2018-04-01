@@ -1,10 +1,8 @@
 {
-	"variables": [],
 	"info": {
+		"_postman_id": "e02e9f61-310f-4965-9034-c845d7a76d2a",
 		"name": "CFHA Hypermedia API",
-		"_postman_id": "da81f593-af18-4245-18fd-c2afab3d39ef",
-		"description": "",
-		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
@@ -13,6 +11,7 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "cd3c0a9a-6024-41ee-aed6-bce0170f2ff0",
 						"type": "text/javascript",
 						"exec": [
 							"var defaultContentType = postman.getEnvironmentVariable('defaultContentType');",
@@ -22,10 +21,10 @@
 							"var apiRoot = JSON.parse(responseBody);",
 							"",
 							"var selfLink = apiRoot._links.self.href;",
-							"var searchCatalogLink = apiRoot._links[nsUri + 'search-catalog'].href;",
-							"var shoppingCartLink = apiRoot._links[nsUri + 'shopping-cart'].href;",
+							"var searchCatalogLink = apiRoot._links[nsUri + 'searchCatalog'].href;",
+							"var shoppingCartLink = apiRoot._links[nsUri + 'shoppingCart'].href;",
 							"var ordersLink = apiRoot._links[nsUri + 'orders'].href;",
-							"var userProfileLink = apiRoot._links[nsUri + 'user-profile'].href;",
+							"var userProfileLink = apiRoot._links[nsUri + 'userProfile'].href;",
 							"",
 							"tests['status code is 200 OK'] = responseCode.code === 200;",
 							"tests['Content-Type header is ' + defaultContentType] = postman.getResponseHeader('Content-Type').match(defaultContentTypeRegExp);",
@@ -48,11 +47,12 @@
 				{
 					"listen": "prerequest",
 					"script": {
+						"id": "65e5da8e-efd0-4ab9-9ffa-a8454ba36946",
 						"type": "text/javascript",
 						"exec": [
 							"postman.clearEnvironmentVariables();",
 							"",
-							"var nsUri = 'http://cfha.luchs.org/';",
+							"var nsUri = 'http://localhost/';",
 							"var mediaType = 'application/hal+json;profile=\"' + nsUri + 'profile\"';",
 							"",
 							"var mediaTypeRegExp = _.escapeRegExp(mediaType).split(';').join('(.*)');",
@@ -60,7 +60,7 @@
 							"postman.setEnvironmentVariable('defaultAccept', mediaType);",
 							"postman.setEnvironmentVariable('defaultContentType', mediaType);",
 							"postman.setEnvironmentVariable('defaultContentTypeRegExp', mediaTypeRegExp);",
-							"postman.setEnvironmentVariable('baseUrl', 'http://localhost:3000/');",
+							"postman.setEnvironmentVariable('baseUrl', 'http://localhost/');",
 							"postman.setEnvironmentVariable('nsUri', nsUri);",
 							"",
 							"var linksSchema = {",
@@ -135,7 +135,7 @@
 							"        _embedded: {",
 							"            type: 'object',",
 							"            properties: {",
-							"                [nsUri + 'shopping-cart-items']: {",
+							"                [nsUri + 'shoppingCartItems']: {",
 							"                    type: 'array',",
 							"                    items: {",
 							"                        type: 'object',",
@@ -167,7 +167,7 @@
 							"            },",
 							"            additionalProperties: false,",
 							"            required: [",
-							"                nsUri + 'shopping-cart-items'",
+							"                nsUri + 'shoppingCartItems'",
 							"            ]",
 							"        },",
 							"        _links: linksSchema",
@@ -186,7 +186,7 @@
 							"        _embedded: {",
 							"            type: 'object',",
 							"            properties: {",
-							"                [nsUri + 'payment-options']: {",
+							"                [nsUri + 'paymentOptions']: {",
 							"                    type: 'array',",
 							"                    items: {",
 							"                        type: 'object',",
@@ -247,7 +247,7 @@
 							"            },",
 							"            additionalProperties: false,",
 							"            required: [",
-							"                nsUri + 'payment-options',",
+							"                nsUri + 'paymentOptions',",
 							"                nsUri + 'addresses'",
 							"            ]",
 							"        },",
@@ -429,17 +429,23 @@
 				}
 			],
 			"request": {
-				"url": "{{baseUrl}}",
 				"method": "GET",
 				"header": [
 					{
 						"key": "Accept",
-						"value": "{{defaultAccept}}",
-						"description": ""
+						"value": "{{defaultAccept}}"
 					}
 				],
-				"body": {},
-				"description": ""
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{baseUrl}}",
+					"host": [
+						"{{baseUrl}}"
+					]
+				}
 			},
 			"response": []
 		},
@@ -449,41 +455,48 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "b48eea04-b1af-4750-b7c9-ed80329f3be7",
 						"type": "text/javascript",
 						"exec": [
-							"var schema = JSON.parse(postman.getEnvironmentVariable('shoppingCartSchema'));\r",
-							"var defaultContentType = postman.getEnvironmentVariable('defaultContentType');\r",
-							"var defaultContentTypeRegExp = postman.getEnvironmentVariable('defaultContentTypeRegExp');\r",
-							"var baseUrl = postman.getEnvironmentVariable('baseUrl');\r",
-							"var nsUri = postman.getEnvironmentVariable('nsUri');\r",
-							"var shoppingCart = JSON.parse(responseBody);\r",
-							"\r",
-							"var selfLink = shoppingCart._links.self.href;\r",
-							"var shoppingCartItemList = shoppingCart._embedded[nsUri + 'shopping-cart-items'];\r",
-							"\r",
-							"tests['status code is 200 OK'] = responseCode.code === 200;\r",
-							"tests['Content-Type header is ' + defaultContentType] = postman.getResponseHeader('Content-Type').match(defaultContentTypeRegExp);\r",
-							"tests['response body is a shopping cart'] = tv4.validate(shoppingCart, schema);\r",
-							"tests['response body contains no shopping cart items'] = shoppingCartItemList.length === 0;\r",
-							"tests['response body contains self link'] = selfLink === baseUrl + 'shoppingCart/';\r",
-							"tests['response body contains no place order link'] = _.isUndefined(shoppingCart._links[nsUri + 'place-order']);\r",
+							"var schema = JSON.parse(postman.getEnvironmentVariable('shoppingCartSchema'));",
+							"var defaultContentType = postman.getEnvironmentVariable('defaultContentType');",
+							"var defaultContentTypeRegExp = postman.getEnvironmentVariable('defaultContentTypeRegExp');",
+							"var baseUrl = postman.getEnvironmentVariable('baseUrl');",
+							"var nsUri = postman.getEnvironmentVariable('nsUri');",
+							"var shoppingCart = JSON.parse(responseBody);",
+							"",
+							"var selfLink = shoppingCart._links.self.href;",
+							"var shoppingCartItemList = shoppingCart._embedded[nsUri + 'shoppingCartItems'];",
+							"",
+							"tests['status code is 200 OK'] = responseCode.code === 200;",
+							"tests['Content-Type header is ' + defaultContentType] = postman.getResponseHeader('Content-Type').match(defaultContentTypeRegExp);",
+							"tests['response body is a shopping cart'] = tv4.validate(shoppingCart, schema);",
+							"tests['response body contains no shopping cart items'] = shoppingCartItemList.length === 0;",
+							"tests['response body contains self link'] = selfLink === baseUrl + 'shoppingCart/';",
+							"tests['response body contains no place order link'] = _.isUndefined(shoppingCart._links[nsUri + 'placeOrder']);",
 							""
 						]
 					}
 				}
 			],
 			"request": {
-				"url": "{{shoppingCartLink}}",
 				"method": "GET",
 				"header": [
 					{
 						"key": "Accept",
-						"value": "{{defaultAccept}}",
-						"description": ""
+						"value": "{{defaultAccept}}"
 					}
 				],
-				"body": {},
-				"description": ""
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{shoppingCartLink}}",
+					"host": [
+						"{{shoppingCartLink}}"
+					]
+				}
 			},
 			"response": []
 		},
@@ -493,71 +506,78 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "8c5b5c8d-730e-444a-b0a8-a74f5f88b7d0",
 						"type": "text/javascript",
 						"exec": [
-							"var schema = JSON.parse(postman.getEnvironmentVariable('productsSchema'));\r",
-							"var defaultContentType = postman.getEnvironmentVariable('defaultContentType');\r",
-							"var defaultContentTypeRegExp = postman.getEnvironmentVariable('defaultContentTypeRegExp');\r",
-							"var baseUrl = postman.getEnvironmentVariable('baseUrl');\r",
-							"var nsUri = postman.getEnvironmentVariable('nsUri');\r",
-							"var products = JSON.parse(responseBody);\r",
-							"\r",
-							"var selfLink = products._links.self.href;\r",
-							"var productList = products._embedded[nsUri + 'products'];\r",
-							"\r",
-							"tests['status code is 200 OK'] = responseCode.code === 200;\r",
-							"tests['Content-Type header is ' + defaultContentType] = postman.getResponseHeader('Content-Type').match(defaultContentTypeRegExp);\r",
-							"tests['response body is a list of products'] = tv4.validate(products, schema);\r",
-							"tests['response body contains at least 2 products'] = productList.length >= 2;\r",
-							"tests['response body contains self link'] = selfLink === baseUrl + 'products/';\r",
-							"\r",
-							"var allProductsHaveSelfLink = true;\r",
-							"var allProductsHaveSCLink = true;\r",
-							"var allProductsHaveImageLink = true;\r",
-							"\r",
-							"var addToShoppingCartLinks = [];\r",
-							"\r",
-							"productList.forEach(function (product) {\r",
-							"    var productHasSelfLink = product._links.self.href.match(baseUrl + 'products/.*/');\r",
-							"    \r",
-							"    var addToShoppingCartLink = product._links[nsUri + 'add-to-shopping-cart'].href;\r",
-							"    var productHasSCLink = addToShoppingCartLink === baseUrl + 'shoppingCart/items/';\r",
-							"    \r",
-							"    addToShoppingCartLinks.push(addToShoppingCartLink);\r",
-							"    \r",
-							"    var productHasImageLink = _.startsWith(product._links[nsUri + 'image'].href, 'http');\r",
-							"    \r",
-							"    allProductsHaveSelfLink = allProductsHaveSelfLink && productHasSelfLink;\r",
-							"    allProductsHaveSCLink = allProductsHaveSCLink && productHasSCLink;\r",
-							"    allProductsHaveImageLink = allProductsHaveImageLink && productHasImageLink;\r",
-							"});\r",
-							"\r",
-							"tests['all products have self link'] = allProductsHaveSelfLink;\r",
-							"tests['all products have add to shopping cart link'] = allProductsHaveSCLink;\r",
-							"tests['all products have image link'] = allProductsHaveImageLink;\r",
-							"\r",
-							"postman.setEnvironmentVariable(\"addToShoppingCartLink1\", addToShoppingCartLinks[0]);\r",
-							"postman.setEnvironmentVariable(\"addToShoppingCartLink2\", addToShoppingCartLinks[1]);\r",
-							"\r",
-							"postman.setEnvironmentVariable(\"productUri1\", productList[0]._links.self.href);\r",
-							"postman.setEnvironmentVariable(\"productUri2\", productList[1]._links.self.href);\r",
+							"var schema = JSON.parse(postman.getEnvironmentVariable('productsSchema'));",
+							"var defaultContentType = postman.getEnvironmentVariable('defaultContentType');",
+							"var defaultContentTypeRegExp = postman.getEnvironmentVariable('defaultContentTypeRegExp');",
+							"var baseUrl = postman.getEnvironmentVariable('baseUrl');",
+							"var nsUri = postman.getEnvironmentVariable('nsUri');",
+							"var products = JSON.parse(responseBody);",
+							"",
+							"var selfLink = products._links.self.href;",
+							"var productList = products._embedded[nsUri + 'products'];",
+							"",
+							"tests['status code is 200 OK'] = responseCode.code === 200;",
+							"tests['Content-Type header is ' + defaultContentType] = postman.getResponseHeader('Content-Type').match(defaultContentTypeRegExp);",
+							"tests['response body is a list of products'] = tv4.validate(products, schema);",
+							"tests['response body contains at least 2 products'] = productList.length >= 2;",
+							"tests['response body contains self link'] = selfLink === baseUrl + 'products/';",
+							"",
+							"var allProductsHaveSelfLink = true;",
+							"var allProductsHaveSCLink = true;",
+							"var allProductsHaveImageLink = true;",
+							"",
+							"var addToShoppingCartLinks = [];",
+							"",
+							"productList.forEach(function (product) {",
+							"    var productHasSelfLink = product._links.self.href.match(baseUrl + 'products/.*/');",
+							"    ",
+							"    var addToShoppingCartLink = product._links[nsUri + 'addToShoppingCart'].href;",
+							"    var productHasSCLink = addToShoppingCartLink === baseUrl + 'shoppingCart/items/';",
+							"    ",
+							"    addToShoppingCartLinks.push(addToShoppingCartLink);",
+							"    ",
+							"    var productHasImageLink = _.startsWith(product._links[nsUri + 'image'].href, 'http');",
+							"    ",
+							"    allProductsHaveSelfLink = allProductsHaveSelfLink && productHasSelfLink;",
+							"    allProductsHaveSCLink = allProductsHaveSCLink && productHasSCLink;",
+							"    allProductsHaveImageLink = allProductsHaveImageLink && productHasImageLink;",
+							"});",
+							"",
+							"tests['all products have self link'] = allProductsHaveSelfLink;",
+							"tests['all products have add to shopping cart link'] = allProductsHaveSCLink;",
+							"tests['all products have image link'] = allProductsHaveImageLink;",
+							"",
+							"postman.setEnvironmentVariable(\"addToShoppingCartLink1\", addToShoppingCartLinks[0]);",
+							"postman.setEnvironmentVariable(\"addToShoppingCartLink2\", addToShoppingCartLinks[1]);",
+							"",
+							"postman.setEnvironmentVariable(\"productUri1\", productList[0]._links.self.href);",
+							"postman.setEnvironmentVariable(\"productUri2\", productList[1]._links.self.href);",
 							""
 						]
 					}
 				}
 			],
 			"request": {
-				"url": "{{searchCatalogLink}}",
 				"method": "GET",
 				"header": [
 					{
 						"key": "Accept",
-						"value": "{{defaultAccept}}",
-						"description": ""
+						"value": "{{defaultAccept}}"
 					}
 				],
-				"body": {},
-				"description": ""
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{searchCatalogLink}}",
+					"host": [
+						"{{searchCatalogLink}}"
+					]
+				}
 			},
 			"response": []
 		},
@@ -582,25 +602,27 @@
 				}
 			],
 			"request": {
-				"url": "{{addToShoppingCartLink1}}",
 				"method": "POST",
 				"header": [
 					{
 						"key": "Accept",
-						"value": "{{defaultAccept}}",
-						"description": ""
+						"value": "{{defaultAccept}}"
 					},
 					{
 						"key": "Content-Type",
-						"value": "{{defaultContentType}}",
-						"description": ""
+						"value": "{{defaultContentType}}"
 					}
 				],
 				"body": {
 					"mode": "raw",
 					"raw": "{\n\t\"product\": \"{{productUri1}}\",\n\t\"quantity\": 1\n}"
 				},
-				"description": ""
+				"url": {
+					"raw": "{{addToShoppingCartLink1}}",
+					"host": [
+						"{{addToShoppingCartLink1}}"
+					]
+				}
 			},
 			"response": []
 		},
@@ -625,25 +647,27 @@
 				}
 			],
 			"request": {
-				"url": "{{addToShoppingCartLink2}}",
 				"method": "POST",
 				"header": [
 					{
 						"key": "Accept",
-						"value": "{{defaultAccept}}",
-						"description": ""
+						"value": "{{defaultAccept}}"
 					},
 					{
 						"key": "Content-Type",
-						"value": "{{defaultContentType}}",
-						"description": ""
+						"value": "{{defaultContentType}}"
 					}
 				],
 				"body": {
 					"mode": "raw",
 					"raw": "{\n\t\"product\": \"{{productUri2}}\",\n\t\"quantity\": 1\n}"
 				},
-				"description": ""
+				"url": {
+					"raw": "{{addToShoppingCartLink2}}",
+					"host": [
+						"{{addToShoppingCartLink2}}"
+					]
+				}
 			},
 			"response": []
 		},
@@ -653,77 +677,84 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "984a3f4e-af60-4c2e-b81a-5581e1f51c24",
 						"type": "text/javascript",
 						"exec": [
-							"var schema = JSON.parse(postman.getEnvironmentVariable('shoppingCartSchema'));\r",
-							"var defaultContentType = postman.getEnvironmentVariable('defaultContentType');\r",
-							"var defaultContentTypeRegExp = postman.getEnvironmentVariable('defaultContentTypeRegExp');\r",
-							"var baseUrl = postman.getEnvironmentVariable('baseUrl');\r",
-							"var nsUri = postman.getEnvironmentVariable('nsUri');\r",
-							"var shoppingCart = JSON.parse(responseBody);\r",
-							"\r",
-							"var selfLink = shoppingCart._links.self.href;\r",
-							"var shoppingCartItemList = shoppingCart._embedded[nsUri + 'shopping-cart-items'];\r",
-							"var placeOrderLink = shoppingCart._links[nsUri + 'place-order'].href;\r",
-							"\r",
-							"tests['status code is 200 OK'] = responseCode.code === 200;\r",
-							"tests['Content-Type header is ' + defaultContentType] = postman.getResponseHeader('Content-Type').match(defaultContentTypeRegExp);\r",
-							"tests['response body is a shopping cart'] = tv4.validate(shoppingCart, schema);\r",
-							"tests['response body contains exactly 2 shopping cart items'] = shoppingCartItemList.length === 2;\r",
-							"tests['response body contains self link'] = selfLink === baseUrl + 'shoppingCart/';\r",
-							"tests['response body contains place order link'] = placeOrderLink.match(baseUrl + 'orders/');\r",
-							"\r",
-							"var allItemsHaveSelfLink = true;\r",
-							"var allItemsHaveUpdateLink = true;\r",
-							"var allItemsHaveRemoveLink = true;\r",
-							"var allItemsHaveProductLink = true;\r",
-							"\r",
-							"var updateQuantityLinks = [];\r",
-							"var removeLinks = [];\r",
-							"\r",
-							"shoppingCartItemList.forEach(function (item) {\r",
-							"    var itemHasSelfLink = item._links.self.href.match(baseUrl + 'shoppingCart/items/.*/');\r",
-							"    \r",
-							"    var updateQuantityLink = item._links[nsUri + 'update-quantity'].href;\r",
-							"    var itemHasUpdateLink = updateQuantityLink.match(baseUrl + 'shoppingCart/items/.*/');\r",
-							"    updateQuantityLinks.push(updateQuantityLink);\r",
-							"    \r",
-							"    var removeLink = item._links[nsUri + 'remove'].href;\r",
-							"    var itemHasRemoveLink = removeLink.match(baseUrl + 'shoppingCart/items/.*/');\r",
-							"    removeLinks.push(removeLink);\r",
-							"    \r",
-							"    var itemHasProductLink = item._links[nsUri + 'product'].href.match(baseUrl + 'products/.*/');\r",
-							"    \r",
-							"    allItemsHaveSelfLink = allItemsHaveSelfLink && itemHasSelfLink;\r",
-							"    allItemsHaveUpdateLink = allItemsHaveUpdateLink && itemHasUpdateLink;\r",
-							"    allItemsHaveRemoveLink = allItemsHaveRemoveLink && itemHasRemoveLink;\r",
-							"    allItemsHaveProductLink = allItemsHaveProductLink && itemHasProductLink;\r",
-							"});\r",
-							"\r",
-							"tests['all items have self link'] = allItemsHaveSelfLink;\r",
-							"tests['all items have update quantity link'] = allItemsHaveUpdateLink;\r",
-							"tests['all items have remove link'] = allItemsHaveRemoveLink;\r",
-							"tests['all items have product link'] = allItemsHaveProductLink;\r",
-							"\r",
-							"postman.setEnvironmentVariable('shoppingCartItem1UpdateQuantityLink', updateQuantityLinks[0]);\r",
-							"postman.setEnvironmentVariable('shoppingCartItem2RemoveLink', removeLinks[1]);\r",
+							"var schema = JSON.parse(postman.getEnvironmentVariable('shoppingCartSchema'));",
+							"var defaultContentType = postman.getEnvironmentVariable('defaultContentType');",
+							"var defaultContentTypeRegExp = postman.getEnvironmentVariable('defaultContentTypeRegExp');",
+							"var baseUrl = postman.getEnvironmentVariable('baseUrl');",
+							"var nsUri = postman.getEnvironmentVariable('nsUri');",
+							"var shoppingCart = JSON.parse(responseBody);",
+							"",
+							"var selfLink = shoppingCart._links.self.href;",
+							"var shoppingCartItemList = shoppingCart._embedded[nsUri + 'shoppingCartItems'];",
+							"var placeOrderLink = shoppingCart._links[nsUri + 'placeOrder'].href;",
+							"",
+							"tests['status code is 200 OK'] = responseCode.code === 200;",
+							"tests['Content-Type header is ' + defaultContentType] = postman.getResponseHeader('Content-Type').match(defaultContentTypeRegExp);",
+							"tests['response body is a shopping cart'] = tv4.validate(shoppingCart, schema);",
+							"tests['response body contains exactly 2 shopping cart items'] = shoppingCartItemList.length === 2;",
+							"tests['response body contains self link'] = selfLink === baseUrl + 'shoppingCart/';",
+							"tests['response body contains place order link'] = placeOrderLink.match(baseUrl + 'orders/');",
+							"",
+							"var allItemsHaveSelfLink = true;",
+							"var allItemsHaveUpdateLink = true;",
+							"var allItemsHaveRemoveLink = true;",
+							"var allItemsHaveProductLink = true;",
+							"",
+							"var updateQuantityLinks = [];",
+							"var removeLinks = [];",
+							"",
+							"shoppingCartItemList.forEach(function (item) {",
+							"    var itemHasSelfLink = item._links.self.href.match(baseUrl + 'shoppingCart/items/.*/');",
+							"    ",
+							"    var updateQuantityLink = item._links[nsUri + 'updateQuantity'].href;",
+							"    var itemHasUpdateLink = updateQuantityLink.match(baseUrl + 'shoppingCart/items/.*/');",
+							"    updateQuantityLinks.push(updateQuantityLink);",
+							"    ",
+							"    var removeLink = item._links[nsUri + 'remove'].href;",
+							"    var itemHasRemoveLink = removeLink.match(baseUrl + 'shoppingCart/items/.*/');",
+							"    removeLinks.push(removeLink);",
+							"    ",
+							"    var itemHasProductLink = item._links[nsUri + 'product'].href.match(baseUrl + 'products/.*/');",
+							"    ",
+							"    allItemsHaveSelfLink = allItemsHaveSelfLink && itemHasSelfLink;",
+							"    allItemsHaveUpdateLink = allItemsHaveUpdateLink && itemHasUpdateLink;",
+							"    allItemsHaveRemoveLink = allItemsHaveRemoveLink && itemHasRemoveLink;",
+							"    allItemsHaveProductLink = allItemsHaveProductLink && itemHasProductLink;",
+							"});",
+							"",
+							"tests['all items have self link'] = allItemsHaveSelfLink;",
+							"tests['all items have update quantity link'] = allItemsHaveUpdateLink;",
+							"tests['all items have remove link'] = allItemsHaveRemoveLink;",
+							"tests['all items have product link'] = allItemsHaveProductLink;",
+							"",
+							"postman.setEnvironmentVariable('shoppingCartItem1UpdateQuantityLink', updateQuantityLinks[0]);",
+							"postman.setEnvironmentVariable('shoppingCartItem2RemoveLink', removeLinks[1]);",
 							""
 						]
 					}
 				}
 			],
 			"request": {
-				"url": "{{shoppingCartLink}}",
 				"method": "GET",
 				"header": [
 					{
 						"key": "Accept",
-						"value": "{{defaultAccept}}",
-						"description": ""
+						"value": "{{defaultAccept}}"
 					}
 				],
-				"body": {},
-				"description": ""
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{shoppingCartLink}}",
+					"host": [
+						"{{shoppingCartLink}}"
+					]
+				}
 			},
 			"response": []
 		},
@@ -733,72 +764,76 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "27b10b29-3fc0-493e-9594-48f07887d83e",
 						"type": "text/javascript",
 						"exec": [
-							"var schema = JSON.parse(postman.getEnvironmentVariable('shoppingCartSchema'));\r",
-							"var defaultContentType = postman.getEnvironmentVariable('defaultContentType');\r",
-							"var defaultContentTypeRegExp = postman.getEnvironmentVariable('defaultContentTypeRegExp');\r",
-							"var baseUrl = postman.getEnvironmentVariable('baseUrl');\r",
-							"var nsUri = postman.getEnvironmentVariable('nsUri');\r",
-							"var shoppingCart = JSON.parse(responseBody);\r",
-							"\r",
-							"var selfLink = shoppingCart._links.self.href;\r",
-							"var shoppingCartItemList = shoppingCart._embedded[nsUri + 'shopping-cart-items'];\r",
-							"var placeOrderLink = shoppingCart._links[nsUri + 'place-order'].href;\r",
-							"\r",
-							"tests['status code is 200 OK'] = responseCode.code === 200;\r",
-							"tests['Content-Type header is ' + defaultContentType] = postman.getResponseHeader('Content-Type').match(defaultContentTypeRegExp);\r",
-							"tests['response body is a shopping cart'] = tv4.validate(shoppingCart, schema);\r",
-							"tests['response body contains 2 shopping cart items'] = shoppingCartItemList.length === 2;\r",
-							"tests['first shopping cart item has a quantity of 2'] = shoppingCartItemList[0].quantity === 2;\r",
-							"tests['response body contains self link'] = selfLink === baseUrl + 'shoppingCart/';\r",
-							"tests['response body contains place order link'] = placeOrderLink.match(baseUrl + 'orders/');\r",
-							"\r",
-							"var allItemsHaveSelfLink = true;\r",
-							"var allItemsHaveUpdateLink = true;\r",
-							"var allItemsHaveRemoveLink = true;\r",
-							"var allItemsHaveProductLink = true;\r",
-							"\r",
-							"shoppingCartItemList.forEach(function (item) {\r",
-							"    var itemHasSelfLink = item._links.self.href.match(baseUrl + 'shoppingCart/items/.*/');\r",
-							"    var itemHasUpdateLink = item._links[nsUri + 'update-quantity'].href.match(baseUrl + 'shoppingCart/items/.*/');\r",
-							"    var itemHasRemoveLink = item._links[nsUri + 'remove'].href.match(baseUrl + 'shoppingCart/items/.*/');\r",
-							"    \r",
-							"    var itemHasProductLink = item._links[nsUri + 'product'].href.match(baseUrl + 'products/.*/');\r",
-							"\r",
-							"    allItemsHaveSelfLink = allItemsHaveSelfLink && itemHasSelfLink;\r",
-							"    allItemsHaveUpdateLink = allItemsHaveUpdateLink && itemHasUpdateLink;\r",
-							"    allItemsHaveRemoveLink = allItemsHaveRemoveLink && itemHasRemoveLink;\r",
-							"    allItemsHaveProductLink = allItemsHaveProductLink && itemHasProductLink;\r",
-							"});\r",
-							"\r",
-							"tests['all items have self link'] = allItemsHaveSelfLink;\r",
-							"tests['all items have update quantity link'] = allItemsHaveUpdateLink;\r",
-							"tests['all items have remove link'] = allItemsHaveRemoveLink;\r",
-							"tests['all items have product link'] = allItemsHaveProductLink;\r",
+							"var schema = JSON.parse(postman.getEnvironmentVariable('shoppingCartSchema'));",
+							"var defaultContentType = postman.getEnvironmentVariable('defaultContentType');",
+							"var defaultContentTypeRegExp = postman.getEnvironmentVariable('defaultContentTypeRegExp');",
+							"var baseUrl = postman.getEnvironmentVariable('baseUrl');",
+							"var nsUri = postman.getEnvironmentVariable('nsUri');",
+							"var shoppingCart = JSON.parse(responseBody);",
+							"",
+							"var selfLink = shoppingCart._links.self.href;",
+							"var shoppingCartItemList = shoppingCart._embedded[nsUri + 'shoppingCartItems'];",
+							"var placeOrderLink = shoppingCart._links[nsUri + 'placeOrder'].href;",
+							"",
+							"tests['status code is 200 OK'] = responseCode.code === 200;",
+							"tests['Content-Type header is ' + defaultContentType] = postman.getResponseHeader('Content-Type').match(defaultContentTypeRegExp);",
+							"tests['response body is a shopping cart'] = tv4.validate(shoppingCart, schema);",
+							"tests['response body contains 2 shopping cart items'] = shoppingCartItemList.length === 2;",
+							"tests['first shopping cart item has a quantity of 2'] = shoppingCartItemList[0].quantity === 2;",
+							"tests['response body contains self link'] = selfLink === baseUrl + 'shoppingCart/';",
+							"tests['response body contains place order link'] = placeOrderLink.match(baseUrl + 'orders/');",
+							"",
+							"var allItemsHaveSelfLink = true;",
+							"var allItemsHaveUpdateLink = true;",
+							"var allItemsHaveRemoveLink = true;",
+							"var allItemsHaveProductLink = true;",
+							"",
+							"shoppingCartItemList.forEach(function (item) {",
+							"    var itemHasSelfLink = item._links.self.href.match(baseUrl + 'shoppingCart/items/.*/');",
+							"    var itemHasUpdateLink = item._links[nsUri + 'updateQuantity'].href.match(baseUrl + 'shoppingCart/items/.*/');",
+							"    var itemHasRemoveLink = item._links[nsUri + 'remove'].href.match(baseUrl + 'shoppingCart/items/.*/');",
+							"    ",
+							"    var itemHasProductLink = item._links[nsUri + 'product'].href.match(baseUrl + 'products/.*/');",
+							"",
+							"    allItemsHaveSelfLink = allItemsHaveSelfLink && itemHasSelfLink;",
+							"    allItemsHaveUpdateLink = allItemsHaveUpdateLink && itemHasUpdateLink;",
+							"    allItemsHaveRemoveLink = allItemsHaveRemoveLink && itemHasRemoveLink;",
+							"    allItemsHaveProductLink = allItemsHaveProductLink && itemHasProductLink;",
+							"});",
+							"",
+							"tests['all items have self link'] = allItemsHaveSelfLink;",
+							"tests['all items have update quantity link'] = allItemsHaveUpdateLink;",
+							"tests['all items have remove link'] = allItemsHaveRemoveLink;",
+							"tests['all items have product link'] = allItemsHaveProductLink;",
 							""
 						]
 					}
 				}
 			],
 			"request": {
-				"url": "{{shoppingCartItem1UpdateQuantityLink}}",
 				"method": "PATCH",
 				"header": [
 					{
 						"key": "Accept",
-						"value": "{{defaultAccept}}",
-						"description": ""
+						"value": "{{defaultAccept}}"
 					},
 					{
 						"key": "Content-Type",
-						"value": "{{defaultContentType}}",
-						"description": ""
+						"value": "{{defaultContentType}}"
 					}
 				],
 				"body": {
 					"mode": "raw",
 					"raw": "{\n\t\"quantity\": 2\n}"
+				},
+				"url": {
+					"raw": "{{shoppingCartItem1UpdateQuantityLink}}",
+					"host": [
+						"{{shoppingCartItem1UpdateQuantityLink}}"
+					]
 				},
 				"description": "\t"
 			},
@@ -810,66 +845,71 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "743d1551-5103-413b-9cb7-63a6841ea894",
 						"type": "text/javascript",
 						"exec": [
-							"var schema = JSON.parse(postman.getEnvironmentVariable('shoppingCartSchema'));\r",
-							"var defaultContentType = postman.getEnvironmentVariable('defaultContentType');\r",
-							"var defaultContentTypeRegExp = postman.getEnvironmentVariable('defaultContentTypeRegExp');\r",
-							"var baseUrl = postman.getEnvironmentVariable('baseUrl');\r",
-							"var nsUri = postman.getEnvironmentVariable('nsUri');\r",
-							"var shoppingCart = JSON.parse(responseBody);\r",
-							"\r",
-							"var selfLink = shoppingCart._links.self.href;\r",
-							"var shoppingCartItemList = shoppingCart._embedded[nsUri + 'shopping-cart-items'];\r",
-							"var placeOrderLink = shoppingCart._links[nsUri + 'place-order'].href;\r",
-							"\r",
-							"tests['status code is 200 OK'] = responseCode.code === 200;\r",
-							"tests['Content-Type header is ' + defaultContentType] = postman.getResponseHeader('Content-Type').match(defaultContentTypeRegExp);\r",
-							"tests['response body is a shopping cart'] = tv4.validate(shoppingCart, schema);\r",
-							"tests['response body contains 1 shopping cart item'] = shoppingCartItemList.length === 1;\r",
-							"tests['response body contains self link'] = selfLink === baseUrl + 'shoppingCart/';\r",
-							"tests['response body contains place order link'] = placeOrderLink.match(baseUrl + 'orders/');\r",
-							"\r",
-							"var allItemsHaveSelfLink = true;\r",
-							"var allItemsHaveUpdateLink = true;\r",
-							"var allItemsHaveRemoveLink = true;\r",
-							"var allItemsHaveProductLink = true;\r",
-							"\r",
-							"shoppingCartItemList.forEach(function (item) {\r",
-							"    var itemHasSelfLink = item._links.self.href.match(baseUrl + 'shoppingCart/items/.*/');\r",
-							"    var itemHasUpdateLink = item._links[nsUri + 'update-quantity'].href.match(baseUrl + 'shoppingCart/items/.*/');\r",
-							"    var itemHasRemoveLink = item._links[nsUri + 'remove'].href.match(baseUrl + 'shoppingCart/items/.*/');\r",
-							"    \r",
-							"    var itemHasProductLink = item._links[nsUri + 'product'].href.match(baseUrl + 'products/.*/');\r",
-							"\r",
-							"    allItemsHaveSelfLink = allItemsHaveSelfLink && itemHasSelfLink;\r",
-							"    allItemsHaveUpdateLink = allItemsHaveUpdateLink && itemHasUpdateLink;\r",
-							"    allItemsHaveRemoveLink = allItemsHaveRemoveLink && itemHasRemoveLink;\r",
-							"    allItemsHaveProductLink = allItemsHaveProductLink && itemHasProductLink;\r",
-							"});\r",
-							"\r",
-							"tests['all items have self link'] = allItemsHaveSelfLink;\r",
-							"tests['all items have update quantity link'] = allItemsHaveUpdateLink;\r",
-							"tests['all items have remove link'] = allItemsHaveRemoveLink;\r",
-							"tests['all items have product link'] = allItemsHaveProductLink;\r",
+							"var schema = JSON.parse(postman.getEnvironmentVariable('shoppingCartSchema'));",
+							"var defaultContentType = postman.getEnvironmentVariable('defaultContentType');",
+							"var defaultContentTypeRegExp = postman.getEnvironmentVariable('defaultContentTypeRegExp');",
+							"var baseUrl = postman.getEnvironmentVariable('baseUrl');",
+							"var nsUri = postman.getEnvironmentVariable('nsUri');",
+							"var shoppingCart = JSON.parse(responseBody);",
+							"",
+							"var selfLink = shoppingCart._links.self.href;",
+							"var shoppingCartItemList = shoppingCart._embedded[nsUri + 'shoppingCartItems'];",
+							"var placeOrderLink = shoppingCart._links[nsUri + 'placeOrder'].href;",
+							"",
+							"tests['status code is 200 OK'] = responseCode.code === 200;",
+							"tests['Content-Type header is ' + defaultContentType] = postman.getResponseHeader('Content-Type').match(defaultContentTypeRegExp);",
+							"tests['response body is a shopping cart'] = tv4.validate(shoppingCart, schema);",
+							"tests['response body contains 1 shopping cart item'] = shoppingCartItemList.length === 1;",
+							"tests['response body contains self link'] = selfLink === baseUrl + 'shoppingCart/';",
+							"tests['response body contains place order link'] = placeOrderLink.match(baseUrl + 'orders/');",
+							"",
+							"var allItemsHaveSelfLink = true;",
+							"var allItemsHaveUpdateLink = true;",
+							"var allItemsHaveRemoveLink = true;",
+							"var allItemsHaveProductLink = true;",
+							"",
+							"shoppingCartItemList.forEach(function (item) {",
+							"    var itemHasSelfLink = item._links.self.href.match(baseUrl + 'shoppingCart/items/.*/');",
+							"    var itemHasUpdateLink = item._links[nsUri + 'updateQuantity'].href.match(baseUrl + 'shoppingCart/items/.*/');",
+							"    var itemHasRemoveLink = item._links[nsUri + 'remove'].href.match(baseUrl + 'shoppingCart/items/.*/');",
+							"    ",
+							"    var itemHasProductLink = item._links[nsUri + 'product'].href.match(baseUrl + 'products/.*/');",
+							"",
+							"    allItemsHaveSelfLink = allItemsHaveSelfLink && itemHasSelfLink;",
+							"    allItemsHaveUpdateLink = allItemsHaveUpdateLink && itemHasUpdateLink;",
+							"    allItemsHaveRemoveLink = allItemsHaveRemoveLink && itemHasRemoveLink;",
+							"    allItemsHaveProductLink = allItemsHaveProductLink && itemHasProductLink;",
+							"});",
+							"",
+							"tests['all items have self link'] = allItemsHaveSelfLink;",
+							"tests['all items have update quantity link'] = allItemsHaveUpdateLink;",
+							"tests['all items have remove link'] = allItemsHaveRemoveLink;",
+							"tests['all items have product link'] = allItemsHaveProductLink;",
 							""
 						]
 					}
 				}
 			],
 			"request": {
-				"url": "{{shoppingCartItem2RemoveLink}}",
 				"method": "DELETE",
 				"header": [
 					{
 						"key": "Accept",
-						"value": "{{defaultAccept}}",
-						"description": ""
+						"value": "{{defaultAccept}}"
 					}
 				],
 				"body": {
 					"mode": "raw",
 					"raw": "\n"
+				},
+				"url": {
+					"raw": "{{shoppingCartItem2RemoveLink}}",
+					"host": [
+						"{{shoppingCartItem2RemoveLink}}"
+					]
 				},
 				"description": "\t"
 			},
@@ -881,71 +921,78 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "c9a0aaf0-39c0-47ab-83df-9d45d6e0056e",
 						"type": "text/javascript",
 						"exec": [
-							"var schema = JSON.parse(postman.getEnvironmentVariable('shoppingCartSchema'));\r",
-							"var defaultContentType = postman.getEnvironmentVariable('defaultContentType');\r",
-							"var defaultContentTypeRegExp = postman.getEnvironmentVariable('defaultContentTypeRegExp');\r",
-							"var baseUrl = postman.getEnvironmentVariable('baseUrl');\r",
-							"var nsUri = postman.getEnvironmentVariable('nsUri');\r",
-							"var shoppingCart = JSON.parse(responseBody);\r",
-							"\r",
-							"var selfLink = shoppingCart._links.self.href;\r",
-							"var shoppingCartItemList = shoppingCart._embedded[nsUri + 'shopping-cart-items'];\r",
-							"var placeOrderLink = shoppingCart._links[nsUri + 'place-order'].href;\r",
-							"\r",
-							"tests['status code is 200 OK'] = responseCode.code === 200;\r",
-							"tests['Content-Type header is ' + defaultContentType] = postman.getResponseHeader('Content-Type').match(defaultContentTypeRegExp);\r",
-							"tests['response body is a shopping cart'] = tv4.validate(shoppingCart, schema);\r",
-							"tests['response body contains 1 shopping cart item'] = shoppingCartItemList.length === 1;\r",
-							"tests['shopping cart item has a quantity of 2'] = shoppingCartItemList[0].quantity === 2;\r",
-							"tests['response body contains self link'] = selfLink === baseUrl + 'shoppingCart/';\r",
-							"tests['response body contains place order link'] = placeOrderLink.match(baseUrl + 'orders/');\r",
-							"\r",
-							"var allItemsHaveSelfLink = true;\r",
-							"var allItemsHaveUpdateLink = true;\r",
-							"var allItemsHaveRemoveLink = true;\r",
-							"var allItemsHaveProductLink = true;\r",
-							"\r",
-							"shoppingCartItemList.forEach(function (item) {\r",
-							"    var itemHasSelfLink = item._links.self.href.match(baseUrl + 'shoppingCart/items/.*/');\r",
-							"    var itemHasUpdateLink = item._links[nsUri + 'update-quantity'].href.match(baseUrl + 'shoppingCart/items/.*/');\r",
-							"    var itemHasRemoveLink = item._links[nsUri + 'remove'].href.match(baseUrl + 'shoppingCart/items/.*/');\r",
-							"    \r",
-							"    var itemHasProductLink = item._links[nsUri + 'product'].href.match(baseUrl + 'products/.*/');\r",
-							"\r",
-							"    allItemsHaveSelfLink = allItemsHaveSelfLink && itemHasSelfLink;\r",
-							"    allItemsHaveUpdateLink = allItemsHaveUpdateLink && itemHasUpdateLink;\r",
-							"    allItemsHaveRemoveLink = allItemsHaveRemoveLink && itemHasRemoveLink;\r",
-							"    allItemsHaveProductLink = allItemsHaveProductLink && itemHasProductLink;\r",
-							"});\r",
-							"\r",
-							"tests['all items have self link'] = allItemsHaveSelfLink;\r",
-							"tests['all items have update quantity link'] = allItemsHaveUpdateLink;\r",
-							"tests['all items have remove link'] = allItemsHaveRemoveLink;\r",
-							"tests['all items have product link'] = allItemsHaveProductLink;\r",
-							"\r",
-							"postman.setEnvironmentVariable('placeOrderLink', placeOrderLink);\r",
-							"\r",
-							"postman.setEnvironmentVariable(\"lineItemUris\", JSON.stringify(shoppingCartItemList.map(function (item) {\r",
-							"    return item._links.self.href;\r",
+							"var schema = JSON.parse(postman.getEnvironmentVariable('shoppingCartSchema'));",
+							"var defaultContentType = postman.getEnvironmentVariable('defaultContentType');",
+							"var defaultContentTypeRegExp = postman.getEnvironmentVariable('defaultContentTypeRegExp');",
+							"var baseUrl = postman.getEnvironmentVariable('baseUrl');",
+							"var nsUri = postman.getEnvironmentVariable('nsUri');",
+							"var shoppingCart = JSON.parse(responseBody);",
+							"",
+							"var selfLink = shoppingCart._links.self.href;",
+							"var shoppingCartItemList = shoppingCart._embedded[nsUri + 'shoppingCartItems'];",
+							"var placeOrderLink = shoppingCart._links[nsUri + 'placeOrder'].href;",
+							"",
+							"tests['status code is 200 OK'] = responseCode.code === 200;",
+							"tests['Content-Type header is ' + defaultContentType] = postman.getResponseHeader('Content-Type').match(defaultContentTypeRegExp);",
+							"tests['response body is a shopping cart'] = tv4.validate(shoppingCart, schema);",
+							"tests['response body contains 1 shopping cart item'] = shoppingCartItemList.length === 1;",
+							"tests['shopping cart item has a quantity of 2'] = shoppingCartItemList[0].quantity === 2;",
+							"tests['response body contains self link'] = selfLink === baseUrl + 'shoppingCart/';",
+							"tests['response body contains place order link'] = placeOrderLink.match(baseUrl + 'orders/');",
+							"",
+							"var allItemsHaveSelfLink = true;",
+							"var allItemsHaveUpdateLink = true;",
+							"var allItemsHaveRemoveLink = true;",
+							"var allItemsHaveProductLink = true;",
+							"",
+							"shoppingCartItemList.forEach(function (item) {",
+							"    var itemHasSelfLink = item._links.self.href.match(baseUrl + 'shoppingCart/items/.*/');",
+							"    var itemHasUpdateLink = item._links[nsUri + 'updateQuantity'].href.match(baseUrl + 'shoppingCart/items/.*/');",
+							"    var itemHasRemoveLink = item._links[nsUri + 'remove'].href.match(baseUrl + 'shoppingCart/items/.*/');",
+							"    ",
+							"    var itemHasProductLink = item._links[nsUri + 'product'].href.match(baseUrl + 'products/.*/');",
+							"",
+							"    allItemsHaveSelfLink = allItemsHaveSelfLink && itemHasSelfLink;",
+							"    allItemsHaveUpdateLink = allItemsHaveUpdateLink && itemHasUpdateLink;",
+							"    allItemsHaveRemoveLink = allItemsHaveRemoveLink && itemHasRemoveLink;",
+							"    allItemsHaveProductLink = allItemsHaveProductLink && itemHasProductLink;",
+							"});",
+							"",
+							"tests['all items have self link'] = allItemsHaveSelfLink;",
+							"tests['all items have update quantity link'] = allItemsHaveUpdateLink;",
+							"tests['all items have remove link'] = allItemsHaveRemoveLink;",
+							"tests['all items have product link'] = allItemsHaveProductLink;",
+							"",
+							"postman.setEnvironmentVariable('placeOrderLink', placeOrderLink);",
+							"",
+							"postman.setEnvironmentVariable(\"lineItemUris\", JSON.stringify(shoppingCartItemList.map(function (item) {",
+							"    return item._links.self.href;",
 							"})));"
 						]
 					}
 				}
 			],
 			"request": {
-				"url": "{{shoppingCartLink}}",
 				"method": "GET",
 				"header": [
 					{
 						"key": "Accept",
-						"value": "{{defaultAccept}}",
-						"description": ""
+						"value": "{{defaultAccept}}"
 					}
 				],
-				"body": {},
-				"description": ""
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{shoppingCartLink}}",
+					"host": [
+						"{{shoppingCartLink}}"
+					]
+				}
 			},
 			"response": []
 		},
@@ -955,66 +1002,73 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "6f840d7b-e974-4316-b5e0-009f234a38ca",
 						"type": "text/javascript",
 						"exec": [
-							"var schema = JSON.parse(postman.getEnvironmentVariable('userProfileSchema'));\r",
-							"var defaultContentType = postman.getEnvironmentVariable('defaultContentType');\r",
-							"var defaultContentTypeRegExp = postman.getEnvironmentVariable('defaultContentTypeRegExp');\r",
-							"var baseUrl = postman.getEnvironmentVariable('baseUrl');\r",
-							"var nsUri = postman.getEnvironmentVariable('nsUri');\r",
-							"var userProfile = JSON.parse(responseBody);\r",
-							"\r",
-							"var selfLink = userProfile._links.self.href;\r",
-							"var addressList = userProfile._embedded[nsUri + 'addresses'];\r",
-							"var paymentOptionList = userProfile._embedded[nsUri + 'payment-options'];\r",
-							"\r",
-							"tests['status code is 200 OK'] = responseCode.code === 200;\r",
-							"tests['Content-Type header is ' + defaultContentType] = postman.getResponseHeader('Content-Type').match(defaultContentTypeRegExp);\r",
-							"tests['response body is a user profile'] = tv4.validate(userProfile, schema);\r",
-							"tests['response body contains at least 2 addresses'] = addressList.length >= 2;\r",
-							"tests['response body contains at least 1 payment option'] = paymentOptionList.length >= 1;\r",
-							"tests['response body contains self link'] = selfLink === baseUrl + 'userProfile/';\r",
-							"\r",
-							"var allAddressesHaveSelfLink = true\r",
-							"\r",
-							"addressList.forEach(function (address) {\r",
-							"    var addressHasSelfLink = address._links.self.href.match(baseUrl + 'userProfile/addresses/.*/');\r",
-							"    \r",
-							"    allAddressesHaveSelfLink = allAddressesHaveSelfLink && addressHasSelfLink;\r",
-							"});\r",
-							"\r",
-							"tests['all addresses have self link'] = allAddressesHaveSelfLink;\r",
-							"\r",
-							"var allPaymentOptionsHaveSelfLink = true\r",
-							"\r",
-							"paymentOptionList.forEach(function (paymentOption) {\r",
-							"    var paymentOptionHasSelfLink = paymentOption._links.self.href.match(baseUrl + 'userProfile/paymentOptions/.*/');\r",
-							"    \r",
-							"    allPaymentOptionsHaveSelfLink = allPaymentOptionsHaveSelfLink && paymentOptionHasSelfLink;\r",
-							"});\r",
-							"\r",
-							"tests['all payment options have self link'] = allPaymentOptionsHaveSelfLink;\r",
-							"\r",
-							"postman.setEnvironmentVariable(\"paymentUri\", paymentOptionList[0]._links.self.href);\r",
-							"postman.setEnvironmentVariable(\"billingAddressUri\", addressList[0]._links.self.href);\r",
-							"postman.setEnvironmentVariable(\"shippingAddressUri\", addressList[1]._links.self.href);\r",
+							"var schema = JSON.parse(postman.getEnvironmentVariable('userProfileSchema'));",
+							"var defaultContentType = postman.getEnvironmentVariable('defaultContentType');",
+							"var defaultContentTypeRegExp = postman.getEnvironmentVariable('defaultContentTypeRegExp');",
+							"var baseUrl = postman.getEnvironmentVariable('baseUrl');",
+							"var nsUri = postman.getEnvironmentVariable('nsUri');",
+							"var userProfile = JSON.parse(responseBody);",
+							"",
+							"var selfLink = userProfile._links.self.href;",
+							"var addressList = userProfile._embedded[nsUri + 'addresses'];",
+							"var paymentOptionList = userProfile._embedded[nsUri + 'paymentOptions'];",
+							"",
+							"tests['status code is 200 OK'] = responseCode.code === 200;",
+							"tests['Content-Type header is ' + defaultContentType] = postman.getResponseHeader('Content-Type').match(defaultContentTypeRegExp);",
+							"tests['response body is a user profile'] = tv4.validate(userProfile, schema);",
+							"tests['response body contains at least 2 addresses'] = addressList.length >= 2;",
+							"tests['response body contains at least 1 payment option'] = paymentOptionList.length >= 1;",
+							"tests['response body contains self link'] = selfLink === baseUrl + 'userProfile/';",
+							"",
+							"var allAddressesHaveSelfLink = true",
+							"",
+							"addressList.forEach(function (address) {",
+							"    var addressHasSelfLink = address._links.self.href.match(baseUrl + 'userProfile/addresses/.*/');",
+							"    ",
+							"    allAddressesHaveSelfLink = allAddressesHaveSelfLink && addressHasSelfLink;",
+							"});",
+							"",
+							"tests['all addresses have self link'] = allAddressesHaveSelfLink;",
+							"",
+							"var allPaymentOptionsHaveSelfLink = true",
+							"",
+							"paymentOptionList.forEach(function (paymentOption) {",
+							"    var paymentOptionHasSelfLink = paymentOption._links.self.href.match(baseUrl + 'userProfile/paymentOptions/.*/');",
+							"    ",
+							"    allPaymentOptionsHaveSelfLink = allPaymentOptionsHaveSelfLink && paymentOptionHasSelfLink;",
+							"});",
+							"",
+							"tests['all payment options have self link'] = allPaymentOptionsHaveSelfLink;",
+							"",
+							"postman.setEnvironmentVariable(\"paymentUri\", paymentOptionList[0]._links.self.href);",
+							"postman.setEnvironmentVariable(\"billingAddressUri\", addressList[0]._links.self.href);",
+							"postman.setEnvironmentVariable(\"shippingAddressUri\", addressList[1]._links.self.href);",
 							""
 						]
 					}
 				}
 			],
 			"request": {
-				"url": "{{userProfileLink}}",
 				"method": "GET",
 				"header": [
 					{
 						"key": "Accept",
-						"value": "{{defaultAccept}}",
-						"description": ""
+						"value": "{{defaultAccept}}"
 					}
 				],
-				"body": {},
-				"description": ""
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{userProfileLink}}",
+					"host": [
+						"{{userProfileLink}}"
+					]
+				}
 			},
 			"response": []
 		},
@@ -1039,25 +1093,27 @@
 				}
 			],
 			"request": {
-				"url": "{{placeOrderLink}}",
 				"method": "POST",
 				"header": [
 					{
 						"key": "Accept",
-						"value": "{{defaultAccept}}",
-						"description": ""
+						"value": "{{defaultAccept}}"
 					},
 					{
 						"key": "Content-Type",
-						"value": "{{defaultContentType}}",
-						"description": ""
+						"value": "{{defaultContentType}}"
 					}
 				],
 				"body": {
 					"mode": "raw",
 					"raw": "{\n\t\"items\": {{lineItemUris}},\n\t\"billingAddress\": \"{{billingAddressUri}}\",\n\t\"shippingAddress\": \"{{shippingAddressUri}}\",\n\t\"payment\": \"{{paymentUri}}\"\n}"
 				},
-				"description": ""
+				"url": {
+					"raw": "{{placeOrderLink}}",
+					"host": [
+						"{{placeOrderLink}}"
+					]
+				}
 			},
 			"response": []
 		},
@@ -1093,20 +1149,23 @@
 				}
 			],
 			"request": {
-				"url": "{{orderLink}}",
 				"method": "GET",
 				"header": [
 					{
 						"key": "Accept",
-						"value": "{{defaultAccept}}",
-						"description": ""
+						"value": "{{defaultAccept}}"
 					}
 				],
 				"body": {
 					"mode": "raw",
 					"raw": "{\n\t\"items\": {{lineItems}},\n\t\"billingAddress\": {{billingAddress}},\n\t\"shippingAddress\": {{shippingAddress}},\n\t\"payment\": {{payment}}\n}"
 				},
-				"description": ""
+				"url": {
+					"raw": "{{orderLink}}",
+					"host": [
+						"{{orderLink}}"
+					]
+				}
 			},
 			"response": []
 		},
@@ -1139,25 +1198,27 @@
 				}
 			],
 			"request": {
-				"url": "{{cancelOrderLink}}",
 				"method": "DELETE",
 				"header": [
 					{
 						"key": "Accept",
-						"value": "{{defaultAccept}}",
-						"description": ""
+						"value": "{{defaultAccept}}"
 					},
 					{
 						"key": "Content-Type",
-						"value": "application/json",
-						"description": ""
+						"value": "application/json"
 					}
 				],
 				"body": {
 					"mode": "raw",
 					"raw": ""
 				},
-				"description": ""
+				"url": {
+					"raw": "{{cancelOrderLink}}",
+					"host": [
+						"{{cancelOrderLink}}"
+					]
+				}
 			},
 			"response": []
 		},
@@ -1190,20 +1251,23 @@
 				}
 			],
 			"request": {
-				"url": "{{orderLink}}",
 				"method": "GET",
 				"header": [
 					{
 						"key": "Accept",
-						"value": "{{defaultAccept}}",
-						"description": ""
+						"value": "{{defaultAccept}}"
 					}
 				],
 				"body": {
 					"mode": "raw",
 					"raw": "{\n\t\"items\": {{lineItems}},\n\t\"billingAddress\": {{billingAddress}},\n\t\"shippingAddress\": {{shippingAddress}},\n\t\"payment\": {{payment}}\n}"
 				},
-				"description": ""
+				"url": {
+					"raw": "{{orderLink}}",
+					"host": [
+						"{{orderLink}}"
+					]
+				}
 			},
 			"response": []
 		},
@@ -1253,17 +1317,23 @@
 				}
 			],
 			"request": {
-				"url": "{{ordersLink}}",
 				"method": "GET",
 				"header": [
 					{
 						"key": "Accept",
-						"value": "{{defaultAccept}}",
-						"description": ""
+						"value": "{{defaultAccept}}"
 					}
 				],
-				"body": {},
-				"description": ""
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{ordersLink}}",
+					"host": [
+						"{{ordersLink}}"
+					]
+				}
 			},
 			"response": []
 		}
