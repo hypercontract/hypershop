@@ -4,7 +4,7 @@
   "description": "Contract-First Hypermedia APIs: Example API ",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js",
+    "start": "ts-node index.ts",
     "test": "run-s test-rest test-hypermedia",
     "test-rest": "newman run ./postman/rest-api.json",
     "test-hypermedia": "newman run ./postman/hypermedia-api.json"
@@ -20,25 +20,34 @@
   },
   "homepage": "https://github.com/luchsamapparat/cfha-api#readme",
   "dependencies": {
-    "body-parser": "^1.17.2",
-    "config": "^1.26.2",
-    "cors": "^2.8.4",
-    "ejs": "^2.5.7",
-    "express": "^4.15.4",
-    "faker": "^4.1.0",
-    "hal": "^1.1.0",
-    "jsonld": "^0.4.12",
-    "lodash": "^4.17.4",
-    "method-override": "^2.3.9",
-    "moment": "2.22.0",
-    "morgan": "^1.8.2",
-    "nedb": "^1.8.0",
-    "winston": "^2.3.1"
+    "body-parser": "1.18.2",
+    "config": "1.30.0",
+    "cors": "2.8.4",
+    "ejs": "2.5.9",
+    "express": "4.16.3",
+    "faker": "4.1.0",
+    "hal": "1.2.0",
+    "jsonld": "1.0.1",
+    "lodash": "4.17.5",
+    "method-override": "2.3.10",
+    "moment": "2.22.1",
+    "morgan": "1.9.0",
+    "nedb": "1.8.0",
+    "winston": "2.4.1"
   },
   "devDependencies": {
-    "eslint": "^4.4.1",
+    "@types/cors": "2.8.3",
+    "@types/express": "4.11.1",
+    "@types/faker": "4.1.2",
+    "@types/lodash": "4.14.107",
+    "@types/method-override": "0.0.31",
+    "@types/morgan": "1.7.35",
+    "@types/nedb": "1.8.5",
+    "@types/node": "9.6.6",
     "newman": "3.9.3",
-    "nodemon": "^1.11.0",
-    "npm-run-all": "4.1.2"
+    "npm-run-all": "4.1.2",
+    "ts-node": "6.0.0",
+    "tslint-config-luchsamapparat": "1.2.0",
+    "typescript": "2.8.3"
   }
 }
