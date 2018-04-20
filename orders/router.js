@@ -16,7 +16,7 @@ router.get(getRootPath(), (request, response) => {
         .then(orders => sendResponse(response, {
             'json': orders,
             'html': html.fromOrders(orders),
-            [config.app.mediaType]: hal.fromOrders(orders)
+            [config.app.mediaType.hal]: hal.fromOrders(orders)
         }));
 });
 
@@ -33,7 +33,7 @@ router.post(getRootPath(), (request, response) => {
     let payment;
 
     // // TODO: use mime type matcher
-    if (request.get('Content-Type') === config.app.mediaType) {
+    if (request.get('Content-Type') === config.app.mediaType.hal) {
         items = request.body.items.map(
             item => item.replace(new RegExp(shoppingCartUris.getShoppingCartItemUri('(.*)')), '$1')
         );
@@ -61,7 +61,7 @@ router.get(getOrderPath(), (request, response) => {
         .then(order => sendResponse(response, {
             'json': order,
             'html': html.fromOrder(order),
-            [config.app.mediaType]: hal.fromOrder(order)
+            [config.app.mediaType.hal]: hal.fromOrder(order)
         }));
 });
 

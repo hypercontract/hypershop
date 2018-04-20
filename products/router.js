@@ -13,7 +13,7 @@ router.get(getRootPath(), (request, response) => {
         .then(products => sendResponse(response, {
             'json': products,
             'html': html.fromProducts(products),
-            [config.app.mediaType]: hal.fromProducts(products)
+            [config.app.mediaType.hal]: hal.fromProducts(products)
         }));
 });
 
@@ -22,7 +22,7 @@ router.get(getProductPath(), (request, response) => {
         .then(product => sendResponse(response, {
             'json': product,
             'html': html.fromProduct(product),
-            [config.app.mediaType]: hal.fromProduct(product)
+            [config.app.mediaType.hal]: hal.fromProduct(product)
         }));
 });
 

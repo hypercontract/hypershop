@@ -19,17 +19,17 @@ router.get(getRootPath(), (request, response) => {
         .then(([shoppingCart, userProfile]) => sendResponse(response, {
             'json': shoppingCart,
             'html': html.fromShoppingCart(shoppingCart, userProfile),
-            [config.app.mediaType]: hal.fromShoppingCart(shoppingCart)
+            [config.app.mediaType.hal]: hal.fromShoppingCart(shoppingCart)
         }));
 });
 
 router.post(getShoppingCartItemsPath(), (request, response) => {
-    let product;
+    let productId;
     // TODO: use mime type matcher
-    if (request.get('Content-Type') === config.app.mediaType) {
-        product = request.body.product.replace(new RegExp(getProductUri('(.*)')), '$1');
+    if (request.get('Content-Type') === config.app.mediaType.hal) {
+        productId = request.body.product.replace(new RegExp(getProductUri('(.*)')), '$1');
     } else {
-        product = request.body.product;
+        productId = request.body.product;
     }
     
     let statusCode = 201;
@@ -39,7 +39,7 @@ router.post(getShoppingCartItemsPath(), (request, response) => {
     }
 
     shoppingCartService.addShoppingCartItem(
-        product,
+        productId,
         request.body.quantity
     )
         .then(() => response.redirect(statusCode, getRootUri()));

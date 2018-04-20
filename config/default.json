@@ -2,7 +2,9 @@
     "app": {
         "version": "1.0",
         "namespace": "http://localhost/profile/",
-        "mediaType": "application/hal+json;profile=\"http://localhost/profile/\""
+        "mediaType": {
+            "hal": "application/hal+json;profile=\"http://localhost/profile/\""
+        }
     },
     "http": {
         "scheme": "http",

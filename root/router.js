@@ -14,7 +14,7 @@ router.get(getRootPath(), (request, response) => {
         'html': html.fromApiRoot(
             hal.fromApiRoot(apiRoot)
         ),
-        [config.app.mediaType]: hal.fromApiRoot(apiRoot)
+        [config.app.mediaType.hal]: hal.fromApiRoot(apiRoot)
     });
 });
 

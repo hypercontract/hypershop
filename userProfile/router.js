@@ -11,7 +11,7 @@ router.get(getRootPath(), (request, response) => {
     userProfileService.getUserProfile()
         .then(userProfile => sendResponse(response, {
             'json': userProfile,
-            [config.app.mediaType]: hal.fromUserProfile(userProfile)
+            [config.app.mediaType.hal]: hal.fromUserProfile(userProfile)
         }));
 });
 
