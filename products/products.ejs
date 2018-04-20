@@ -6,7 +6,7 @@
     <% products.forEach(function (product, index) { %>
     <li class="row align-items-center mb-5">
         <figure class="figure col-2">
-            <img src="<%= product.image %>" class="figure-img img-fluid rounded" alt="Product Image">
+            <img src="<%= product.image %>" class="figure-img img-fluid rounded" alt="Product Image of <%= product.name %>">
         </figure>
 
         <div class="col-8">
@@ -21,9 +21,9 @@
 
                 <div class="input-group">
                     <input type="text" name="quantity" value="1" class="form-control text-right">
-                    <span class="input-group-btn">
+                    <div class="input-group-append">
                         <button type="submit" class="btn btn-primary">Add</button>
-                    </span>
+                    </div>
                 </div>
             </form>
         </div>

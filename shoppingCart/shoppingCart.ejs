@@ -23,9 +23,9 @@
                 <form action="<%= links.updateQuantity[index] %>" method="POST" class="input-group">
                     <input type="hidden" name="_method" value="PATCH" />
                     <input type="text" name="quantity" value="<%= shoppingCartItem.quantity %>" class="form-control text-right">
-                    <span class="input-group-btn">
+                    <div class="input-group-append">
                         <button type="submit" class="btn btn-primary">Update</button>
-                    </span>
+                    </input-group-append>
                 </form>
             </td>
             <td>
@@ -39,14 +39,14 @@
     </tbody>
     <tfoot>
         <tr>
-            <td colspan="2" class="text-right"><strong><%= shoppingCart.totalPrice.toFixed(2) %></strong></td>
+            <td colspan="2" class="text-right"><%= shoppingCart.totalPrice.toFixed(2) %></td>
             <td colspan="2"></td>
         </tr>
     </tfoot>
 </table>
 
 <% if (links.placeOrder) { %>
-<form action="<%= links.placeOrder %>" method="POST" class="mt-5 row align-items-end">
+<form action="<%= links.placeOrder %>" method="POST" class="mt-5 row align-items-start">
     <% shoppingCart.items.forEach(function (shoppingCartItem, index) { %>
         <input type="hidden" name="items[]" value="<%= shoppingCartItem._id %>" />
     <% }) %>
@@ -54,31 +54,52 @@
     <h2 class="col-12 h3 mb-4">Place Order</h2>
 
     <div class="form-group col-4">
-        <label class="form-control-label" for="billingAddress">Billing Address</label>
-        <select class="form-control custom-select" name="billingAddress" id="billingAddress">
-            <% userProfile.addresses.forEach(function (address, index) { %>
-            <option value="<%= address._id %>"<%= (index === 0) ? ' selected' : '' %>><%= address.name %>, <%= address.street %>, <%= address.city %></option>
-            <% }) %>
-        </select>
+        <label class="form-control-label h6 mb-3" for="billingAddress">Billing Address</label>
+
+        <% userProfile.addresses.forEach(function (address, index) { %>
+        <div class="form-check mb-3">
+            <input class="form-check-input" type="radio" name="billingAddress" id="billingAddress-<%= index %>" value="<%= address._id %>" <%= (index === 0) ? ' checked' : '' %> />
+            <label class="form-check-label" for="billingAddress-<%= index %>">
+                <%= address.name %><br />
+                <small>
+                    <%= address.street %>, <%= address.city %>
+                </small>
+            </label>
+        </div>
+        <% }) %>
     </div>
+
     <div class="form-group col-4">
-        <label class="form-control-label" for="shippingAddress">Shipping Address</label>
-        <select class="form-control custom-select" name="shippingAddress" id="shippingAddress">
-            <% userProfile.addresses.forEach(function (address, index) { %>
-            <option value="<%= address._id %>"<%= (index === 1) ? ' selected' : '' %>><%= address.name %>, <%= address.street %>, <%= address.city %></option>
-            <% }) %>
-        </select>
-    </div>
-    <div class="form-group col-3">
-        <label class="form-control-label" for="payment">Payment</label>
-        <select class="form-control custom-select" name="payment" id="payment">
-            <% userProfile.paymentOptions.forEach(function (paymentOption) { %>
-            <option value="<%= paymentOption._id %>"><%= paymentOption.accountOwner %>, <%= paymentOption.iban %></option>
-            <% }) %>
-        </select>
+        <label class="form-control-label h6 mb-3" for="shippingAddress">Shipping Address</label>
+        
+        <% userProfile.addresses.forEach(function (address, index) { %>
+        <div class="form-check mb-3">
+            <input class="form-check-input" type="radio" name="shippingAddress" id="shippingAddress-<%= index %>" value="<%= address._id %>" <%= (index === 0) ? ' checked' : '' %> />
+            <label class="form-check-label" for="shippingAddress-<%= index %>">
+                <%= address.name %><br />
+                <small>
+                    <%= address.street %>, <%= address.city %>
+                </small>
+            </label>
+        </div>
+        <% }) %>
     </div>
     
-    <div class="form-group col-1">
+    <div class="form-group col-2">
+        <label class="form-control-label h6 mb-3" for="payment">Payment</label>
+
+        <% userProfile.paymentOptions.forEach(function (paymentOption, index) { %>
+        <div class="form-check mb-3">
+            <input class="form-check-input" type="radio" name="payment" id="payment-<%= index %>" value="<%= paymentOption._id %>" <%= (index === 0) ? ' checked' : '' %> />
+            <label class="form-check-label" for="paymentOption-<%= index %>">
+                <%= paymentOption.accountOwner %><br />
+                <small><%= paymentOption.iban %></small>
+            </label>
+        </div>
+        <% }) %>
+    </div>
+    
+    <div class="form-group col-2 text-right">
         <button type="submit" class="btn btn-primary">Place Order</button>
     </div>
 </form>
