@@ -47,13 +47,13 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "65e5da8e-efd0-4ab9-9ffa-a8454ba36946",
+						"id": "adca6d68-78fb-4c5e-8e85-94bfb88580ee",
 						"type": "text/javascript",
 						"exec": [
 							"postman.clearEnvironmentVariables();",
 							"",
-							"var nsUri = 'http://localhost/';",
-							"var mediaType = 'application/hal+json;profile=\"' + nsUri + 'profile\"';",
+							"var nsUri = 'http://localhost/profile/';",
+							"var mediaType = 'application/hal+json;profile=\"' + nsUri + '\"';",
 							"",
 							"var mediaTypeRegExp = _.escapeRegExp(mediaType).split(';').join('(.*)');",
 							"",

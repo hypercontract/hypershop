@@ -38,7 +38,8 @@
     {
         "@id": "http://localhost/",
         "@type": [
-            "http://cfha.luchs.org/#EntryPoint"
+            "http://cfha.luchs.org/#EntryPoint",
+            "http://localhost/profile/ApiRoot"
         ],
         "http://cfha.luchs.org/#defaultMediaType": [
             {
@@ -50,6 +51,12 @@
             {
                 "@value": "text/html"
             }
+        ]
+    },
+    {
+        "@id": "http://localhost/profile/ApiRoot",
+        "@type": [
+            "http://www.w3.org/2002/07/owl#Class"
         ]
     },
     {
@@ -676,6 +683,54 @@
         "http://www.w3.org/2000/01/rdf-schema#subPropertyOf": [
             {
                 "@id": "http://www.w3.org/2002/07/owl#topDataProperty"
+            }
+        ]
+    },
+    {
+        "@id": "http://localhost/profile/searchCatalog",
+        "@type": [
+            "http://www.w3.org/2002/07/owl#DatatypeProperty",
+            "http://www.w3.org/2002/07/owl#FunctionalProperty"
+        ],
+        "http://www.w3.org/2000/01/rdf-schema#range": [
+            {
+                "@id": "http://localhost/profile/Products"
+            }
+        ]
+    },
+    {
+        "@id": "http://localhost/profile/shoppingCart",
+        "@type": [
+            "http://www.w3.org/2002/07/owl#DatatypeProperty",
+            "http://www.w3.org/2002/07/owl#FunctionalProperty"
+        ],
+        "http://www.w3.org/2000/01/rdf-schema#range": [
+            {
+                "@id": "http://localhost/profile/ShoppingCart"
+            }
+        ]
+    },
+    {
+        "@id": "http://localhost/profile/orders",
+        "@type": [
+            "http://www.w3.org/2002/07/owl#DatatypeProperty",
+            "http://www.w3.org/2002/07/owl#FunctionalProperty"
+        ],
+        "http://www.w3.org/2000/01/rdf-schema#range": [
+            {
+                "@id": "http://localhost/profile/Orders"
+            }
+        ]
+    },
+    {
+        "@id": "http://localhost/profile/userProfile",
+        "@type": [
+            "http://www.w3.org/2002/07/owl#DatatypeProperty",
+            "http://www.w3.org/2002/07/owl#FunctionalProperty"
+        ],
+        "http://www.w3.org/2000/01/rdf-schema#range": [
+            {
+                "@id": "http://localhost/profile/UserProfile"
             }
         ]
     }
