@@ -1,6 +1,6 @@
 const express = require('express');
 const morgan = require('morgan');
-const cors = require('cors');
+const cors = require('cors');
 const config = require('config');
 const methodOverride = require('method-override');
 const bodyParser = require('body-parser');
@@ -27,9 +27,8 @@ app.use(bodyParser.urlencoded({
     extended: true
 })); 
 app.use(bodyParser.json());
-app.use(bodyParser.json({
-    type: 'application/hal+json'
-}));
+app.use(bodyParser.json({ type: 'application/hal+json' }));
+app.use(bodyParser.json({ type: 'application/ld+json' }));
 
 app.use(methodOverride(request => {
     const method = get(request, 'body._method');
