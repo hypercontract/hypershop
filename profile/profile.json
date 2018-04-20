@@ -617,11 +617,6 @@
             {
                 "@id": "http://www.w3.org/2001/XMLSchema#string"
             }
-        ],
-        "http://www.w3.org/2000/01/rdf-schema#subPropertyOf": [
-            {
-                "@id": "http://www.w3.org/2002/07/owl#topDataProperty"
-            }
         ]
     },
     {
@@ -679,11 +674,6 @@
             {
                 "@id": "http://www.w3.org/2001/XMLSchema#string"
             }
-        ],
-        "http://www.w3.org/2000/01/rdf-schema#subPropertyOf": [
-            {
-                "@id": "http://www.w3.org/2002/07/owl#topDataProperty"
-            }
         ]
     },
     {
@@ -731,6 +721,23 @@
         "http://www.w3.org/2000/01/rdf-schema#range": [
             {
                 "@id": "http://localhost/profile/UserProfile"
+            }
+        ]
+    },
+    {
+        "@id": "http://localhost/profile/version",
+        "@type": [
+            "http://www.w3.org/2002/07/owl#DatatypeProperty",
+            "http://www.w3.org/2002/07/owl#FunctionalProperty"
+        ],
+        "http://www.w3.org/2000/01/rdf-schema#domain": [
+            {
+                "@id": "http://localhost/profile/ApiRoot"
+            }
+        ],
+        "http://www.w3.org/2000/01/rdf-schema#range": [
+            {
+                "@id": "http://www.w3.org/2001/XMLSchema#string"
             }
         ]
     }
