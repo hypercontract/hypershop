@@ -1,15 +1,15 @@
-import * as express from 'express';
-import * as morgan from 'morgan';
-import * as cors from 'cors';
-import * as config from 'config';
-import * as methodOverride from 'method-override';
 import * as bodyParser from 'body-parser';
-import { isUndefined, get } from 'lodash';
-
-import * as root from './root/router';
-import { getRootUri } from './root/uris';
+import * as config from 'config';
+import * as cors from 'cors';
+import * as express from 'express';
+import { get, isUndefined } from 'lodash';
+import * as methodOverride from 'method-override';
+import * as morgan from 'morgan';
 import { endpoints } from './endpoints';
 import * as mockData from './mock/mockData';
+import * as root from './root/router';
+import { getRootUri } from './root/uris';
+
 
 mockData.create();
 
@@ -22,7 +22,11 @@ app.locals = {
 };
 
 app.use(morgan('combined'));
-app.use(cors());
+app.use(cors({
+    exposedHeaders: [
+        'Location'
+    ]
+}));
 app.use(bodyParser.urlencoded({
     extended: true
 })); 
