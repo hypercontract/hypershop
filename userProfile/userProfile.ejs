@@ -8,8 +8,8 @@
 
         <ul>
             <% userProfile.addresses.forEach(function (address, index) { %>
-            <li>
-                <address>
+            <li class="mb-3">
+                <address class="mb-0">
                     <%= address.name %><br />
                     <small>
                         <%= address.street %>, <%= address.city %>
@@ -25,11 +25,9 @@
 
         <ul>
             <% userProfile.paymentOptions.forEach(function (paymentOption, index) { %>
-            <li>
-                <address>
-                        <%= paymentOption.accountOwner %><br />
-                        <small><%= paymentOption.iban %></small>
-                </address>
+            <li class="mb-3">
+                <%= paymentOption.accountOwner %><br />
+                <small><%= paymentOption.iban %></small>
             </li>
             <% }) %>
         </ul>
