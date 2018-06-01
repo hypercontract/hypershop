@@ -111,21 +111,6 @@
         "@id": "http://localhost/profile/QuantityUpdate",
         "@type": [
             "http://www.w3.org/2002/07/owl#Class"
-        ],
-        "http://cfha.luchs.org/#expectedType": [
-            {
-                "@id": "http://localhost/profile/QuantityUpdate"
-            }
-        ],
-        "http://cfha.luchs.org/#method": [
-            {
-                "@value": "PATCH"
-            }
-        ],
-        "http://cfha.luchs.org/#returnedType": [
-            {
-                "@id": "http://localhost/profile/ShoppingCart"
-            }
         ]
     },
     {
