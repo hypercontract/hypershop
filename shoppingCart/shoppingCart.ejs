@@ -22,10 +22,10 @@
             <td style="width: 15%">
                 <form action="<%= links.updateQuantity[index] %>" method="POST" class="input-group">
                     <input type="hidden" name="_method" value="PATCH" />
-                    <input type="text" name="quantity" value="<%= shoppingCartItem.quantity %>" class="form-control text-right">
+                    <input type="number" name="quantity" value="<%= shoppingCartItem.quantity %>" class="form-control text-right">
                     <div class="input-group-append">
                         <button type="submit" class="btn btn-primary">Update</button>
-                    </input-group-append>
+                    </div>
                 </form>
             </td>
             <td>
