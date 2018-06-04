@@ -6,7 +6,7 @@
     <% orders.forEach(function (order, index) { %>
     <li class="row align-items-center mb-5">
         <div class="col">
-            <h2 class="h5 mb-1"><a href="<%= links.order[index] %>"><%= new Date(order.date).toLocaleDateString() %> <%= new Date(order.date).toLocaleTimeString() %></a></h2>
+            <h2 class="h5 mb-1"><a href="<%= links.order[index] %>">Order <%= formatDate(order.date) %></a></h2>
             <p class="mt-2"><span class="badge badge-secondary"><%= order.status %></span></p>
         </div>
 
