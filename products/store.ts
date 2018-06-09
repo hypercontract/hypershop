@@ -1,4 +1,6 @@
-import { Store } from '../shared/store';
+import { createOrGetStore } from '../shared/storeFactory';
 import { Product } from './model';
 
-export const productStore = new Store<Product>();
+export function getProductStore() {
+    return createOrGetStore<Product>('product');
+}

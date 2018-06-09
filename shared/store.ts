@@ -1,6 +1,4 @@
-import * as Datastore from 'nedb';
 import * as faker from 'faker';
-import { Z_STREAM_ERROR } from 'zlib';
 
 export type EntityId = string;
 
@@ -10,16 +8,16 @@ export interface Entity {
 
 export class Store<T extends Entity> {
 
-    private db: Datastore;
+    private dbConnection: any;
 
-    constructor(initialData: T[] = []) {
-        this.db = new Datastore();
+    constructor(dbConnection: any, initialData: T[] = []) {
+        this.dbConnection = dbConnection;
         this.bulkInsert(initialData);
     }
 
     findOne(entityId: EntityId) {
         return new Promise<T>((resolve, reject) => {
-            this.db.findOne({ _id: entityId }, (error, entity: T) => {
+            this.dbConnection.findOne({ _id: entityId }, (error: any, entity: T) => {
                 if (error) {
                     return reject(error);
                 }
@@ -30,7 +28,7 @@ export class Store<T extends Entity> {
 
     find(query = {}) {
         return new Promise<T[]>((resolve, reject) => {
-            this.db.find(query, (error: any, entities: T[]) => {
+            this.dbConnection.find(query, (error: any, entities: T[]) => {
                 if (error) {
                     return reject(error);
                 }
@@ -46,7 +44,7 @@ export class Store<T extends Entity> {
 
     bulkInsert(entities: T[]) {
         return new Promise<EntityId[]>((resolve, reject) => {
-            this.db.insert(generateIds(entities), (error, entities: T[]) => {
+            this.dbConnection.insert(generateIds(entities), (error: any, entities: T[]) => {
                 if (error) {
                     return reject(error);
                 }
@@ -57,7 +55,7 @@ export class Store<T extends Entity> {
 
     update(entityId: EntityId, updatedEntity: Partial<T>) {
         return new Promise<void>((resolve, reject) => {
-            this.db.update({ _id: entityId }, { $set: updatedEntity }, {}, (error) => {
+            this.dbConnection.update({ _id: entityId }, { $set: updatedEntity }, {}, (error: any) => {
                 if (error) {
                     return reject(error);
                 }
@@ -68,7 +66,7 @@ export class Store<T extends Entity> {
 
     remove(entityId: EntityId) {
         return new Promise<void>((resolve, reject) => {
-            this.db.remove({ _id: entityId }, {}, (error) => {
+            this.dbConnection.remove({ _id: entityId }, {}, (error: any) => {
                 if (error) {
                     return reject(error);
                 }
@@ -79,7 +77,7 @@ export class Store<T extends Entity> {
 
     removeAll() {
         return new Promise<void>((resolve, reject) => {
-            this.db.remove({}, { multi: true }, (error) => {
+            this.dbConnection.remove({}, { multi: true }, (error: any) => {
                 if (error) {
                     return reject(error);
                 }

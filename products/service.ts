@@ -1,13 +1,15 @@
 import { defaultTo } from 'lodash';
-import { productStore } from './store';
 import { EntityId } from '../shared/store';
+import { getProductStore } from './store';
 
 export function findProducts(query: string) {
-    return productStore.find(getQueryMatcher(query));
+    return getProductStore()
+        .then(productStore => productStore.find(getQueryMatcher(query)));
 }
 
 export function getProduct(id: EntityId) {
-    return productStore.findOne(id);
+    return getProductStore()
+        .then(productStore => productStore.findOne(id));
 }
 
 function getQueryMatcher(rawQuery: string) {

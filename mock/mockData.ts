@@ -1,13 +1,13 @@
 import * as faker from 'faker';
 import { random, sample, times, toNumber } from 'lodash';
+import { OrderStatus } from '../orders/model';
 import * as orderService from '../orders/service';
-import { productStore } from '../products/store';
-import * as shoppingCartService from '../shoppingCart/service';
-import { addressStore } from '../userProfile/addresses/store';
-import { paymentOptionStore } from '../userProfile/paymentOptions/store';
+import { getProductStore } from '../products/store';
 import { EntityId } from '../shared/store';
 import { ShoppingCart } from '../shoppingCart/model';
-import { OrderStatus } from '../orders/model';
+import * as shoppingCartService from '../shoppingCart/service';
+import { getAddressStore } from '../userProfile/addresses/store';
+import { getPaymentOptionStore } from '../userProfile/paymentOptions/store';
 
 const orderStatusValues = [
     OrderStatus.Cancelled,
@@ -26,15 +26,22 @@ export function create() {
     const products = times(100, () => generateProduct());
 
     return Promise.all([
-        productStore.bulkInsert(products),
-        addressStore.bulkInsert(addresses),
-        paymentOptionStore.bulkInsert(paymentOptions)
+        getProductStore(),
+        getAddressStore(),
+        getPaymentOptionStore()
     ])
-        .then(([productIds, addressIds, paymentOptionIds]) => repeatInSequence(
-            20,
-            () => createShoppingCart(productIds)
-                .then(shoppingCart => createOrder(shoppingCart, addressIds, paymentOptionIds))
-        ));
+        .then(([productStore, addressStore, paymentOptionStore]) => {
+            return Promise.all([
+                productStore.bulkInsert(products),
+                addressStore.bulkInsert(addresses),
+                paymentOptionStore.bulkInsert(paymentOptions)
+            ])
+                .then(([productIds, addressIds, paymentOptionIds]) => repeatInSequence(
+                    20,
+                    () => createShoppingCart(productIds)
+                        .then(shoppingCart => createOrder(shoppingCart, addressIds, paymentOptionIds))
+                ));
+        });    
 }
 
 function generateAddress() {

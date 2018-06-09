@@ -1,4 +1,6 @@
-import { Store } from '../shared/store';
+import { createOrGetStore } from '../shared/storeFactory';
 import { ShoppingCartItem } from './model';
 
-export const shoppingCartItemStore = new Store<ShoppingCartItem>();
+export function getShoppingCartItemStore() {
+    return createOrGetStore<ShoppingCartItem>('shoppingCartItem');
+}

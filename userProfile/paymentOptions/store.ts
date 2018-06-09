@@ -1,4 +1,6 @@
-import { Store } from '../../shared/store';
+import { createOrGetStore } from '../../shared/storeFactory';
 import { PaymentOption } from '../model';
 
-export const paymentOptionStore = new Store<PaymentOption>();
+export function getPaymentOptionStore() {
+    return createOrGetStore<PaymentOption>('paymentOption');
+}

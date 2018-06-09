@@ -1,45 +1,52 @@
-import * as moment from 'moment';
 import { omit } from 'lodash';
-import { orderStore } from './store';
-import * as shoppingCartService from '../shoppingCart/service';
-import * as userProfileService from '../userProfile/service';
+import * as moment from 'moment';
 import { EntityId } from '../shared/store';
-import { Order, NewOrder, OrderStatus } from './model';
 import { ShoppingCartItem } from '../shoppingCart/model';
+import * as shoppingCartService from '../shoppingCart/service';
 import { Address, PaymentOption } from '../userProfile/model';
+import * as userProfileService from '../userProfile/service';
+import { NewOrder, Order, OrderStatus } from './model';
+import { getOrderStore } from './store';
 
 export function createOrder(values: NewOrder) {
-    return Promise.all([
-        Promise.all(values.items.map(
-            (lineItemId: EntityId) => shoppingCartService.getShoppingCartItem(lineItemId)
-        )),
-        userProfileService.getAddress(values.billingAddress),
-        userProfileService.getAddress(values.shippingAddress),
-        userProfileService.getPaymentOption(values.payment)
-    ])
-        .then(([lineItems, billingAddress, shippingAddress, payment]) => {
-            return orderStore.insert(
-                getNewOrder(lineItems, billingAddress, shippingAddress, payment)
-            )
-                .then(orderId => shoppingCartService.emptyShoppingCart()
-                    .then(() => orderId));
+    return getOrderStore()
+        .then(orderStore => {
+            return Promise.all([
+                Promise.all(values.items.map(
+                    (lineItemId: EntityId) => shoppingCartService.getShoppingCartItem(lineItemId)
+                )),
+                userProfileService.getAddress(values.billingAddress),
+                userProfileService.getAddress(values.shippingAddress),
+                userProfileService.getPaymentOption(values.payment)
+            ])
+                .then(([lineItems, billingAddress, shippingAddress, payment]) => {
+                    return orderStore.insert(
+                        getNewOrder(lineItems, billingAddress, shippingAddress, payment)
+                    )
+                        .then(orderId => shoppingCartService.emptyShoppingCart()
+                            .then(() => orderId));
+                });
         });
+
 }
 
 export function getOrder(id: EntityId) {
-    return orderStore.findOne(id);
+    return getOrderStore()
+        .then(orderStore => orderStore.findOne(id));
 }
 
 export function getOrders() {
-    return orderStore.find()
+    return getOrderStore()
+        .then(orderStore => orderStore.find())
         .then(orders => sortOrdersByDate(orders));
 }
 
 export function updateOrderStatus(id: EntityId, status: OrderStatus) {
-    return orderStore.update(
-        id,
-        { status }
-    );
+    return getOrderStore()
+        .then(orderStore => orderStore.update(
+            id,
+            { status }
+        ));
 }
 
 function getNewOrder(lineItems: ShoppingCartItem[], billingAddress: Address, shippingAddress: Address, payment: PaymentOption) {

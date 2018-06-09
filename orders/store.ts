@@ -1,4 +1,6 @@
-import { Store } from '../shared/store';
+import { createOrGetStore } from '../shared/storeFactory';
 import { Order } from './model';
 
-export const orderStore = new Store<Order>();
+export function getOrderStore() {
+    return createOrGetStore<Order>('order');
+}
