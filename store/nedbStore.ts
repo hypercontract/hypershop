@@ -1,23 +1,20 @@
-import * as faker from 'faker';
+import * as Datastore from 'nedb';
+import { Entity, EntityId, Store } from "./model";
+import { generateIds } from "./util";
 
-export type EntityId = string;
+export class NeDBStore<T extends Entity> implements Store<T> {
 
-export interface Entity {
-    _id?: EntityId;
-}
+    private name: string;
+    private dataStore: Datastore;
 
-export class Store<T extends Entity> {
-
-    private dbConnection: any;
-
-    constructor(dbConnection: any, initialData: T[] = []) {
-        this.dbConnection = dbConnection;
-        this.bulkInsert(initialData);
+    constructor(name: string) {
+        this.name = name;
+        this.dataStore = new Datastore();
     }
 
     findOne(entityId: EntityId) {
         return new Promise<T>((resolve, reject) => {
-            this.dbConnection.findOne({ _id: entityId }, (error: any, entity: T) => {
+            this.dataStore.findOne({ _id: entityId }, (error: any, entity: T) => {
                 if (error) {
                     return reject(error);
                 }
@@ -28,7 +25,7 @@ export class Store<T extends Entity> {
 
     find(query = {}) {
         return new Promise<T[]>((resolve, reject) => {
-            this.dbConnection.find(query, (error: any, entities: T[]) => {
+            this.dataStore.find(query, (error: any, entities: T[]) => {
                 if (error) {
                     return reject(error);
                 }
@@ -44,7 +41,7 @@ export class Store<T extends Entity> {
 
     bulkInsert(entities: T[]) {
         return new Promise<EntityId[]>((resolve, reject) => {
-            this.dbConnection.insert(generateIds(entities), (error: any, entities: T[]) => {
+            this.dataStore.insert(generateIds(entities), (error: any, entities: T[]) => {
                 if (error) {
                     return reject(error);
                 }
@@ -55,7 +52,7 @@ export class Store<T extends Entity> {
 
     update(entityId: EntityId, updatedEntity: Partial<T>) {
         return new Promise<void>((resolve, reject) => {
-            this.dbConnection.update({ _id: entityId }, { $set: updatedEntity }, {}, (error: any) => {
+            this.dataStore.update({ _id: entityId }, { $set: updatedEntity }, {}, (error: any) => {
                 if (error) {
                     return reject(error);
                 }
@@ -66,7 +63,7 @@ export class Store<T extends Entity> {
 
     remove(entityId: EntityId) {
         return new Promise<void>((resolve, reject) => {
-            this.dbConnection.remove({ _id: entityId }, {}, (error: any) => {
+            this.dataStore.remove({ _id: entityId }, {}, (error: any) => {
                 if (error) {
                     return reject(error);
                 }
@@ -77,7 +74,7 @@ export class Store<T extends Entity> {
 
     removeAll() {
         return new Promise<void>((resolve, reject) => {
-            this.dbConnection.remove({}, { multi: true }, (error: any) => {
+            this.dataStore.remove({}, { multi: true }, (error: any) => {
                 if (error) {
                     return reject(error);
                 }
@@ -86,11 +83,4 @@ export class Store<T extends Entity> {
         });
     }
 
-}
-
-function generateIds<T>(entities: T[]) {
-    return entities.map((entity: T) => Object.assign(
-        { _id: faker.random.uuid() },
-        entity
-    ));
 }

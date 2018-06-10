@@ -1,8 +1,8 @@
 import { omit } from 'lodash';
 import * as moment from 'moment';
-import { EntityId } from '../shared/store';
 import { ShoppingCartItem } from '../shoppingCart/model';
 import * as shoppingCartService from '../shoppingCart/service';
+import { EntityId } from '../store/model';
 import { Address, PaymentOption } from '../userProfile/model';
 import * as userProfileService from '../userProfile/service';
 import { NewOrder, Order, OrderStatus } from './model';

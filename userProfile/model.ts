@@ -1,4 +1,4 @@
-import { Entity } from "../shared/store";
+import { Entity } from "../store/model";
 
 export interface UserProfile extends Entity {
     addresses: Address[];

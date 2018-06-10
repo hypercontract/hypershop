@@ -1,4 +1,4 @@
-import { createOrGetStore } from '../../shared/storeFactory';
+import { createOrGetStore } from '../../store/storeFactory';
 import { Address } from '../model';
 
 export function getAddressStore() {

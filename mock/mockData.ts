@@ -3,9 +3,9 @@ import { random, sample, times, toNumber } from 'lodash';
 import { OrderStatus } from '../orders/model';
 import * as orderService from '../orders/service';
 import { getProductStore } from '../products/store';
-import { EntityId } from '../shared/store';
 import { ShoppingCart } from '../shoppingCart/model';
 import * as shoppingCartService from '../shoppingCart/service';
+import { EntityId } from '../store/model';
 import { getAddressStore } from '../userProfile/addresses/store';
 import { getPaymentOptionStore } from '../userProfile/paymentOptions/store';
 

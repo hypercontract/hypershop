@@ -1,5 +1,4 @@
-import { Entity, EntityId } from "../shared/store";
-import { Product } from "../products/model";
+import { Entity, EntityId } from "../store/model";
 
 export interface ShoppingCart {
     items: ShoppingCartItem[];

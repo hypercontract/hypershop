@@ -1,7 +1,7 @@
 import { isNull } from 'lodash';
 import { Product } from '../products/model';
 import * as productService from '../products/service';
-import { EntityId } from '../shared/store';
+import { EntityId } from '../store/model';
 import { ShoppingCartItem } from './model';
 import { getShoppingCartItemStore } from './store';
 

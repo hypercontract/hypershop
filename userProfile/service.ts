@@ -1,4 +1,4 @@
-import { EntityId } from '../shared/store';
+import { EntityId } from '../store/model';
 import { getAddressStore } from './addresses/store';
 import { getPaymentOptionStore } from './paymentOptions/store';
 

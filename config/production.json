@@ -9,5 +9,8 @@
     },
     "http": {
         "hostname": "shop.luchs.org"
+    },
+    "db": {
+        "type": "nedb"
     }
 }

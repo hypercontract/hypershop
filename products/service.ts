@@ -1,5 +1,5 @@
 import { defaultTo } from 'lodash';
-import { EntityId } from '../shared/store';
+import { EntityId } from '../store/model';
 import { getProductStore } from './store';
 
 export function findProducts(query: string) {

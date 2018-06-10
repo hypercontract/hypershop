@@ -11,5 +11,8 @@
         "scheme": "http",
         "hostname": "localhost",
         "port": 80
+    },
+    "db": {
+        "type": "nedb"
     }
 }

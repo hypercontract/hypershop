@@ -1,6 +1,6 @@
 import { isNull } from 'lodash';
 import * as rootUris from '../root/uris';
-import { EntityId } from '../shared/store';
+import { EntityId } from '../store/model';
 
 export function getBasePath() {
     return '/shoppingCart';

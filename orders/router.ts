@@ -1,15 +1,15 @@
-import * as express from 'express';
 import * as config from 'config';
+import * as express from 'express';
 import { escapeRegExp } from 'lodash';
+import { sendResponse } from '../shared/util';
+import * as shoppingCartUris from '../shoppingCart/uris';
+import { EntityId } from '../store/model';
+import * as userProfileUris from '../userProfile/uris';
 import * as hal from './hal';
 import * as html from './html';
-import * as orderService from './service';
-import { getBasePath, getRootPath, getOrderPath, getOrderUri } from './uris';
-import * as shoppingCartUris from '../shoppingCart/uris';
-import * as userProfileUris from '../userProfile/uris';
-import { sendResponse } from '../shared/util';
-import { EntityId } from '../shared/store';
 import { OrderStatus } from './model';
+import * as orderService from './service';
+import { getBasePath, getOrderPath, getOrderUri, getRootPath } from './uris';
 
 export const basePath = getBasePath();
 
