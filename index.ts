@@ -10,8 +10,9 @@ import * as mockData from './mock/mockData';
 import * as root from './root/router';
 import { getRootUri } from './root/uris';
 
-
-mockData.create();
+if (config.get('db.generateMockData')) {
+    mockData.create();
+}
 
 const app = express();
 

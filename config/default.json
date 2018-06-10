@@ -13,6 +13,7 @@
         "port": 80
     },
     "db": {
-        "type": "nedb"
+        "type": "nedb",
+        "generateMockData": false
     }
 }
