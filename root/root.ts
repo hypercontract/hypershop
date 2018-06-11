@@ -1,4 +1,4 @@
-import * as config from 'config';
+import config from 'config';
 import { ApiRoot } from './model';
 
 export const apiRoot: ApiRoot = {

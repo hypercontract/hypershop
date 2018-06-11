@@ -1,13 +1,9 @@
 import * as jsonld from 'jsonld';
-import { isArray, isEmpty, isUndefined, filter, find, omit } from 'lodash';
-import { shop, rdfs } from '../shared/namespaces';
-
-// @ts-ignore
-import * as context from './context.json';
-// @ts-ignore
-import * as domainProfile from './profile.json';
-// @ts-ignore
-import * as cfhaVocabulary from './cfha.json';
+import { filter, find, isArray, isEmpty, isUndefined, omit } from 'lodash';
+import { rdfs, shop } from '../shared/namespaces';
+import cfhaVocabulary from './cfha.json';
+import context from './context.json';
+import domainProfile from './profile.json';
 
 export type Uri = string;
 export type Context = any;
@@ -43,7 +39,7 @@ function getResourceByUri(uri: Uri) {
 }
 
 function getPropertiesByDomain(domainUri: Uri) {
-    return filter(domainProfile, (resource) => {
+    return filter(domainProfile, (resource: any) => {
         const domain = resource[rdfs('domain')];
         return (
             isArray(domain) &&

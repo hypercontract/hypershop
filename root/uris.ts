@@ -1,4 +1,4 @@
-import * as config from 'config';
+import config from 'config';
 
 export function getBaseUri() {
     const scheme = config.get('http.scheme');

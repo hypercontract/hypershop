@@ -1,10 +1,10 @@
+import config from 'config';
 import * as express from 'express';
-import * as config from 'config';
+import { sendResponse } from '../shared/util';
 import * as hal from './hal';
 import * as html from './html';
 import * as productService from './service';
-import { getBasePath, getRootPath, getProductPath } from './uris';
-import { sendResponse } from '../shared/util';
+import { getBasePath, getProductPath, getRootPath } from './uris';
 
 export const basePath = getBasePath();
 

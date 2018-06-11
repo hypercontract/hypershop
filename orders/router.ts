@@ -1,4 +1,4 @@
-import * as config from 'config';
+import config from 'config';
 import * as express from 'express';
 import { escapeRegExp } from 'lodash';
 import { sendResponse } from '../shared/util';

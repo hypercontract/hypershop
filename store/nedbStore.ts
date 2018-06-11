@@ -1,4 +1,4 @@
-import * as Datastore from 'nedb';
+import Datastore from 'nedb';
 import { Entity, EntityId, Store } from "./model";
 import { generateIds } from "./util";
 

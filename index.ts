@@ -1,10 +1,10 @@
 import * as bodyParser from 'body-parser';
-import * as config from 'config';
-import * as cors from 'cors';
-import * as express from 'express';
+import config from 'config';
+import cors from 'cors';
+import express from 'express';
 import { get, isUndefined } from 'lodash';
-import * as methodOverride from 'method-override';
-import * as morgan from 'morgan';
+import methodOverride from 'method-override';
+import morgan from 'morgan';
 import { endpoints } from './endpoints';
 import * as mockData from './mock/mockData';
 import * as root from './root/router';

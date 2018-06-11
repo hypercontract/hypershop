@@ -1,4 +1,4 @@
-import * as config from 'config';
+import config from 'config';
 import { MongoClient } from 'mongodb';
 import { NeDBStore } from "../store/nedbStore";
 import { Store, StoreType } from './model';

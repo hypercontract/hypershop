@@ -1,9 +1,9 @@
+import config from 'config';
 import * as express from 'express';
-import * as config from 'config';
-import { apiRoot } from './root';
+import { sendResponse } from '../shared/util';
 import * as hal from './hal';
 import * as html from './html';
-import { sendResponse } from '../shared/util';
+import { apiRoot } from './root';
 import { getRootPath } from './uris';
 
 export const router = express.Router();

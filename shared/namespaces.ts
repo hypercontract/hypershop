@@ -1,4 +1,4 @@
-import * as config from 'config';
+import config from 'config';
 
 export const shop = (name: string) => config.app.namespace + name;
 export const cfha = (name: string) => `http://cfha.luchs.org/#${name}`;

@@ -1,13 +1,13 @@
+import config from 'config';
 import * as express from 'express';
-import * as config from 'config';
 import { escapeRegExp } from 'lodash';
+import { getProductUri } from '../products/uris';
+import { sendResponse } from '../shared/util';
+import * as userProfileService from '../userProfile/service';
 import * as hal from './hal';
 import * as html from './html';
 import * as shoppingCartService from './service';
-import * as userProfileService from '../userProfile/service';
-import { getBasePath, getRootPath, getRootUri, getShoppingCartItemsPath, getShoppingCartItemPath } from './uris';
-import { getProductUri } from '../products/uris';
-import { sendResponse } from '../shared/util';
+import { getBasePath, getRootPath, getRootUri, getShoppingCartItemPath, getShoppingCartItemsPath } from './uris';
 
 export const basePath = getBasePath();
 

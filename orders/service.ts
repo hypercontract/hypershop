@@ -1,5 +1,5 @@
 import { omit } from 'lodash';
-import * as moment from 'moment';
+import moment from 'moment';
 import { ShoppingCartItem } from '../shoppingCart/model';
 import * as shoppingCartService from '../shoppingCart/service';
 import { EntityId } from '../store/model';
