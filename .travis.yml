@@ -11,5 +11,5 @@ addons:
     packages:
       - g++-4.9
 script:
-  - npm start &
+  - sudo npm start &
   - npm test
