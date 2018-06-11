@@ -12,4 +12,4 @@ addons:
       - g++-4.9
 script:
   - sudo npm start &
-  - npm test
+  - sudo $(which npm) test
