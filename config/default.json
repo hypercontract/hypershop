@@ -1,11 +1,6 @@
 {
     "app": {
-        "version": "1.0",
-        "namespace": "http://localhost/profile/",
-        "mediaType": {
-            "hal": "application/hal+json;profile=\"http://localhost/profile/\"",
-            "ld": "application/ld+json;profile=\"http://localhost/profile/\""
-        }
+        "version": "1.0"
     },
     "http": {
         "scheme": "http",

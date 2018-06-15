@@ -1,7 +1,6 @@
-import config from 'config';
 import * as express from 'express';
-import { escapeRegExp } from 'lodash';
 import { getProductUri } from '../products/uris';
+import { acceptIsHtml, contentTypeIsJsonHal, jsonHal } from '../shared/mediaType';
 import { sendResponse } from '../shared/util';
 import * as userProfileService from '../userProfile/service';
 import * as hal from './hal';
@@ -19,24 +18,24 @@ router.get(getRootPath(), (request, response) => {
         userProfileService.getUserProfile()
     ])
         .then(([shoppingCart, userProfile]) => sendResponse(response, {
-            'json': shoppingCart,
-            'html': html.fromShoppingCart(shoppingCart, userProfile),
-            [config.app.mediaType.hal]: hal.fromShoppingCart(shoppingCart)
+            json: shoppingCart,
+            html: html.fromShoppingCart(shoppingCart, userProfile),
+            [jsonHal]: hal.fromShoppingCart(shoppingCart)
         }));
 });
 
 router.post(getShoppingCartItemsPath(), (request, response) => {
     let productId;
     // TODO: use mime type matcher
-    if (request.get('Content-Type') === config.app.mediaType.hal) {
+    if (contentTypeIsJsonHal(request)) {
         productId = request.body.product.replace(new RegExp(getProductUri('(.*)')), '$1');
     } else {
         productId = request.body.product;
     }
-    
+
     let statusCode = 201;
     // TODO: use mime type matcher
-    if (request.get('Accept')!.match(escapeRegExp('text/html'))) {
+    if (acceptIsHtml(request)) {
         statusCode = 303;
     }
 

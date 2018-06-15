@@ -1,14 +1,11 @@
 {
     "app": {
-        "version": "1.0",
-        "namespace": "http://shop.luchs.org/profile/",
-        "mediaType": {
-            "hal": "application/hal+json;profile=\"http://shop.luchs.org/profile/\"",
-            "ld": "application/ld+json;profile=\"http://shop.luchs.org/profile/\""
-        }
+        "version": "1.0"
     },
     "http": {
-        "hostname": "shop.luchs.org"
+        "scheme": "http",
+        "hostname": "localhost",
+        "port": 80
     },
     "db": {
         "type": "nedb",

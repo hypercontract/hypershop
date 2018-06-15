@@ -1,6 +1,5 @@
-import config from 'config';
 import * as express from 'express';
-import { escapeRegExp } from 'lodash';
+import { acceptIsHtml, contentTypeIsJsonHal, jsonHal } from '../shared/mediaType';
 import { sendResponse } from '../shared/util';
 import * as shoppingCartUris from '../shoppingCart/uris';
 import { EntityId } from '../store/model';
@@ -20,14 +19,14 @@ router.get(getRootPath(), (request, response) => {
         .then(orders => sendResponse(response, {
             json: orders,
             html: html.fromOrders(orders),
-            [config.app.mediaType.hal]: hal.fromOrders(orders)
+            [jsonHal]: hal.fromOrders(orders)
         }));
 });
 
 router.post(getRootPath(), (request, response) => {
     let statusCode = 201;
     // TODO: use mime type matcher
-    if (request.get('Accept')!.match(escapeRegExp('text/html'))) {
+    if (acceptIsHtml(request)) {
         statusCode = 303;
     }
 
@@ -37,7 +36,7 @@ router.post(getRootPath(), (request, response) => {
     let payment;
 
     // // TODO: use mime type matcher
-    if (request.get('Content-Type') === config.app.mediaType.hal) {
+    if (contentTypeIsJsonHal(request)) {
         items = request.body.items.map(
             (item: EntityId) => item.replace(new RegExp(shoppingCartUris.getShoppingCartItemUri('(.*)')), '$1')
         );
@@ -50,7 +49,7 @@ router.post(getRootPath(), (request, response) => {
         shippingAddress = request.body.shippingAddress;
         payment = request.body.payment;
     }
-    
+
     orderService.createOrder({
         items,
         billingAddress,
@@ -63,9 +62,9 @@ router.post(getRootPath(), (request, response) => {
 router.get(getOrderPath(), (request, response) => {
     orderService.getOrder(request.params.orderId)
         .then(order => sendResponse(response, {
-            'json': order,
-            'html': html.fromOrder(order),
-            [config.app.mediaType.hal]: hal.fromOrder(order)
+            json: order,
+            html: html.fromOrder(order),
+            [jsonHal]: hal.fromOrder(order)
         }));
 });
 

@@ -1,10 +1,10 @@
 import { Resource } from 'hal';
 import { map, omit } from 'lodash';
-import { getRootUri, getShoppingCartItemUri } from './uris';
 import * as orderUris from '../orders/uris';
 import * as productUris from '../products/uris';
-import { shop } from '../shared/namespaces';
+import { shop } from '../profile/namespaces';
 import { ShoppingCart, ShoppingCartItem } from './model';
+import { getRootUri, getShoppingCartItemUri } from './uris';
 
 export function fromShoppingCart(shoppingCart: ShoppingCart) {
     const resource = Resource(

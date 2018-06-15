@@ -1,9 +1,9 @@
 import { Resource } from 'hal';
 import { map, omit } from 'lodash';
-import { getRootUri, getProductUri } from './uris';
+import { shop } from '../profile/namespaces';
 import * as shoppingCartUris from '../shoppingCart/uris';
-import { shop } from '../shared/namespaces';
 import { Product } from './model';
+import { getProductUri, getRootUri } from './uris';
 
 export function fromProducts(products: Product[]) {
     return Resource(
@@ -12,7 +12,7 @@ export function fromProducts(products: Product[]) {
     )
         .embed(
             shop('products'),
-            map(products, fromProduct)   
+            map(products, fromProduct)
         );
 }
 

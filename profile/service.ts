@@ -1,23 +1,22 @@
 import * as jsonld from 'jsonld';
 import { filter, find, isArray, isEmpty, isUndefined, omit } from 'lodash';
-import { rdfs, shop } from '../shared/namespaces';
 import cfhaVocabulary from './cfha.json';
-import context from './context.json';
-import domainProfile from './profile.json';
+import { context as domainContext } from './context';
+import { profile as domainProfile } from './profile';
 
 export type Uri = string;
 export type Context = any;
 
 export function getProfile() {
-    return compact(domainProfile, context);
+    return compact(domainProfile, domainContext);
 }
 
 export function getCFHAVocabulary() {
-    return compact(cfhaVocabulary, omit(context, ['shop']));
+    return compact(cfhaVocabulary, omit(domainContext, ['shop']));
 }
 
 export function getResource(name: string) {
-    const uri = shop(name);
+    const uri = `shop:${name}`;
 
     const graph = [
         getResourceByUri(uri),
@@ -30,7 +29,7 @@ export function getResource(name: string) {
 
     return (<Promise<any>> compact(
         { '@graph': graph },
-        context
+        domainContext
     ));
 }
 
@@ -40,7 +39,7 @@ function getResourceByUri(uri: Uri) {
 
 function getPropertiesByDomain(domainUri: Uri) {
     return filter(domainProfile, (resource: any) => {
-        const domain = resource[rdfs('domain')];
+        const domain = resource[`rdfs:domain`];
         return (
             isArray(domain) &&
             (!isUndefined(find(domain, { '@id': domainUri })))

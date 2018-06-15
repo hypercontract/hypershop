@@ -1,5 +1,5 @@
-import config from 'config';
 import * as express from 'express';
+import { jsonHal } from '../shared/mediaType';
 import { sendResponse } from '../shared/util';
 import * as hal from './hal';
 import * as html from './html';
@@ -13,8 +13,8 @@ export const router = express.Router();
 router.get(getRootPath(), (request, response) => {
     userProfileService.getUserProfile()
         .then(userProfile => sendResponse(response, {
-            'json': userProfile,
-            'html': html.fromUserProfile(userProfile),
-            [config.app.mediaType.hal]: hal.fromUserProfile(userProfile)
+            json: userProfile,
+            html: html.fromUserProfile(userProfile),
+            [jsonHal]: hal.fromUserProfile(userProfile)
         }));
 });

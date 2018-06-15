@@ -1,8 +1,8 @@
 import { Resource } from 'hal';
 import { map, omit } from 'lodash';
-import { getRootUri, getAddressUri, getPaymentOptionUri } from './uris';
-import { shop } from '../shared/namespaces';
-import { UserProfile, PaymentOption, Address } from './model';
+import { shop } from '../profile/namespaces';
+import { Address, PaymentOption, UserProfile } from './model';
+import { getAddressUri, getPaymentOptionUri, getRootUri } from './uris';
 
 export function fromUserProfile(userProfile: UserProfile) {
     return Resource(
