@@ -4,7 +4,7 @@
   "description": "Contract-First Hypermedia APIs: Example API ",
   "main": "index.js",
   "scripts": {
-    "dev": "ts-node index.ts",
+    "serve": "ts-node index.ts",
     "start": "node ./dist/index.js",
     "postinstall": "tsc -p .",
     "test": "run-s test-rest test-hypermedia",

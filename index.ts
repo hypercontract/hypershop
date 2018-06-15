@@ -30,7 +30,7 @@ app.use(cors({
 }));
 app.use(bodyParser.urlencoded({
     extended: true
-})); 
+}));
 app.use(bodyParser.json());
 app.use(bodyParser.json({ type: 'application/hal+json' }));
 app.use(bodyParser.json({ type: 'application/ld+json' }));
