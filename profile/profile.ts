@@ -68,6 +68,12 @@ export const profile = [
         ]
     },
     {
+        '@id': 'shop:CatalogSearchQuery',
+        '@type': [
+            'owl:Class'
+        ]
+    },
+    {
         '@id': 'shop:Address',
         '@type': [
             'owl:Class'
@@ -537,6 +543,23 @@ export const profile = [
         ]
     },
     {
+        '@id': 'shop:query',
+        '@type': [
+            'owl:DatatypeProperty',
+            'owl:FunctionalProperty'
+        ],
+        'rdfs:domain': [
+            {
+                '@id': 'shop:CatalogSearchQuery'
+            }
+        ],
+        'rdfs:range': [
+            {
+                '@id': 'xsd:string'
+            }
+        ]
+    },
+    {
         '@id': 'shop:remove',
         '@type': [
             'owl:ObjectProperty',
@@ -666,10 +689,21 @@ export const profile = [
     {
         '@id': 'shop:searchCatalog',
         '@type': [
-            'owl:DatatypeProperty',
-            'owl:FunctionalProperty'
+            'owl:ObjectProperty',
+            'owl:FunctionalProperty',
+            'cfha:Operation'
         ],
-        'rdfs:range': [
+        'cfha:expectedType': [
+            {
+                '@id': 'shop:CatalogSearchQuery'
+            }
+        ],
+        'cfha:method': [
+            {
+                '@value': 'GET'
+            }
+        ],
+        'cfha:returnedType': [
             {
                 '@id': 'shop:Products'
             }
