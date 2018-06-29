@@ -1,7 +1,7 @@
 import * as express from 'express';
 import { isEmpty, omit } from 'lodash';
-import { getBasePath, getRootPath, getResourcePath } from './uris';
-import { getProfile, getCFHAVocabulary, getResource } from './service';
+import { getCFHAVocabulary, getProfile, getResource } from './service';
+import { getBasePath, getResourcePath, getRootPath } from './uris';
 
 export const basePath = getBasePath();
 

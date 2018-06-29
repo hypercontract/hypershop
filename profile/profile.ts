@@ -1,4 +1,5 @@
 import { getRootUri } from '../root/uris';
+import { shop } from './namespaces';
 
 export const profile = [
     {
@@ -41,7 +42,7 @@ export const profile = [
         '@id': `${getRootUri()}`,
         '@type': [
             'cfha:EntryPoint',
-            'shop:ApiRoot'
+            shop('ApiRoot')
         ],
         'cfha:defaultMediaType': [
             {
@@ -56,92 +57,92 @@ export const profile = [
         ]
     },
     {
-        '@id': 'shop:ApiRoot',
+        '@id': shop('ApiRoot'),
         '@type': [
             'owl:Class'
         ]
     },
     {
-        '@id': 'shop:AdditionToShoppingCart',
+        '@id': shop('AdditionToShoppingCart'),
         '@type': [
             'owl:Class'
         ]
     },
     {
-        '@id': 'shop:CatalogSearchQuery',
+        '@id': shop('CatalogSearchQuery'),
         '@type': [
             'owl:Class'
         ]
     },
     {
-        '@id': 'shop:Address',
+        '@id': shop('Address'),
         '@type': [
             'owl:Class'
         ]
     },
     {
-        '@id': 'shop:LineItem',
+        '@id': shop('LineItem'),
         '@type': [
             'owl:Class'
         ]
     },
     {
-        '@id': 'shop:Order',
+        '@id': shop('Order'),
         '@type': [
             'owl:Class'
         ]
     },
     {
-        '@id': 'shop:Orders',
+        '@id': shop('Orders'),
         '@type': [
             'owl:Class'
         ]
     },
     {
-        '@id': 'shop:PaymentOption',
+        '@id': shop('PaymentOption'),
         '@type': [
             'owl:Class'
         ]
     },
     {
-        '@id': 'shop:Product',
+        '@id': shop('Product'),
         '@type': [
             'owl:Class'
         ]
     },
     {
-        '@id': 'shop:Products',
+        '@id': shop('Products'),
         '@type': [
             'owl:Class'
         ]
     },
     {
-        '@id': 'shop:QuantityUpdate',
+        '@id': shop('QuantityUpdate'),
         '@type': [
             'owl:Class'
         ]
     },
     {
-        '@id': 'shop:ShoppingCart',
+        '@id': shop('ShoppingCart'),
         '@type': [
             'owl:Class'
         ]
     },
     {
-        '@id': 'shop:UserProfile',
+        '@id': shop('UserProfile'),
         '@type': [
             'owl:Class'
         ]
     },
     {
-        '@id': 'shop:accountOwner',
+        '@id': shop('accountOwner'),
         '@type': [
             'owl:DatatypeProperty',
             'owl:FunctionalProperty'
         ],
         'rdfs:domain': [
             {
-                '@id': 'shop:PaymentOption'
+                '@id': shop('PaymentOption')
             }
         ],
         'rdfs:range': [
@@ -151,7 +152,7 @@ export const profile = [
         ]
     },
     {
-        '@id': 'shop:addToShoppingCart',
+        '@id': shop('addToShoppingCart'),
         '@type': [
             'owl:ObjectProperty',
             'owl:FunctionalProperty',
@@ -159,7 +160,7 @@ export const profile = [
         ],
         'cfha:expectedType': [
             {
-                '@id': 'shop:AdditionToShoppingCart'
+                '@id': shop('AdditionToShoppingCart')
             }
         ],
         'cfha:method': [
@@ -169,35 +170,35 @@ export const profile = [
         ],
         'cfha:returnedType': [
             {
-                '@id': 'shop:ShoppingCart'
+                '@id': shop('ShoppingCart')
             }
         ]
     },
     {
-        '@id': 'shop:address',
+        '@id': shop('address'),
         '@type': [
             'owl:ObjectProperty'
         ],
         'rdfs:domain': [
             {
-                '@id': 'shop:UserProfile'
+                '@id': shop('UserProfile')
             }
         ],
         'rdfs:range': [
             {
-                '@id': 'shop:Address'
+                '@id': shop('Address')
             }
         ]
     },
     {
-        '@id': 'shop:bic',
+        '@id': shop('bic'),
         '@type': [
             'owl:DatatypeProperty',
             'owl:FunctionalProperty'
         ],
         'rdfs:domain': [
             {
-                '@id': 'shop:PaymentOption'
+                '@id': shop('PaymentOption')
             }
         ],
         'rdfs:range': [
@@ -207,24 +208,24 @@ export const profile = [
         ]
     },
     {
-        '@id': 'shop:billingAddress',
+        '@id': shop('billingAddress'),
         '@type': [
             'owl:ObjectProperty',
             'owl:FunctionalProperty'
         ],
         'rdfs:domain': [
             {
-                '@id': 'shop:Order'
+                '@id': shop('Order')
             }
         ],
         'rdfs:range': [
             {
-                '@id': 'shop:Address'
+                '@id': shop('Address')
             }
         ]
     },
     {
-        '@id': 'shop:cancel',
+        '@id': shop('cancel'),
         '@type': [
             'owl:ObjectProperty',
             'owl:FunctionalProperty',
@@ -237,19 +238,19 @@ export const profile = [
         ],
         'cfha:returnedType': [
             {
-                '@id': 'shop:Order'
+                '@id': shop('Order')
             }
         ]
     },
     {
-        '@id': 'shop:city',
+        '@id': shop('city'),
         '@type': [
             'owl:DatatypeProperty',
             'owl:FunctionalProperty'
         ],
         'rdfs:domain': [
             {
-                '@id': 'shop:Address'
+                '@id': shop('Address')
             }
         ],
         'rdfs:range': [
@@ -259,14 +260,14 @@ export const profile = [
         ]
     },
     {
-        '@id': 'shop:country',
+        '@id': shop('country'),
         '@type': [
             'owl:DatatypeProperty',
             'owl:FunctionalProperty'
         ],
         'rdfs:domain': [
             {
-                '@id': 'shop:Address'
+                '@id': shop('Address')
             }
         ],
         'rdfs:range': [
@@ -276,14 +277,14 @@ export const profile = [
         ]
     },
     {
-        '@id': 'shop:date',
+        '@id': shop('date'),
         '@type': [
             'owl:DatatypeProperty',
             'owl:FunctionalProperty'
         ],
         'rdfs:domain': [
             {
-                '@id': 'shop:Order'
+                '@id': shop('Order')
             }
         ],
         'rdfs:range': [
@@ -293,17 +294,17 @@ export const profile = [
         ]
     },
     {
-        '@id': 'shop:description',
+        '@id': shop('description'),
         '@type': [
             'owl:DatatypeProperty',
             'owl:FunctionalProperty'
         ],
         'rdfs:domain': [
             {
-                '@id': 'shop:LineItem'
+                '@id': shop('LineItem')
             },
             {
-                '@id': 'shop:Product'
+                '@id': shop('Product')
             }
         ],
         'rdfs:range': [
@@ -313,14 +314,14 @@ export const profile = [
         ]
     },
     {
-        '@id': 'shop:iban',
+        '@id': shop('iban'),
         '@type': [
             'owl:DatatypeProperty',
             'owl:FunctionalProperty'
         ],
         'rdfs:domain': [
             {
-                '@id': 'shop:PaymentOption'
+                '@id': shop('PaymentOption')
             }
         ],
         'rdfs:range': [
@@ -330,48 +331,48 @@ export const profile = [
         ]
     },
     {
-        '@id': 'shop:image',
+        '@id': shop('image'),
         '@type': [
             'owl:ObjectProperty',
             'owl:FunctionalProperty'
         ],
         'rdfs:domain': [
             {
-                '@id': 'shop:Product'
+                '@id': shop('Product')
             }
         ]
     },
     {
-        '@id': 'shop:items',
+        '@id': shop('items'),
         '@type': [
             'owl:ObjectProperty'
         ],
         'rdfs:domain': [
             {
-                '@id': 'shop:Order'
+                '@id': shop('Order')
             },
             {
-                '@id': 'shop:ShoppingCart'
+                '@id': shop('ShoppingCart')
             }
         ],
         'rdfs:range': [
             {
-                '@id': 'shop:LineItem'
+                '@id': shop('LineItem')
             }
         ]
     },
     {
-        '@id': 'shop:name',
+        '@id': shop('name'),
         '@type': [
             'owl:DatatypeProperty',
             'owl:FunctionalProperty'
         ],
         'rdfs:domain': [
             {
-                '@id': 'shop:LineItem'
+                '@id': shop('LineItem')
             },
             {
-                '@id': 'shop:Product'
+                '@id': shop('Product')
             }
         ],
         'rdfs:range': [
@@ -381,7 +382,7 @@ export const profile = [
         ]
     },
     {
-        '@id': 'shop:orderStatus',
+        '@id': shop('orderStatus'),
         '@type': [
             'rdfs:Datatype'
         ],
@@ -392,56 +393,56 @@ export const profile = [
         ]
     },
     {
-        '@id': 'shop:orders',
+        '@id': shop('orders'),
         '@type': [
             'owl:ObjectProperty'
         ],
         'rdfs:domain': [
             {
-                '@id': 'shop:Orders'
+                '@id': shop('Orders')
             }
         ],
         'rdfs:range': [
             {
-                '@id': 'shop:Order'
+                '@id': shop('Order')
             }
         ]
     },
     {
-        '@id': 'shop:payment',
+        '@id': shop('payment'),
         '@type': [
             'owl:ObjectProperty',
             'owl:FunctionalProperty'
         ],
         'rdfs:domain': [
             {
-                '@id': 'shop:Order'
+                '@id': shop('Order')
             }
         ],
         'rdfs:range': [
             {
-                '@id': 'shop:PaymentOption'
+                '@id': shop('PaymentOption')
             }
         ]
     },
     {
-        '@id': 'shop:paymentOption',
+        '@id': shop('paymentOption'),
         '@type': [
             'owl:ObjectProperty'
         ],
         'rdfs:domain': [
             {
-                '@id': 'shop:UserProfile'
+                '@id': shop('UserProfile')
             }
         ],
         'rdfs:range': [
             {
-                '@id': 'shop:PaymentOption'
+                '@id': shop('PaymentOption')
             }
         ]
     },
     {
-        '@id': 'shop:placeOrder',
+        '@id': shop('placeOrder'),
         '@type': [
             'owl:ObjectProperty',
             'owl:FunctionalProperty',
@@ -449,7 +450,7 @@ export const profile = [
         ],
         'cfha:expectedType': [
             {
-                '@id': 'shop:Order'
+                '@id': shop('Order')
             }
         ],
         'cfha:method': [
@@ -459,22 +460,22 @@ export const profile = [
         ],
         'cfha:returnedType': [
             {
-                '@id': 'shop:Order'
+                '@id': shop('Order')
             }
         ]
     },
     {
-        '@id': 'shop:price',
+        '@id': shop('price'),
         '@type': [
             'owl:DatatypeProperty',
             'owl:FunctionalProperty'
         ],
         'rdfs:domain': [
             {
-                '@id': 'shop:LineItem'
+                '@id': shop('LineItem')
             },
             {
-                '@id': 'shop:Product'
+                '@id': shop('Product')
             }
         ],
         'rdfs:range': [
@@ -484,56 +485,56 @@ export const profile = [
         ]
     },
     {
-        '@id': 'shop:product',
+        '@id': shop('product'),
         '@type': [
             'owl:ObjectProperty',
             'owl:FunctionalProperty'
         ],
         'rdfs:domain': [
             {
-                '@id': 'shop:AdditionToShoppingCart'
+                '@id': shop('AdditionToShoppingCart')
             },
             {
-                '@id': 'shop:LineItem'
+                '@id': shop('LineItem')
             }
         ],
         'rdfs:range': [
             {
-                '@id': 'shop:Product'
+                '@id': shop('Product')
             }
         ]
     },
     {
-        '@id': 'shop:products',
+        '@id': shop('products'),
         '@type': [
             'owl:ObjectProperty'
         ],
         'rdfs:domain': [
             {
-                '@id': 'shop:Products'
+                '@id': shop('Products')
             }
         ],
         'rdfs:range': [
             {
-                '@id': 'shop:Product'
+                '@id': shop('Product')
             }
         ]
     },
     {
-        '@id': 'shop:quantity',
+        '@id': shop('quantity'),
         '@type': [
             'owl:DatatypeProperty',
             'owl:FunctionalProperty'
         ],
         'rdfs:domain': [
             {
-                '@id': 'shop:AdditionToShoppingCart'
+                '@id': shop('AdditionToShoppingCart')
             },
             {
-                '@id': 'shop:LineItem'
+                '@id': shop('LineItem')
             },
             {
-                '@id': 'shop:QuantityUpdate'
+                '@id': shop('QuantityUpdate')
             }
         ],
         'rdfs:range': [
@@ -543,14 +544,14 @@ export const profile = [
         ]
     },
     {
-        '@id': 'shop:query',
+        '@id': shop('query'),
         '@type': [
             'owl:DatatypeProperty',
             'owl:FunctionalProperty'
         ],
         'rdfs:domain': [
             {
-                '@id': 'shop:CatalogSearchQuery'
+                '@id': shop('CatalogSearchQuery')
             }
         ],
         'rdfs:range': [
@@ -560,7 +561,7 @@ export const profile = [
         ]
     },
     {
-        '@id': 'shop:remove',
+        '@id': shop('remove'),
         '@type': [
             'owl:ObjectProperty',
             'owl:FunctionalProperty',
@@ -573,29 +574,29 @@ export const profile = [
         ],
         'cfha:returnedType': [
             {
-                '@id': 'shop:ShoppingCart'
+                '@id': shop('ShoppingCart')
             }
         ]
     },
     {
-        '@id': 'shop:shippingAddress',
+        '@id': shop('shippingAddress'),
         '@type': [
             'owl:ObjectProperty',
             'owl:FunctionalProperty'
         ],
         'rdfs:domain': [
             {
-                '@id': 'shop:Order'
+                '@id': shop('Order')
             }
         ],
         'rdfs:range': [
             {
-                '@id': 'shop:Address'
+                '@id': shop('Address')
             }
         ]
     },
     {
-        '@id': 'shop:status',
+        '@id': shop('status'),
         '@type': [
             'owl:ObjectProperty',
             'owl:FunctionalProperty',
@@ -603,24 +604,24 @@ export const profile = [
         ],
         'rdfs:domain': [
             {
-                '@id': 'shop:Order'
+                '@id': shop('Order')
             }
         ],
         'rdfs:range': [
             {
-                '@id': 'shop:orderStatus'
+                '@id': shop('orderStatus')
             }
         ]
     },
     {
-        '@id': 'shop:street',
+        '@id': shop('street'),
         '@type': [
             'owl:DatatypeProperty',
             'owl:FunctionalProperty'
         ],
         'rdfs:domain': [
             {
-                '@id': 'shop:Address'
+                '@id': shop('Address')
             }
         ],
         'rdfs:range': [
@@ -630,14 +631,14 @@ export const profile = [
         ]
     },
     {
-        '@id': 'shop:totalPrice',
+        '@id': shop('totalPrice'),
         '@type': [
             'owl:DatatypeProperty',
             'owl:FunctionalProperty'
         ],
         'rdfs:domain': [
             {
-                '@id': 'shop:ShoppingCart'
+                '@id': shop('ShoppingCart')
             }
         ],
         'rdfs:range': [
@@ -647,7 +648,7 @@ export const profile = [
         ]
     },
     {
-        '@id': 'shop:updateQuantity',
+        '@id': shop('updateQuantity'),
         '@type': [
             'owl:ObjectProperty',
             'owl:FunctionalProperty',
@@ -655,7 +656,7 @@ export const profile = [
         ],
         'cfha:expectedType': [
             {
-                '@id': 'shop:QuantityUpdate'
+                '@id': shop('QuantityUpdate')
             }
         ],
         'cfha:method': [
@@ -665,19 +666,19 @@ export const profile = [
         ],
         'cfha:returnedType': [
             {
-                '@id': 'shop:ShoppingCart'
+                '@id': shop('ShoppingCart')
             }
         ]
     },
     {
-        '@id': 'shop:zipCode',
+        '@id': shop('zipCode'),
         '@type': [
             'owl:DatatypeProperty',
             'owl:FunctionalProperty'
         ],
         'rdfs:domain': [
             {
-                '@id': 'shop:Address'
+                '@id': shop('Address')
             }
         ],
         'rdfs:range': [
@@ -687,7 +688,7 @@ export const profile = [
         ]
     },
     {
-        '@id': 'shop:searchCatalog',
+        '@id': shop('searchCatalog'),
         '@type': [
             'owl:ObjectProperty',
             'owl:FunctionalProperty',
@@ -695,7 +696,7 @@ export const profile = [
         ],
         'cfha:expectedType': [
             {
-                '@id': 'shop:CatalogSearchQuery'
+                '@id': shop('CatalogSearchQuery')
             }
         ],
         'cfha:method': [
@@ -705,55 +706,55 @@ export const profile = [
         ],
         'cfha:returnedType': [
             {
-                '@id': 'shop:Products'
+                '@id': shop('Products')
             }
         ]
     },
     {
-        '@id': 'shop:shoppingCart',
+        '@id': shop('shoppingCart'),
         '@type': [
             'owl:DatatypeProperty',
             'owl:FunctionalProperty'
         ],
         'rdfs:range': [
             {
-                '@id': 'shop:ShoppingCart'
+                '@id': shop('ShoppingCart')
             }
         ]
     },
     {
-        '@id': 'shop:orders',
+        '@id': shop('orders'),
         '@type': [
             'owl:DatatypeProperty',
             'owl:FunctionalProperty'
         ],
         'rdfs:range': [
             {
-                '@id': 'shop:Orders'
+                '@id': shop('Orders')
             }
         ]
     },
     {
-        '@id': 'shop:userProfile',
+        '@id': shop('userProfile'),
         '@type': [
             'owl:DatatypeProperty',
             'owl:FunctionalProperty'
         ],
         'rdfs:range': [
             {
-                '@id': 'shop:UserProfile'
+                '@id': shop('UserProfile')
             }
         ]
     },
     {
-        '@id': 'shop:version',
+        '@id': shop('version'),
         '@type': [
             'owl:DatatypeProperty',
             'owl:FunctionalProperty'
         ],
         'rdfs:domain': [
             {
-                '@id': 'shop:ApiRoot'
+                '@id': shop('ApiRoot')
             }
         ],
         'rdfs:range': [
