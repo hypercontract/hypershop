@@ -1,8 +1,8 @@
-import { Entity } from "../store/model";
+import { Entity } from '../store/model';
 
 export interface UserProfile extends Entity {
     addresses: Address[];
-    paymentOptions: PaymentOption[]
+    paymentOptions: PaymentOption[];
 }
 
 export interface Address extends Entity {

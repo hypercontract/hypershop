@@ -1,6 +1,6 @@
-import { ShoppingCartItem } from "../shoppingCart/model";
-import { Entity, EntityId } from "../store/model";
-import { Address, PaymentOption } from "../userProfile/model";
+import { ShoppingCartItem } from '../shoppingCart/model';
+import { Entity, EntityId } from '../store/model';
+import { Address, PaymentOption } from '../userProfile/model';
 
 export interface Order extends Entity {
     status: OrderStatus;

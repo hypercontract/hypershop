@@ -20,7 +20,7 @@ export function getRootUri() {
 
 export function getAddressPath(id: EntityId | null = null) {
     const pathTemplate = getRootPath() + 'addresses/:addressId/';
-    
+
     if (!isNull(id)) {
         return pathTemplate.replace(':addressId', id);
     }
@@ -28,13 +28,13 @@ export function getAddressPath(id: EntityId | null = null) {
     return pathTemplate;
 }
 
-export function getAddressUri(id: EntityId | null = null) {
+export function getAddressUri(id: EntityId) {
     return getBaseUri() + getAddressPath(id);
 }
 
 export function getPaymentOptionPath(id: EntityId | null) {
     const pathTemplate = getRootPath() + 'paymentOptions/:paymentOptionId/';
-    
+
     if (!isNull(id)) {
         return pathTemplate.replace(':paymentOptionId', id);
     }

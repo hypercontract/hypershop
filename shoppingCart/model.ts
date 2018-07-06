@@ -1,4 +1,4 @@
-import { Entity, EntityId } from "../store/model";
+import { Entity, EntityId } from '../store/model';
 
 export interface ShoppingCart {
     items: ShoppingCartItem[];
