@@ -1,11 +1,12 @@
 import * as express from 'express';
-import { acceptIsHtml, contentTypeIsJsonHal, jsonHal } from '../shared/mediaType';
+import { acceptIsHtml, contentTypeIsJsonHal, contentTypeIsJsonLd, jsonHal, jsonLd } from '../shared/mediaType';
 import { sendResponse } from '../shared/util';
 import * as shoppingCartUris from '../shoppingCart/uris';
 import { EntityId } from '../store/model';
 import * as userProfileUris from '../userProfile/uris';
 import * as hal from './hal';
 import * as html from './html';
+import * as ld from './ld';
 import { OrderStatus } from './model';
 import * as orderService from './service';
 import { getBasePath, getOrderPath, getOrderUri, getRootPath } from './uris';
@@ -19,7 +20,8 @@ router.get(getRootPath(), (request, response) => {
         .then(orders => sendResponse(response, {
             json: orders,
             html: html.fromOrders(orders),
-            [jsonHal]: hal.fromOrders(orders)
+            [jsonHal]: hal.fromOrders(orders),
+            [jsonLd]: ld.fromOrders(orders)
         }));
 });
 
@@ -36,7 +38,7 @@ router.post(getRootPath(), (request, response) => {
     let payment;
 
     // // TODO: use mime type matcher
-    if (contentTypeIsJsonHal(request)) {
+    if (contentTypeIsJsonHal(request) || contentTypeIsJsonLd(request)) {
         items = request.body.items.map(
             (item: EntityId) => item.replace(new RegExp(shoppingCartUris.getShoppingCartItemUri('(.*)')), '$1')
         );
@@ -64,7 +66,8 @@ router.get(getOrderPath(), (request, response) => {
         .then(order => sendResponse(response, {
             json: order,
             html: html.fromOrder(order),
-            [jsonHal]: hal.fromOrder(order)
+            [jsonHal]: hal.fromOrder(order),
+            [jsonLd]: ld.fromOrder(order)
         }));
 });
 

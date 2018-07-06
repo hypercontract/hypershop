@@ -1,5 +1,6 @@
 import * as jsonld from 'jsonld';
-import { filter, find, isArray, isEmpty, isUndefined } from 'lodash';
+import { defaultTo, filter, find, isArray, isEmpty, isUndefined, omit } from 'lodash';
+import * as rootUris from '../root/uris';
 import cfhaVocabulary from './cfha.json';
 import { domainContext, vocabularyContext } from './context';
 import { shop } from './namespaces';
@@ -33,6 +34,10 @@ export function getResource(name: string) {
     ));
 }
 
+export function getApiRootResource() {
+    return getResourceByUri(rootUris.getRootUri());
+}
+
 export function addVocabularyContext(input: any) {
     return addContext(input, vocabularyContext);
 }
@@ -61,9 +66,14 @@ function getPropertiesByDomain(domainUri: Uri) {
 
 function compact(input: any, context: Context) {
     return new Promise((resolve, reject) => {
+        const inputContext = defaultTo(input['@context'], {});
+
         jsonld.compact(
-            input,
-            context,
+            omit(input, ['@context']),
+            {
+                ...context,
+                ...inputContext
+            },
             (error: any, output: any) => {
                 if (error) {
                     reject(error);

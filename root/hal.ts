@@ -10,10 +10,10 @@ import { getRootUri } from './uris';
 export function fromApiRoot(apiRoot: ApiRoot) {
     return Resource(apiRoot, getRootUri())
         .link(shop('searchCatalog'), {
-            href: productUris.getRootUriTemplate(),
+            href: productUris.getCatalogSearchUriTemplate(),
             templated: true
         })
         .link(shop('shoppingCart'), shoppingCartUris.getRootUri())
-        .link(shop('orders'), orderUris.getRootUri())
+        .link(shop('orderList'), orderUris.getRootUri())
         .link(shop('userProfile'), userProfileUris.getRootUri());
 }

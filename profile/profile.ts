@@ -1,4 +1,4 @@
-import { getRootUri } from '../root/uris';
+import * as rootUris from '../root/uris';
 import { shop } from './namespaces';
 
 export const profile = [
@@ -39,12 +39,15 @@ export const profile = [
         ]
     },
     {
-        '@id': `${getRootUri()}`,
+        '@id': rootUris.getRootUri(),
         '@type': [
             'cfha:EntryPoint',
             shop('ApiRoot')
         ],
         'cfha:defaultMediaType': [
+            {
+                '@value': 'application/ld+json'
+            },
             {
                 '@value': 'application/hal+json'
             },
@@ -694,6 +697,11 @@ export const profile = [
             'owl:FunctionalProperty',
             'cfha:Operation'
         ],
+        'rdfs:domain': [
+            {
+                '@id': shop('ApiRoot')
+            }
+        ],
         'cfha:expectedType': [
             {
                 '@id': shop('CatalogSearchQuery')
@@ -716,6 +724,11 @@ export const profile = [
             'owl:DatatypeProperty',
             'owl:FunctionalProperty'
         ],
+        'rdfs:domain': [
+            {
+                '@id': shop('ApiRoot')
+            }
+        ],
         'rdfs:range': [
             {
                 '@id': shop('ShoppingCart')
@@ -723,10 +736,15 @@ export const profile = [
         ]
     },
     {
-        '@id': shop('orders'),
+        '@id': shop('orderList'),
         '@type': [
             'owl:DatatypeProperty',
             'owl:FunctionalProperty'
+        ],
+        'rdfs:domain': [
+            {
+                '@id': shop('ApiRoot')
+            }
         ],
         'rdfs:range': [
             {
@@ -739,6 +757,11 @@ export const profile = [
         '@type': [
             'owl:DatatypeProperty',
             'owl:FunctionalProperty'
+        ],
+        'rdfs:domain': [
+            {
+                '@id': shop('ApiRoot')
+            }
         ],
         'rdfs:range': [
             {

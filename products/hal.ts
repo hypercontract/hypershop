@@ -3,12 +3,12 @@ import { map, omit } from 'lodash';
 import { shop } from '../profile/namespaces';
 import * as shoppingCartUris from '../shoppingCart/uris';
 import { Product } from './model';
-import { getProductUri, getRootUri } from './uris';
+import { getCatalogSearchUri, getProductUri } from './uris';
 
-export function fromProducts(products: Product[]) {
+export function fromProducts(products: Product[], query?: string) {
     return Resource(
         {},
-        getRootUri()
+        getCatalogSearchUri(query)
     )
         .embed(
             shop('products'),

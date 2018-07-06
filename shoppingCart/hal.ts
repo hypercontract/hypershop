@@ -12,7 +12,7 @@ export function fromShoppingCart(shoppingCart: ShoppingCart) {
         getRootUri()
     )
         .embed(
-            shop('shoppingCartItems'),
+            shop('items'),
             map(shoppingCart.items, fromShoppingCartItem)
         );
 

@@ -1,10 +1,11 @@
 import * as express from 'express';
 import { getProductUri } from '../products/uris';
-import { acceptIsHtml, contentTypeIsJsonHal, jsonHal } from '../shared/mediaType';
+import { acceptIsHtml, contentTypeIsJsonHal, contentTypeIsJsonLd, jsonHal, jsonLd } from '../shared/mediaType';
 import { sendResponse } from '../shared/util';
 import * as userProfileService from '../userProfile/service';
 import * as hal from './hal';
 import * as html from './html';
+import * as ld from './ld';
 import * as shoppingCartService from './service';
 import { getBasePath, getRootPath, getRootUri, getShoppingCartItemPath, getShoppingCartItemsPath } from './uris';
 
@@ -20,14 +21,15 @@ router.get(getRootPath(), (request, response) => {
         .then(([shoppingCart, userProfile]) => sendResponse(response, {
             json: shoppingCart,
             html: html.fromShoppingCart(shoppingCart, userProfile),
-            [jsonHal]: hal.fromShoppingCart(shoppingCart)
+            [jsonHal]: hal.fromShoppingCart(shoppingCart),
+            [jsonLd]: ld.fromShoppingCart(shoppingCart)
         }));
 });
 
 router.post(getShoppingCartItemsPath(), (request, response) => {
     let productId;
     // TODO: use mime type matcher
-    if (contentTypeIsJsonHal(request)) {
+    if (contentTypeIsJsonHal(request) || contentTypeIsJsonLd(request)) {
         productId = request.body.product.replace(new RegExp(getProductUri('(.*)')), '$1');
     } else {
         productId = request.body.product;
