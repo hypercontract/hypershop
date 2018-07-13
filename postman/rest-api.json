@@ -27,12 +27,12 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "e76cce39-d73a-4683-8a6a-3744f0b3789a",
+						"id": "ffadb741-c76d-4a27-be67-086b73eae56b",
 						"type": "text/javascript",
 						"exec": [
 							"postman.clearEnvironmentVariables();",
 							"",
-							"var baseUrl = 'http://localhost/';",
+							"var baseUrl = postman.getGlobalVariable('baseUrl');",
 							"",
 							"postman.setEnvironmentVariable('defaultAccept', 'application/json');",
 							"postman.setEnvironmentVariable('defaultContentType', 'application/json');",

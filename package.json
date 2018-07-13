@@ -7,9 +7,15 @@
     "serve": "ts-node index.ts",
     "start": "node ./dist/index.js",
     "postinstall": "tsc -p .",
-    "test": "run-s test-rest test-hypermedia",
-    "test-rest": "newman run ./postman/rest-api.json",
-    "test-hypermedia": "newman run ./postman/hypermedia-api.json"
+    "test": "run-s test:local",
+    "test:local": "run-s test-rest-local test-hypermedia-local test-semantic-local",
+    "test-rest-local": "newman run ./postman/rest-api.json -g ./postman/globals-local.json",
+    "test-hypermedia-local": "newman run ./postman/hypermedia-api.json -g ./postman/globals-local.json",
+    "test-semantic-local": "newman run ./postman/semantic-api.json -g ./postman/globals-local.json",
+    "test:test": "run-s test-rest-test test-hypermedia-test test-semantic-test",
+    "test-rest-test": "newman run ./postman/rest-api.json -g ./postman/globals-test.json",
+    "test-hypermedia-test": "newman run ./postman/hypermedia-api.json -g ./postman/globals-test.json",
+    "test-semantic-test": "newman run ./postman/semantic-api.json -g ./postman/globals-test.json"
   },
   "repository": {
     "type": "git",

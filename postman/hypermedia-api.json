@@ -47,12 +47,13 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "f59adabb-6840-44fd-b11d-787d11798008",
+						"id": "61ac6996-078e-4867-9810-32c61b3d4eb9",
 						"type": "text/javascript",
 						"exec": [
 							"postman.clearEnvironmentVariables();",
 							"",
-							"var baseUrl = 'http://localhost/';",
+							"var baseUrl = postman.getGlobalVariable('baseUrl');",
+							"",
 							"var nsUri = baseUrl + 'profile/';",
 							"var mediaType = 'application/hal+json;profile=\"' + nsUri + '\"';",
 							"",

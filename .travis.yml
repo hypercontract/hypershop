@@ -4,6 +4,7 @@ node_js:
 sudo: required
 env:
   - CXX=g++-4.9
+  - NODE_ENV=test
 addons:
   apt:
     sources:
@@ -12,4 +13,4 @@ addons:
       - g++-4.9
 script:
   - sudo $(which npm) start &
-  - npm test
+  - npm run test:test
