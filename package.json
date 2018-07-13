@@ -6,7 +6,10 @@
   "scripts": {
     "dev": "ts-node index.ts",
     "start": "node ./dist/index.js",
-    "postinstall": "tsc -p .",
+    "postinstall": "run-s build",
+    "build": "run-s compile copy-assets",
+    "copy-assets": "copyfiles **/*.ejs **/*.json ./dist -e *node_modules*",
+    "compile": "tsc -p .",
     "test": "run-s test:local",
     "test:local": "run-s test-rest-local test-hypermedia-local test-semantic-local",
     "test-rest-local": "newman run ./postman/rest-api.json -g ./postman/globals-local.json",
@@ -15,7 +18,11 @@
     "test:test": "run-s test-rest-test test-hypermedia-test test-semantic-test",
     "test-rest-test": "newman run ./postman/rest-api.json -g ./postman/globals-test.json",
     "test-hypermedia-test": "newman run ./postman/hypermedia-api.json -g ./postman/globals-test.json",
-    "test-semantic-test": "newman run ./postman/semantic-api.json -g ./postman/globals-test.json"
+    "test-semantic-test": "newman run ./postman/semantic-api.json -g ./postman/globals-test.json",
+    "test:production": "run-s test-rest-production test-hypermedia-production test-semantic-production",
+    "test-rest-production": "newman run ./postman/rest-api.json -g ./postman/globals-production.json",
+    "test-hypermedia-production": "newman run ./postman/hypermedia-api.json -g ./postman/globals-production.json",
+    "test-semantic-production": "newman run ./postman/semantic-api.json -g ./postman/globals-production.json"
   },
   "repository": {
     "type": "git",
@@ -54,6 +61,7 @@
     "@types/morgan": "1.7.35",
     "@types/nedb": "1.8.5",
     "@types/node": "9.6.6",
+    "copyfiles": "2.0.0",
     "newman": "3.9.3",
     "npm-run-all": "4.1.2",
     "ts-node": "6.1.0",
