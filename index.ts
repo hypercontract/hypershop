@@ -2,7 +2,7 @@ import * as bodyParser from 'body-parser';
 import config from 'config';
 import cors from 'cors';
 import express from 'express';
-import { get, isUndefined } from 'lodash';
+import { defaultTo, get, isUndefined } from 'lodash';
 import methodOverride from 'method-override';
 import morgan from 'morgan';
 import { endpoints } from './endpoints';
@@ -49,6 +49,6 @@ endpoints.forEach(
     endpoint => app.use(endpoint.basePath, endpoint.router)
 );
 
-const port = config.get('http.port');
+const port = defaultTo(process.env.PORT, config.get('http.port'));
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
