@@ -27,14 +27,16 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "73367c1c-dba2-4fdf-b963-7e0e8a1f89c6",
+						"id": "e76cce39-d73a-4683-8a6a-3744f0b3789a",
 						"type": "text/javascript",
 						"exec": [
 							"postman.clearEnvironmentVariables();",
 							"",
+							"var baseUrl = 'http://localhost/';",
+							"",
 							"postman.setEnvironmentVariable('defaultAccept', 'application/json');",
 							"postman.setEnvironmentVariable('defaultContentType', 'application/json');",
-							"postman.setEnvironmentVariable('baseUrl', 'http://localhost/');",
+							"postman.setEnvironmentVariable('baseUrl', baseUrl);",
 							"",
 							"postman.setEnvironmentVariable('productsSchema', JSON.stringify({",
 							"    type: 'array',",

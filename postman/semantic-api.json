@@ -47,12 +47,16 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "78416917-a9fc-426c-8c7e-a49f741f3f34",
+						"id": "35023af2-288a-4841-a720-6f936c396ef0",
 						"type": "text/javascript",
 						"exec": [
 							"postman.clearEnvironmentVariables();",
 							"",
-							"var nsUri = 'http://localhost/profile/';",
+							"if (_.isUndefined(baseUrl)) {",
+							"    var baseUrl = 'http://localhost/';",
+							"}",
+							"",
+							"var nsUri = baseUrl + 'profile/';",
 							"var mediaType = 'application/ld+json;profile=\"' + nsUri + '\"';",
 							"",
 							"var mediaTypeRegExp = _.escapeRegExp(mediaType).split(';').join('(.*)');",
@@ -60,7 +64,7 @@
 							"postman.setEnvironmentVariable('defaultAccept', mediaType);",
 							"postman.setEnvironmentVariable('defaultContentType', mediaType);",
 							"postman.setEnvironmentVariable('defaultContentTypeRegExp', mediaTypeRegExp);",
-							"postman.setEnvironmentVariable('baseUrl', 'http://localhost/');",
+							"postman.setEnvironmentVariable('baseUrl', baseUrl);",
 							"postman.setEnvironmentVariable('nsUri', nsUri);",
 							"",
 							"var linksSchema = {",
