@@ -1,5 +1,5 @@
 import * as faker from 'faker';
-import { random, sample, times, toNumber } from 'lodash';
+import { random, sample, times } from 'lodash';
 import { OrderStatus } from '../orders/model';
 import * as orderService from '../orders/service';
 import { getProductStore } from '../products/store';
@@ -20,10 +20,19 @@ const orderStatusValues = [
     OrderStatus.Returned
 ];
 
+const addressCount = 3;
+const paymentOptionCount = 2;
+const productCount = 100;
+const orderCount = 100;
+const minItemCount = 1;
+const maxItemCount = 3;
+const minItemQty = 1;
+const maxItemQty = 5;
+
 export function create() {
-    const addresses = times(3, () => generateAddress());
-    const paymentOptions = times(2, () => generatePaymentOption());
-    const products = times(100, () => generateProduct());
+    const addresses = times(addressCount, () => generateAddress());
+    const paymentOptions = times(paymentOptionCount, () => generatePaymentOption());
+    const products = times(productCount, () => generateProduct());
 
     return Promise.all([
         getProductStore(),
@@ -37,11 +46,11 @@ export function create() {
                 paymentOptionStore.bulkInsert(paymentOptions)
             ])
                 .then(([productIds, addressIds, paymentOptionIds]) => repeatInSequence(
-                    20,
+                    orderCount,
                     () => createShoppingCart(productIds)
                         .then(shoppingCart => createOrder(shoppingCart, addressIds, paymentOptionIds))
                 ));
-        });    
+        });
 }
 
 function generateAddress() {
@@ -67,15 +76,15 @@ function generateProduct() {
     return {
         name: faker.commerce.productName(),
         description: faker.lorem.paragraph(),
-        price: toNumber(random(0.20, 90).toFixed(2)),
-        image: faker.image.food() + '?' + faker.random.uuid()
+        price: faker.random.number({ min: 0.01, max: 99.99, precision: 0.01 }),
+        image: `${faker.image.food()}?${faker.random.uuid()}`
     };
 }
 
 function createShoppingCart(productIds: EntityId[]) {
     return Promise.all(
         times(
-            random(1, 3),
+            random(minItemCount, maxItemCount),
             () => createShoppingCartItem(productIds)
         )
     )
@@ -85,7 +94,7 @@ function createShoppingCart(productIds: EntityId[]) {
 function createShoppingCartItem(productIds: EntityId[]) {
     return shoppingCartService.addShoppingCartItem(
         sample(productIds)!,
-        random(1, 5)
+        random(minItemQty, maxItemQty)
     );
 }
 
