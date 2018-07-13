@@ -12,5 +12,5 @@ addons:
     packages:
       - g++-4.9
 script:
-  - sudo $(which npm) start &
+  - node ./dist/index.js
   - npm run test:test
