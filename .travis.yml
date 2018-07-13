@@ -11,5 +11,5 @@ addons:
     packages:
       - g++-4.9
 script:
-  - node ./dist/index.js
+  - node ./dist/index.js &
   - npm run test:test
