@@ -41,10 +41,10 @@ export const profile = [
     {
         '@id': rootUris.getRootUri(),
         '@type': [
-            'cfha:EntryPoint',
+            'hyper:EntryPoint',
             shop('ApiRoot')
         ],
-        'cfha:defaultMediaType': [
+        'hyper:defaultMediaType': [
             {
                 '@value': 'application/ld+json'
             },
@@ -159,19 +159,19 @@ export const profile = [
         '@type': [
             'owl:ObjectProperty',
             'owl:FunctionalProperty',
-            'cfha:Operation'
+            'hyper:Operation'
         ],
-        'cfha:expectedType': [
+        'hyper:expectedType': [
             {
                 '@id': shop('AdditionToShoppingCart')
             }
         ],
-        'cfha:method': [
+        'hyper:method': [
             {
                 '@value': 'POST'
             }
         ],
-        'cfha:returnedType': [
+        'hyper:returnedType': [
             {
                 '@id': shop('ShoppingCart')
             }
@@ -232,14 +232,14 @@ export const profile = [
         '@type': [
             'owl:ObjectProperty',
             'owl:FunctionalProperty',
-            'cfha:Operation'
+            'hyper:Operation'
         ],
-        'cfha:method': [
+        'hyper:method': [
             {
                 '@value': 'DELETE'
             }
         ],
-        'cfha:returnedType': [
+        'hyper:returnedType': [
             {
                 '@id': shop('Order')
             }
@@ -449,19 +449,19 @@ export const profile = [
         '@type': [
             'owl:ObjectProperty',
             'owl:FunctionalProperty',
-            'cfha:Operation'
+            'hyper:Operation'
         ],
-        'cfha:expectedType': [
+        'hyper:expectedType': [
             {
                 '@id': shop('Order')
             }
         ],
-        'cfha:method': [
+        'hyper:method': [
             {
                 '@value': 'POST'
             }
         ],
-        'cfha:returnedType': [
+        'hyper:returnedType': [
             {
                 '@id': shop('Order')
             }
@@ -568,14 +568,14 @@ export const profile = [
         '@type': [
             'owl:ObjectProperty',
             'owl:FunctionalProperty',
-            'cfha:Operation'
+            'hyper:Operation'
         ],
-        'cfha:method': [
+        'hyper:method': [
             {
                 '@value': 'DELETE'
             }
         ],
-        'cfha:returnedType': [
+        'hyper:returnedType': [
             {
                 '@id': shop('ShoppingCart')
             }
@@ -655,19 +655,19 @@ export const profile = [
         '@type': [
             'owl:ObjectProperty',
             'owl:FunctionalProperty',
-            'cfha:Operation'
+            'hyper:Operation'
         ],
-        'cfha:expectedType': [
+        'hyper:expectedType': [
             {
                 '@id': shop('QuantityUpdate')
             }
         ],
-        'cfha:method': [
+        'hyper:method': [
             {
                 '@value': 'PATCH'
             }
         ],
-        'cfha:returnedType': [
+        'hyper:returnedType': [
             {
                 '@id': shop('ShoppingCart')
             }
@@ -695,24 +695,24 @@ export const profile = [
         '@type': [
             'owl:ObjectProperty',
             'owl:FunctionalProperty',
-            'cfha:Operation'
+            'hyper:Operation'
         ],
         'rdfs:domain': [
             {
                 '@id': shop('ApiRoot')
             }
         ],
-        'cfha:expectedType': [
+        'hyper:expectedType': [
             {
                 '@id': shop('CatalogSearchQuery')
             }
         ],
-        'cfha:method': [
+        'hyper:method': [
             {
                 '@value': 'GET'
             }
         ],
-        'cfha:returnedType': [
+        'hyper:returnedType': [
             {
                 '@id': shop('Products')
             }

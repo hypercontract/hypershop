@@ -1,6 +1,6 @@
 import config from 'config';
 import { MongoClient } from 'mongodb';
-import { NeDBStore } from "../store/nedbStore";
+import { NeDBStore } from '../store/nedbStore';
 import { Store, StoreType } from './model';
 import { MongoDBStore } from './mongodbStore';
 
@@ -41,8 +41,8 @@ function createMongoDBStore<T>(name: string) {
             if (error) {
                 reject(error);
             }
-    
-            const store = new MongoDBStore<T>(name, client.db('cfha'));
+
+            const store = new MongoDBStore<T>(name, client.db('hypershop'));
             resolve(store);
         });
     });

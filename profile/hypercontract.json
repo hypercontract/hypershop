@@ -33,19 +33,19 @@
         ]
     },
     {
-        "@id": "http://cfha.luchs.org/#",
+        "@id": "http://hypercontract.org/#",
         "@type": [
             "http://www.w3.org/2002/07/owl#Ontology"
         ]
     },
     {
-        "@id": "http://cfha.luchs.org/#EntryPoint",
+        "@id": "http://hypercontract.org/#EntryPoint",
         "@type": [
             "http://www.w3.org/2002/07/owl#Class"
         ]
     },
     {
-        "@id": "http://cfha.luchs.org/#Operation",
+        "@id": "http://hypercontract.org/#Operation",
         "@type": [
             "http://www.w3.org/2002/07/owl#Class"
         ],
@@ -56,18 +56,18 @@
         ]
     },
     {
-        "@id": "http://cfha.luchs.org/#expectedType",
+        "@id": "http://hypercontract.org/#expectedType",
         "@type": [
             "http://www.w3.org/2002/07/owl#ObjectProperty"
         ],
         "http://www.w3.org/2000/01/rdf-schema#domain": [
             {
-                "@id": "http://cfha.luchs.org/#Operation"
+                "@id": "http://hypercontract.org/#Operation"
             }
         ]
     },
     {
-        "@id": "http://cfha.luchs.org/#method",
+        "@id": "http://hypercontract.org/#method",
         "@type": [
             "http://www.w3.org/2000/01/rdf-schema#Datatype",
             "http://www.w3.org/2002/07/owl#DatatypeProperty",
@@ -75,12 +75,12 @@
         ],
         "http://www.w3.org/2000/01/rdf-schema#domain": [
             {
-                "@id": "http://cfha.luchs.org/#Operation"
+                "@id": "http://hypercontract.org/#Operation"
             }
         ],
         "http://www.w3.org/2000/01/rdf-schema#range": [
             {
-                "@id": "http://cfha.luchs.org/#method"
+                "@id": "http://hypercontract.org/#method"
             }
         ],
         "http://www.w3.org/2002/07/owl#equivalentClass": [
@@ -90,69 +90,69 @@
         ]
     },
     {
-        "@id": "http://cfha.luchs.org/#returnedType",
+        "@id": "http://hypercontract.org/#returnedType",
         "@type": [
             "http://www.w3.org/2002/07/owl#ObjectProperty"
         ],
         "http://www.w3.org/2000/01/rdf-schema#domain": [
             {
-                "@id": "http://cfha.luchs.org/#Operation"
+                "@id": "http://hypercontract.org/#Operation"
             }
         ]
     },
     {
-        "@id": "http://cfha.luchs.org/#defaultMediaType",
+        "@id": "http://hypercontract.org/#defaultMediaType",
         "@type": [
             "http://www.w3.org/2000/01/rdf-schema#Datatype",
             "http://www.w3.org/2002/07/owl#DatatypeProperty"
         ],
         "http://www.w3.org/2000/01/rdf-schema#domain": [
             {
-                "@id": "http://cfha.luchs.org/#EntryPoint"
+                "@id": "http://hypercontract.org/#EntryPoint"
             }
         ],
         "http://www.w3.org/2000/01/rdf-schema#range": [
             {
-                "@id": "http://cfha.luchs.org/#mediaType"
+                "@id": "http://hypercontract.org/#mediaType"
             }
         ]
     },
     {
-        "@id": "http://cfha.luchs.org/#returnedMediaType",
+        "@id": "http://hypercontract.org/#returnedMediaType",
         "@type": [
             "http://www.w3.org/2000/01/rdf-schema#Datatype",
             "http://www.w3.org/2002/07/owl#DatatypeProperty"
         ],
         "http://www.w3.org/2000/01/rdf-schema#domain": [
             {
-                "@id": "http://cfha.luchs.org/#Operation"
+                "@id": "http://hypercontract.org/#Operation"
             }
         ],
         "http://www.w3.org/2000/01/rdf-schema#range": [
             {
-                "@id": "http://cfha.luchs.org/#mediaType"
+                "@id": "http://hypercontract.org/#mediaType"
             }
         ]
     },
     {
-        "@id": "http://cfha.luchs.org/#expectedMediaType",
+        "@id": "http://hypercontract.org/#expectedMediaType",
         "@type": [
             "http://www.w3.org/2000/01/rdf-schema#Datatype",
             "http://www.w3.org/2002/07/owl#DatatypeProperty"
         ],
         "http://www.w3.org/2000/01/rdf-schema#domain": [
             {
-                "@id": "http://cfha.luchs.org/#Operation"
+                "@id": "http://hypercontract.org/#Operation"
             }
         ],
         "http://www.w3.org/2000/01/rdf-schema#range": [
             {
-                "@id": "http://cfha.luchs.org/#mediaType"
+                "@id": "http://hypercontract.org/#mediaType"
             }
         ]
     },
     {
-        "@id": "http://cfha.luchs.org/#mediaType",
+        "@id": "http://hypercontract.org/#mediaType",
         "@type": [
             "http://www.w3.org/2000/01/rdf-schema#Datatype"
         ],

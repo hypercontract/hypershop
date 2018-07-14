@@ -3,7 +3,7 @@
   "values": [
     {
       "key": "baseUrl",
-      "value": "http://cfha-api.herokuapp.com/",
+      "value": "https://hypercontract.herokuapp.com/",
       "enabled": true,
       "type": "text"
     }

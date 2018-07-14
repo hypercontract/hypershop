@@ -3,9 +3,9 @@
         "version": "1.0"
     },
     "http": {
-        "scheme": "http",
-        "hostname": "cfha-api.herokuapp.com",
-        "port": 80
+        "scheme": "https",
+        "hostname": "hypercontract.herokuapp.com",
+        "port": 443
     },
     "db": {
         "type": "nedb",

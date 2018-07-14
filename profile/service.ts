@@ -1,8 +1,8 @@
 import * as jsonld from 'jsonld';
 import { defaultTo, filter, find, isArray, isEmpty, isUndefined, omit } from 'lodash';
 import * as rootUris from '../root/uris';
-import cfhaVocabulary from './cfha.json';
 import { domainContext, vocabularyContext } from './context';
+import hyperVocabulary from './hypercontract.json';
 import { shop } from './namespaces';
 import { profile as domainProfile } from './profile';
 
@@ -13,8 +13,8 @@ export function getProfile() {
     return addDomainContext(domainProfile);
 }
 
-export function getCFHAVocabulary() {
-    return addVocabularyContext(cfhaVocabulary);
+export function getHypercontractVocabulary() {
+    return addVocabularyContext(hyperVocabulary);
 }
 
 export function getResource(name: string) {

@@ -1,6 +1,6 @@
 import * as express from 'express';
 import { isEmpty, omit } from 'lodash';
-import { getCFHAVocabulary, getProfile, getResource } from './service';
+import { getHypercontractVocabulary, getProfile, getResource } from './service';
 import { getBasePath, getResourcePath, getRootPath } from './uris';
 
 export const basePath = getBasePath();
@@ -15,8 +15,8 @@ router.get(getRootPath(), (request, response) => {
         );
 });
 
-router.get(getResourcePath('cfha'), (request, response) => {
-    getCFHAVocabulary()
+router.get(getResourcePath('hypercontract'), (request, response) => {
+    getHypercontractVocabulary()
         .then(profile => response
             .type('application/ld+json')
             .send(profile)
