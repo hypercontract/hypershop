@@ -12,7 +12,7 @@ addons:
     - g++-4.9
 script:
 - node ./dist/index.js &
-- node ./postman/index.js
+- node ./postman/test.js
 deploy:
   provider: heroku
   app: hypercontract
