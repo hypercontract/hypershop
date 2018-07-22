@@ -2,13 +2,13 @@
   "name": "@hypercontract/hypershop",
   "version": "1.0.0",
   "description": "hypershop: Example App for hypercontract",
-  "main": "index.js",
+  "main": "./dist/index.js",
   "scripts": {
     "dev": "ts-node index.ts",
     "start": "node ./dist/index.js",
     "postinstall": "run-s build",
     "build": "run-s compile copy-assets",
-    "copy-assets": "copyfiles **/*.ejs **/*.json ./dist -e *node_modules*",
+    "copy-assets": "copyfiles **/*.ejs **/*.json ./dist -e node_modules/**/*",
     "compile": "tsc -p .",
     "test": "node ./postman/test.js"
   },
@@ -36,8 +36,7 @@
     "moment": "2.22.1",
     "mongodb": "3.0.10",
     "morgan": "1.9.0",
-    "nedb": "1.8.0",
-    "winston": "2.4.1"
+    "nedb": "1.8.0"
   },
   "devDependencies": {
     "@types/cors": "2.8.3",
