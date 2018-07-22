@@ -51,11 +51,11 @@ function addContext(input: any, context: any) {
 }
 
 function getResourceByUri(uri: Uri) {
-    return find(domainProfile, { '@id': uri });
+    return find(domainProfile['@graph'], { '@id': uri });
 }
 
 function getPropertiesByDomain(domainUri: Uri) {
-    return filter(domainProfile, (resource: any) => {
+    return filter(domainProfile['@graph'], (resource: any) => {
         const domain = resource[`rdfs:domain`];
         return (
             isArray(domain) &&

@@ -51,4 +51,4 @@ endpoints.forEach(
 
 const port = defaultTo(process.env.PORT, config.get('http.port'));
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+app.listen(port, () => console.log(`Listening on port ${port}!`));
