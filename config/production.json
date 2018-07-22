@@ -4,7 +4,7 @@
     },
     "http": {
         "scheme": "https",
-        "hostname": "hypercontract.herokuapp.com",
+        "hostname": "example.hypercontract.org",
         "port": 443
     },
     "db": {

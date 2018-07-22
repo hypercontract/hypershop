@@ -3,7 +3,7 @@
   "values": [
     {
       "key": "baseUrl",
-      "value": "https://hypercontract.herokuapp.com/",
+      "value": "https://example.hypercontract.org/",
       "enabled": true,
       "type": "text"
     }
