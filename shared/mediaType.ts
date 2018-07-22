@@ -1,13 +1,14 @@
 import { profileBaseUri } from '../profile/namespaces';
 
 export const html = 'text/html';
-export const jsonHal = `application/hal+json;profile="${profileBaseUri}"`;
-export const jsonLd = `application/ld+json;profile="${profileBaseUri}"`;
+export const jsonHalWithProfile = `application/hal+json;profile="${profileBaseUri}"`;
+export const jsonLd = `application/ld+json`;
+export const jsonLdWithProfile = `${jsonLd};profile="${profileBaseUri}"`;
 
 export const acceptIsHtml = isAccept(html);
 
-export const contentTypeIsJsonHal = isContentType(jsonHal);
-export const contentTypeIsJsonLd = isContentType(jsonLd);
+export const contentTypeIsJsonHal = isContentType(jsonHalWithProfile);
+export const contentTypeIsJsonLd = isContentType(jsonLdWithProfile);
 
 function isContentType(mediaType) {
     return request => request.get('Content-Type') === mediaType;

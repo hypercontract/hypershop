@@ -1,6 +1,6 @@
 import * as express from 'express';
 import { getProductUri } from '../products/uris';
-import { acceptIsHtml, contentTypeIsJsonHal, contentTypeIsJsonLd, jsonHal, jsonLd } from '../shared/mediaType';
+import { acceptIsHtml, contentTypeIsJsonHal, contentTypeIsJsonLd, jsonHalWithProfile, jsonLdWithProfile } from '../shared/mediaType';
 import { sendResponse } from '../shared/util';
 import * as userProfileService from '../userProfile/service';
 import * as hal from './hal';
@@ -21,8 +21,8 @@ router.get(getRootPath(), (request, response) => {
         .then(([shoppingCart, userProfile]) => sendResponse(response, {
             json: shoppingCart,
             html: html.fromShoppingCart(shoppingCart, userProfile),
-            [jsonHal]: hal.fromShoppingCart(shoppingCart),
-            [jsonLd]: ld.fromShoppingCart(shoppingCart)
+            [jsonHalWithProfile]: hal.fromShoppingCart(shoppingCart),
+            [jsonLdWithProfile]: ld.fromShoppingCart(shoppingCart)
         }));
 });
 

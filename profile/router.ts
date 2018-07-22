@@ -1,5 +1,6 @@
 import * as express from 'express';
 import { isEmpty, omit } from 'lodash';
+import { jsonLd } from '../shared/mediaType';
 import { getHypercontractVocabulary, getProfile, getResource } from './service';
 import { getBasePath, getResourcePath, getRootPath } from './uris';
 
@@ -10,7 +11,7 @@ export const router = express.Router();
 router.get(getRootPath(), (request, response) => {
     getProfile()
         .then(profile => response
-            .type('application/ld+json')
+            .type(jsonLd)
             .send(profile)
         );
 });
@@ -18,7 +19,7 @@ router.get(getRootPath(), (request, response) => {
 router.get(getResourcePath('hypercontract'), (request, response) => {
     getHypercontractVocabulary()
         .then(profile => response
-            .type('application/ld+json')
+            .type(jsonLd)
             .send(profile)
         );
 });
@@ -32,7 +33,7 @@ router.get(getResourcePath(), (request, response) => {
             }
 
             response
-                .type('application/ld+json')
+                .type(jsonLd)
                 .send(resource);
         });
 });

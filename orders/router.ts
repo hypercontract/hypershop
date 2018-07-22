@@ -1,5 +1,5 @@
 import * as express from 'express';
-import { acceptIsHtml, contentTypeIsJsonHal, contentTypeIsJsonLd, jsonHal, jsonLd } from '../shared/mediaType';
+import { acceptIsHtml, contentTypeIsJsonHal, contentTypeIsJsonLd, jsonHalWithProfile, jsonLdWithProfile } from '../shared/mediaType';
 import { sendResponse } from '../shared/util';
 import * as shoppingCartUris from '../shoppingCart/uris';
 import { EntityId } from '../store/model';
@@ -20,8 +20,8 @@ router.get(getRootPath(), (request, response) => {
         .then(orders => sendResponse(response, {
             json: orders,
             html: html.fromOrders(orders),
-            [jsonHal]: hal.fromOrders(orders),
-            [jsonLd]: ld.fromOrders(orders)
+            [jsonHalWithProfile]: hal.fromOrders(orders),
+            [jsonLdWithProfile]: ld.fromOrders(orders)
         }));
 });
 
@@ -66,8 +66,8 @@ router.get(getOrderPath(), (request, response) => {
         .then(order => sendResponse(response, {
             json: order,
             html: html.fromOrder(order),
-            [jsonHal]: hal.fromOrder(order),
-            [jsonLd]: ld.fromOrder(order)
+            [jsonHalWithProfile]: hal.fromOrder(order),
+            [jsonLdWithProfile]: ld.fromOrder(order)
         }));
 });
 

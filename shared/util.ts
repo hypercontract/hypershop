@@ -1,13 +1,13 @@
 import { Response } from 'express';
 import { isArray, mapValues } from 'lodash';
 import { addDomainContext } from '../profile/service';
-import { jsonHal, jsonLd } from './mediaType';
+import { jsonHalWithProfile, jsonLdWithProfile } from './mediaType';
 
 const handlerMapping = {
     json: handleJsonResponse,
     html: handleHtmlResponse,
-    [jsonHal]: handleJsonHalResponse,
-    [jsonLd]: handleJsonLdResponse
+    [jsonHalWithProfile]: handleJsonHalResponse,
+    [jsonLdWithProfile]: handleJsonLdResponse
 };
 
 export type ResponseBody = any;
@@ -38,13 +38,13 @@ function handleJsonLdResponse(response: Response, responseBody: ResponseBody) {
     addDomainContext(responseBody)
         .then(body => {
             return response
-            .type(jsonLd)
+            .type(jsonLdWithProfile)
             .send(body);
         });
 }
 
 function handleJsonHalResponse(response: Response, responseBody: ResponseBody) {
-    handleJsonResponse(response, responseBody, jsonHal);
+    handleJsonResponse(response, responseBody, jsonHalWithProfile);
 }
 
 function handleJsonResponse(response: Response, responseBody: ResponseBody, mediaType = 'json') {
