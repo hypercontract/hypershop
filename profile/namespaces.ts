@@ -5,7 +5,7 @@ import { getRootUri } from '../root/uris';
 export const profileBaseUri = `${getRootUri()}profile/`;
 
 export const shop = (name: string | object) => addPrefix(profileBaseUri, name);
-export const hyper = (name: string | object) => addPrefix('http://hypercontract.org/#', name);
+export const hyper = (name: string | object) => addPrefix('http://hypercontract.org/', name);
 export const owl = (name: string | object) => addPrefix('http://www.w3.org/2002/07/owl#', name);
 export const rdfs = (name: string | object) => addPrefix('http://www.w3.org/2000/01/rdf-schema#', name);
 
