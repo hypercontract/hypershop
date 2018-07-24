@@ -8,7 +8,7 @@
     "start": "node ./dist/index.js",
     "postinstall": "run-s build",
     "build": "run-s compile copy-assets",
-    "copy-assets": "copyfiles **/*.ejs **/*.json ./dist -e node_modules/**",
+    "copy-assets": "copyfiles **/*.ejs **/*.json ./dist -e \"node_modules/**\"",
     "compile": "tsc -p .",
     "test": "node ./postman/test.js"
   },
