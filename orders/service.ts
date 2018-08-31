@@ -1,5 +1,4 @@
 import { omit } from 'lodash';
-import moment from 'moment';
 import { ShoppingCartItem } from '../shoppingCart/model';
 import * as shoppingCartService from '../shoppingCart/service';
 import { EntityId } from '../store/model';
@@ -50,16 +49,14 @@ export function updateOrderStatus(id: EntityId, status: OrderStatus) {
 }
 
 function getNewOrder(lineItems: ShoppingCartItem[], billingAddress: Address, shippingAddress: Address, payment: PaymentOption) {
-    return Object.assign(
-        {
-            date: moment().format(),
-            status: 'PaymentDue',
-            items: lineItems.map(item => omit(item, ['_id'])),
-            billingAddress: omit(billingAddress, ['_id']),
-            shippingAddress: omit(shippingAddress, ['_id']),
-            payment: omit(payment, ['_id'])
-        }
-    );
+    return {
+        date: (new Date()).toISOString(),
+        status: 'PaymentDue',
+        items: lineItems.map(item => omit(item, ['_id'])),
+        billingAddress: omit(billingAddress, ['_id']),
+        shippingAddress: omit(shippingAddress, ['_id']),
+        payment: omit(payment, ['_id'])
+    };
 }
 
 function sortOrdersByDate(orders: Order[]) {
