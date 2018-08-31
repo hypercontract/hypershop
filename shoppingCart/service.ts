@@ -34,7 +34,7 @@ export function addShoppingCartItem(productId: EntityId, quantity: number) {
                     shoppingCartItem!._id!,
                     shoppingCartItem!.quantity + quantity
                 )
-                    .then(() => shoppingCartItem._id)
+                    .then(() => shoppingCartItem._id);
             }
         });
 }
@@ -63,6 +63,7 @@ function createShoppingCartItem(product: Product, quantity: number) {
             name: product.name,
             description: product.description,
             price: product.price,
+            // tslint:disable-next-line:object-literal-shorthand
             quantity: quantity,
             product: product._id!
         }));

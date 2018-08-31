@@ -1,8 +1,8 @@
-import { getShoppingCartItemUri } from './uris';
 import * as orderUris from '../orders/uris';
 import * as productUris from '../products/uris';
-import { ShoppingCart } from './model';
 import { UserProfile } from '../userProfile/model';
+import { ShoppingCart } from './model';
+import { getShoppingCartItemUri } from './uris';
 
 export function fromShoppingCart(shoppingCart: ShoppingCart, userProfile: UserProfile) {
     const links: { [key: string]: string | string[] } = {
@@ -20,7 +20,7 @@ export function fromShoppingCart(shoppingCart: ShoppingCart, userProfile: UserPr
     if (shoppingCart.items.length > 0) {
         links.placeOrder = orderUris.getRootUri();
     }
-    
+
     return [
         'shoppingCart/shoppingCart',
         {
