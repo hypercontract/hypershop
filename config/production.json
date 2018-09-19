@@ -3,9 +3,9 @@
         "version": "1.0"
     },
     "http": {
-        "scheme": "http",
+        "scheme": "https",
         "hostname": "example.hypercontract.org",
-        "port": 80
+        "port": 443
     },
     "db": {
         "type": "nedb",
