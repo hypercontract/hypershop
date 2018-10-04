@@ -1,7 +1,8 @@
 import * as rootUris from '../root/uris';
+import { addDomainContext } from './context';
 import { shop } from './namespaces';
 
-export const profile = {
+export const profile = addDomainContext({
     '@graph': [
         {
             '@id': rootUris.getRootUri(),
@@ -784,4 +785,4 @@ export const profile = {
             ]
         }
     ]
-};
+});

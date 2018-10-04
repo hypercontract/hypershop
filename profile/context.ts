@@ -13,6 +13,13 @@ const domainContext = {
     ...vocabularyContext
 };
 
+export function addDomainContext(input: any) {
+    return {
+        '@context': domainContext,
+        ...input
+    };
+}
+
 export function compactWithDomainContext(input: any) {
     return compact(input, domainContext);
 }

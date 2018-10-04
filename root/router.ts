@@ -1,4 +1,5 @@
 import * as express from 'express';
+import { getApiRootProfile } from '../profile/service';
 import { jsonHalWithProfile, jsonLdWithProfile } from '../shared/mediaType';
 import { sendResponse } from '../shared/response';
 import * as hal from './hal';
@@ -10,10 +11,11 @@ import { getRootPath } from './uris';
 export const router = express.Router();
 
 router.get(getRootPath(), (request, response) => {
-    sendResponse(response, {
-        json: apiRoot,
-        html: html.fromApiRoot(apiRoot),
-        [jsonHalWithProfile]: hal.fromApiRoot(apiRoot),
-        [jsonLdWithProfile]: ld.fromApiRoot(apiRoot)
-    });
+    getApiRootProfile()
+        .then(apiRootProfile => sendResponse(response, {
+            json: apiRoot,
+            html: html.fromApiRoot(apiRoot),
+            [jsonHalWithProfile]: hal.fromApiRoot(apiRoot),
+            [jsonLdWithProfile]: ld.fromApiRoot(apiRoot, apiRootProfile)
+        }));
 });
