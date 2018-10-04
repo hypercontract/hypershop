@@ -4,42 +4,6 @@ import { shop } from './namespaces';
 export const profile = {
     '@graph': [
         {
-            '@id': '_:genid10',
-            '@type': [
-                'rdfs:Datatype'
-            ],
-            'owl:oneOf': [
-                {
-                    '@list': [
-                        {
-                            '@value': 'Cancelled'
-                        },
-                        {
-                            '@value': 'Delivered'
-                        },
-                        {
-                            '@value': 'InTransit'
-                        },
-                        {
-                            '@value': 'PaymentDue'
-                        },
-                        {
-                            '@value': 'PickupAvailable'
-                        },
-                        {
-                            '@value': 'Problem'
-                        },
-                        {
-                            '@value': 'Processing'
-                        },
-                        {
-                            '@value': 'Returned'
-                        }
-                    ]
-                }
-            ]
-        },
-        {
             '@id': rootUris.getRootUri(),
             '@type': [
                 'hyper:EntryPoint',
@@ -386,13 +350,45 @@ export const profile = {
             ]
         },
         {
-            '@id': shop('orderStatus'),
+            '@id': shop('OrderStatus'),
             '@type': [
                 'rdfs:Datatype'
             ],
             'owl:equivalentClass': [
                 {
-                    '@id': '_:genid10'
+                    '@type': [
+                        'rdfs:Datatype'
+                    ],
+                    'owl:oneOf': [
+                        {
+                            '@list': [
+                                {
+                                    '@value': 'Cancelled'
+                                },
+                                {
+                                    '@value': 'Delivered'
+                                },
+                                {
+                                    '@value': 'InTransit'
+                                },
+                                {
+                                    '@value': 'PaymentDue'
+                                },
+                                {
+                                    '@value': 'PickupAvailable'
+                                },
+                                {
+                                    '@value': 'Problem'
+                                },
+                                {
+                                    '@value': 'Processing'
+                                },
+                                {
+                                    '@value': 'Returned'
+                                }
+                            ]
+                        }
+                    ]
                 }
             ]
         },
@@ -613,7 +609,7 @@ export const profile = {
             ],
             'rdfs:range': [
                 {
-                    '@id': shop('orderStatus')
+                    '@id': shop('OrderStatus')
                 }
             ]
         },
