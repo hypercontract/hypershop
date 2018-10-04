@@ -1,15 +1,13 @@
-import * as jsonld from 'jsonld';
-import { defaultTo, filter, find, isArray, isEmpty, isUndefined, omit } from 'lodash';
+import { filter, find, isArray, isEmpty, isUndefined } from 'lodash';
 import * as rootUris from '../root/uris';
-import { domainContext } from './context';
+import { compactWithDomainContext } from './context';
 import { shop } from './namespaces';
 import { profile as domainProfile } from './profile';
 
 export type Uri = string;
-export type Context = any;
 
 export function getProfile() {
-    return addDomainContext(domainProfile);
+    return compactWithDomainContext(domainProfile);
 }
 
 export function getResource(name: string) {
@@ -24,21 +22,13 @@ export function getResource(name: string) {
         return Promise.resolve(null);
     }
 
-    return (<Promise<any>> addDomainContext(
+    return (<Promise<any>> compactWithDomainContext(
         { '@graph': graph }
     ));
 }
 
 export function getApiRootResource() {
     return getResourceByUri(rootUris.getRootUri());
-}
-
-export function addDomainContext(input: any) {
-    return addContext(input, domainContext);
-}
-
-function addContext(input: any, context: any) {
-    return compact(input, context);
 }
 
 function getResourceByUri(uri: Uri) {
@@ -51,27 +41,6 @@ function getPropertiesByDomain(domainUri: Uri) {
         return (
             isArray(domain) &&
             (!isUndefined(find(domain, { '@id': domainUri })))
-        );
-    });
-}
-
-function compact(input: any, context: Context) {
-    return new Promise((resolve, reject) => {
-        const inputContext = defaultTo(input['@context'], {});
-
-        jsonld.compact(
-            omit(input, ['@context']),
-            {
-                ...context,
-                ...inputContext
-            },
-            (error: any, output: any) => {
-                if (error) {
-                    reject(error);
-                }
-
-                resolve(output);
-            }
         );
     });
 }

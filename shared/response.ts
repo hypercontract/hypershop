@@ -1,6 +1,6 @@
 import { Response } from 'express';
 import { isArray, mapValues } from 'lodash';
-import { addDomainContext } from '../profile/service';
+import { compactWithDomainContext } from '../profile/context';
 import { jsonHalWithProfile, jsonLdWithProfile } from './mediaType';
 
 const handlerMapping = {
@@ -35,7 +35,7 @@ function handleHtmlResponse(response: Response, responseBody: ResponseBody) {
 }
 
 function handleJsonLdResponse(response: Response, responseBody: ResponseBody) {
-    addDomainContext(responseBody)
+    compactWithDomainContext(responseBody)
         .then(body => {
             return response
             .type(jsonLdWithProfile)
