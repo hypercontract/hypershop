@@ -1,8 +1,7 @@
 import * as jsonld from 'jsonld';
 import { defaultTo, filter, find, isArray, isEmpty, isUndefined, omit } from 'lodash';
 import * as rootUris from '../root/uris';
-import { domainContext, vocabularyContext } from './context';
-import hyperVocabulary from './hypercontract.json';
+import { domainContext } from './context';
 import { shop } from './namespaces';
 import { profile as domainProfile } from './profile';
 
@@ -11,10 +10,6 @@ export type Context = any;
 
 export function getProfile() {
     return addDomainContext(domainProfile);
-}
-
-export function getHypercontractVocabulary() {
-    return addVocabularyContext(hyperVocabulary);
 }
 
 export function getResource(name: string) {
@@ -29,17 +24,13 @@ export function getResource(name: string) {
         return Promise.resolve(null);
     }
 
-    return (<Promise<any>> addVocabularyContext(
+    return (<Promise<any>> addDomainContext(
         { '@graph': graph }
     ));
 }
 
 export function getApiRootResource() {
     return getResourceByUri(rootUris.getRootUri());
-}
-
-export function addVocabularyContext(input: any) {
-    return addContext(input, vocabularyContext);
 }
 
 export function addDomainContext(input: any) {

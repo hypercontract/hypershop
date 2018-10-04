@@ -1,7 +1,7 @@
 import * as express from 'express';
 import { isEmpty, omit } from 'lodash';
 import { jsonLd } from '../shared/mediaType';
-import { getHypercontractVocabulary, getProfile, getResource } from './service';
+import { getProfile, getResource } from './service';
 import { getBasePath, getResourcePath, getRootPath } from './uris';
 
 export const basePath = getBasePath();
@@ -10,14 +10,6 @@ export const router = express.Router();
 
 router.get(getRootPath(), (request, response) => {
     getProfile()
-        .then(profile => response
-            .type(jsonLd)
-            .send(profile)
-        );
-});
-
-router.get(getResourcePath('hypercontract'), (request, response) => {
-    getHypercontractVocabulary()
         .then(profile => response
             .type(jsonLd)
             .send(profile)
