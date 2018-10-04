@@ -1,7 +1,7 @@
 import * as express from 'express';
 import { getProductUri } from '../products/uris';
 import { acceptIsHtml, contentTypeIsJsonHal, contentTypeIsJsonLd, jsonHalWithProfile, jsonLdWithProfile } from '../shared/mediaType';
-import { sendResponse } from '../shared/util';
+import { sendResponse } from '../shared/response';
 import * as userProfileService from '../userProfile/service';
 import * as hal from './hal';
 import * as html from './html';

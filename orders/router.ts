@@ -1,6 +1,6 @@
 import * as express from 'express';
 import { acceptIsHtml, contentTypeIsJsonHal, contentTypeIsJsonLd, jsonHalWithProfile, jsonLdWithProfile } from '../shared/mediaType';
-import { sendResponse } from '../shared/util';
+import { sendResponse } from '../shared/response';
 import * as shoppingCartUris from '../shoppingCart/uris';
 import { EntityId } from '../store/model';
 import * as userProfileUris from '../userProfile/uris';

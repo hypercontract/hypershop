@@ -1,6 +1,6 @@
 import * as express from 'express';
 import { jsonHalWithProfile, jsonLdWithProfile } from '../shared/mediaType';
-import { sendResponse } from '../shared/util';
+import { sendResponse } from '../shared/response';
 import * as hal from './hal';
 import * as html from './html';
 import * as ld from './ld';
