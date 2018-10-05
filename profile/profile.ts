@@ -599,7 +599,6 @@ export const profile = addDomainContext({
         {
             '@id': shop('status'),
             '@type': [
-                'owl:ObjectProperty',
                 'owl:FunctionalProperty',
                 'owl:DatatypeProperty'
             ],
