@@ -55,7 +55,7 @@
     "@types/newman": "3.9.0",
     "@types/node": "9.6.6",
     "copyfiles": "2.0.0",
-    "newman": "3.9.3",
+    "newman": "4.1.0",
     "npm-run-all": "4.1.2",
     "ts-node": "6.1.0",
     "tslint-config-luchsamapparat": "1.2.0",
