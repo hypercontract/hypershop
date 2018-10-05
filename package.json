@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/hypercontract/hypershop#readme",
   "dependencies": {
-    "@types/n3": "1.0.0",
+    "@hypercontract/hypercontract-shared": "1.0.0",
     "body-parser": "1.18.2",
     "config": "1.30.0",
     "cors": "2.8.4",
@@ -50,6 +50,7 @@
     "@types/method-override": "0.0.31",
     "@types/mongodb": "3.0.19",
     "@types/morgan": "1.7.35",
+    "@types/n3": "1.0.0",
     "@types/nedb": "1.8.5",
     "@types/newman": "3.9.0",
     "@types/node": "9.6.6",

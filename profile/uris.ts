@@ -19,7 +19,7 @@ export function getRootUri() {
 
 export function getResourcePath(resourceName: string | null = null) {
     const pathTemplate = getRootPath() + ':resourceName/';
-    
+
     if (!isNull(resourceName)) {
         return pathTemplate.replace(':resourceName', resourceName);
     }
