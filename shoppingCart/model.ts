@@ -2,6 +2,7 @@ import { Entity, EntityId } from '../store/model';
 
 export interface ShoppingCart {
     items: ShoppingCartItem[];
+    totalPrice: number;
 }
 
 export interface ShoppingCartItem extends Entity {
