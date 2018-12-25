@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "a640ac8b-e626-48de-8af6-8a4299fb0371",
+		"_postman_id": "23cb90e8-1115-4b1d-ad88-5eb3d8798519",
 		"name": "hypercontract JSON",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -413,7 +413,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"type": "text/javascript",
+						"id": "797d1579-6603-4987-95d3-8d83a4a46d6e",
 						"exec": [
 							"var schema = JSON.parse(postman.getEnvironmentVariable('productsSchema'));\r",
 							"var defaultContentType = postman.getEnvironmentVariable('defaultContentType');\r",
@@ -427,7 +427,8 @@
 							"postman.setEnvironmentVariable(\"productId1\", products[0]._id);\r",
 							"postman.setEnvironmentVariable(\"productId2\", products[1]._id);\r",
 							""
-						]
+						],
+						"type": "text/javascript"
 					}
 				}
 			],
@@ -444,7 +445,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{baseUrl}}products/?query=nostrum",
+					"raw": "{{baseUrl}}products/?query=table",
 					"host": [
 						"{{baseUrl}}products"
 					],
@@ -454,7 +455,7 @@
 					"query": [
 						{
 							"key": "query",
-							"value": "nostrum"
+							"value": "table"
 						}
 					]
 				}
@@ -467,17 +468,18 @@
 				{
 					"listen": "test",
 					"script": {
-						"type": "text/javascript",
+						"id": "52c0f0a3-0f44-442c-89bf-dd0614a70486",
 						"exec": [
 							"var baseUrl = postman.getEnvironmentVariable('baseUrl');\r",
 							"\r",
 							"tests['status code is 201 Created'] = responseCode.code === 201;\r",
-							"tests['Location header redirects to /shoppingCart'] = postman.getResponseHeader('Location') === baseUrl + 'shoppingCart/'; \r",
+							"tests['Location header redirects to /shoppingCart'] = postman.getResponseHeader('Location').match(baseUrl + 'shoppingCart/?');\r",
 							"tests['response body is empty'] = responseBody === '';\r",
 							"\r",
 							"postman.setEnvironmentVariable('shoppingCartUrl', postman.getResponseHeader('Location'));\r",
 							""
-						]
+						],
+						"type": "text/javascript"
 					}
 				}
 			],
@@ -516,17 +518,18 @@
 				{
 					"listen": "test",
 					"script": {
-						"type": "text/javascript",
+						"id": "cc2643b0-7fb8-4df5-a52c-218d40801470",
 						"exec": [
 							"var baseUrl = postman.getEnvironmentVariable('baseUrl');\r",
 							"\r",
 							"tests['status code is 201 Created'] = responseCode.code === 201;\r",
-							"tests['Location header redirects to /shoppingCart'] = postman.getResponseHeader('Location') === baseUrl + 'shoppingCart/'; \r",
+							"tests['Location header redirects to /shoppingCart'] = postman.getResponseHeader('Location').match(baseUrl + 'shoppingCart/?');\r",
 							"tests['response body is empty'] = responseBody === '';\r",
 							"\r",
 							"postman.setEnvironmentVariable('shoppingCartUrl', postman.getResponseHeader('Location'));\r",
 							""
-						]
+						],
+						"type": "text/javascript"
 					}
 				}
 			],
@@ -814,7 +817,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"type": "text/javascript",
+						"id": "b142ebb0-fb35-4b70-abdf-3d37f0810f2f",
 						"exec": [
 							"var baseUrl = postman.getEnvironmentVariable('baseUrl');",
 							"",
@@ -824,7 +827,8 @@
 							"",
 							"postman.setEnvironmentVariable('orderUrl', postman.getResponseHeader('Location'));",
 							""
-						]
+						],
+						"type": "text/javascript"
 					}
 				}
 			],
@@ -888,7 +892,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"items\": {{lineItems}},\n\t\"billingAddress\": {{billingAddress}},\n\t\"shippingAddress\": {{shippingAddress}},\n\t\"payment\": {{payment}}\n}"
+					"raw": ""
 				},
 				"url": {
 					"raw": "{{orderUrl}}",
@@ -977,7 +981,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"items\": {{lineItems}},\n\t\"billingAddress\": {{billingAddress}},\n\t\"shippingAddress\": {{shippingAddress}},\n\t\"payment\": {{payment}}\n}"
+					"raw": ""
 				},
 				"url": {
 					"raw": "{{orderUrl}}",
