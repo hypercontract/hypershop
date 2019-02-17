@@ -1,6 +1,6 @@
-import { getProductUri } from './uris';
 import * as shoppingCartUris from '../shoppingCart/uris';
 import { Product } from './model';
+import { getProductUri } from './uris';
 
 export function fromProducts(products: Product[]) {
     return [

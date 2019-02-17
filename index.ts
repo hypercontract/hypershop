@@ -7,8 +7,12 @@ import methodOverride from 'method-override';
 import morgan from 'morgan';
 import { endpoints } from './endpoints';
 import * as mockData from './mock/mockData';
+import * as orderUris from './orders/uris';
+import * as productUris from './products/uris';
 import * as root from './root/router';
-import { getRootUri } from './root/uris';
+import * as rootUris from './root/uris';
+import * as shoppingCartUris from './shoppingCart/uris';
+import * as userProfileUris from './userProfile/uris';
 
 if (config.get('db.generateMockData')) {
     mockData.create();
@@ -19,7 +23,13 @@ const app = express();
 app.set('view engine', 'ejs');
 app.set('views', __dirname);
 app.locals = {
-    rootLink: getRootUri()
+    navigation: {
+        root: rootUris.getRootUri(),
+        catalog: productUris.getRootUri(),
+        shoppingCart: shoppingCartUris.getRootUri(),
+        orders: orderUris.getRootUri(),
+        userProfile: userProfileUris.getRootUri()
+    }
 };
 
 app.use(morgan('combined'));
