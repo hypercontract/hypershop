@@ -71,7 +71,7 @@
             <input class="form-check-input" type="radio" name="billingAddress" id="billingAddress-<%= index %>" value="<%= address._id %>" <%= (index === 0) ? ' checked' : '' %> />
             <label class="form-check-label" for="billingAddress-<%= index %>">
                 <address class="mb-0">
-                    <%= address.name %><br />
+                    <em><%= address.name %></em><br />
                     <small>
                         <%= address.street %>, <%= address.city %>
                     </small>
@@ -89,7 +89,7 @@
             <input class="form-check-input" type="radio" name="shippingAddress" id="shippingAddress-<%= index %>" value="<%= address._id %>" <%= (index === 0) ? ' checked' : '' %> />
             <label class="form-check-label" for="shippingAddress-<%= index %>">
                 <address class="mb-0">
-                    <%= address.name %><br />
+                    <em><%= address.name %></em><br />
                     <small>
                         <%= address.street %>, <%= address.city %>
                     </small>
@@ -106,7 +106,7 @@
         <div class="form-check mb-3">
             <input class="form-check-input" type="radio" name="payment" id="paymentOption-<%= index %>" value="<%= paymentOption._id %>" <%= (index === 0) ? ' checked' : '' %> />
             <label class="form-check-label" for="paymentOption-<%= index %>">
-                <%= paymentOption.accountOwner %><br />
+                <em><%= paymentOption.accountOwner %></em><br />
                 <small>
                     <%= paymentOption.iban %><br />
                     <%= paymentOption.bic %>

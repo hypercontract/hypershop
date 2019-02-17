@@ -15,7 +15,7 @@
                 <h3 class="h6">Billing Address</h3>
                 
                 <address class="mb-0">
-                    <%= order.billingAddress.name %><br />
+                    <em><%= order.billingAddress.name %></em><br />
                     <small><%= order.billingAddress.street %>, <%= order.billingAddress.city %></small>
                 </address>
             </div>
@@ -23,14 +23,14 @@
                 <h3 class="h6">Shipping Address</h3>
                 
                 <address class="mb-0">
-                    <%= order.shippingAddress.name %><br />
+                    <em><%= order.shippingAddress.name %></em><br />
                     <small><%= order.shippingAddress.street %>, <%= order.shippingAddress.city %></small>
                 </address>
             </div>
             <div class="col-3 payment">
                 <h3 class="h6">Payment</h3>
                 
-                <%= order.payment.accountOwner %><br />
+                <em><%= order.payment.accountOwner %></em><br />
                 <small><%= order.payment.iban %></small>
             </div>
         </div>

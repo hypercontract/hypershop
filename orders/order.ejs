@@ -39,7 +39,7 @@
 <div class="col-12 mt-5 row">
     <address class="col-3">
         <h3 class="h6">Billing Address</h3>
-        <%= order.billingAddress.name %><br />
+        <em><%= order.billingAddress.name %></em><br />
         <small>
             <%= order.billingAddress.street %><br />
             <%= order.billingAddress.zipCode %>
@@ -49,7 +49,7 @@
     </address>
     <address class="col-3">
         <h3 class="h6">Shipping Address</h3>
-        <%= order.shippingAddress.name %><br />
+        <em><%= order.shippingAddress.name %></em><br />
         <small>
             <%= order.shippingAddress.street %><br />
             <%= order.shippingAddress.zipCode %>
@@ -59,7 +59,7 @@
     </address>
     <div class="payment col-3">
         <h3 class="h6">Payment</h3>
-        <%= order.payment.accountOwner %><br />
+        <em><%= order.payment.accountOwner %></em><br />
         <small>
             <%= order.payment.iban %><br />
             <%= order.payment.bic %>
