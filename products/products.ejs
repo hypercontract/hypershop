@@ -2,6 +2,7 @@
 
 <h1 class="mb-5">Products</h1>
 
+<% if (products.length > 0) { %>
 <ul class="list-unstyled">
     <% products.forEach(function (product, index) { %>
     <li class="row align-items-center mb-5">
@@ -30,5 +31,12 @@
     </li>
     <% }) %>
 </ul>
+<% } %>
+
+<% if (products.length === 0) { %>
+<div class="alert alert-warning" role="alert">
+    No products found.
+</div>
+<% } %>
 
 <%- include('../shared/foot') %>
