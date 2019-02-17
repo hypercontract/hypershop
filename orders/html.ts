@@ -10,9 +10,7 @@ export function fromOrders(orders: Order[]) {
             links: {
                 order: orders.map(order => getOrderUri(order._id!))
             },
-            formatDate: (date: string) => {
-                return moment(date).format('DD.MM.YYYY HH:mm:ss');
-            }
+            formatDate
         }
     ];
 }
@@ -30,7 +28,12 @@ export function fromOrder(order: Order) {
         'orders/order',
         {
             order,
-            links
+            links,
+            formatDate
         }
     ];
+}
+
+function formatDate(date: string) {
+    return moment(date).format('DD.MM.YYYY HH:mm:ss');
 }

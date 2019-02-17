@@ -1,6 +1,6 @@
 <%- include('../shared/head') %>
 
-<h1 class="mb-5"><%= new Date(order.date).toLocaleDateString() %> <%= new Date(order.date).toLocaleTimeString() %></h1>
+<h1 class="mb-5">Order <%= formatDate(order.date) %></h1>
 
 <div class="row align-items-center mb-5">
     <p class="col-6"><span class="badge badge-secondary"><%= order.status %></span></p>
