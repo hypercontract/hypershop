@@ -2,6 +2,7 @@
 
 <h1 class="mb-5">Shopping Cart</h1>
 
+<% if (shoppingCart.items.length > 0) { %>
 <table class="table table-hover">
     <thead>
         <tr>
@@ -44,6 +45,15 @@
         </tr>
     </tfoot>
 </table>
+<% } %>
+
+
+<% if (shoppingCart.items.length === 0) { %>
+    <div class="alert alert-warning" role="alert">
+        You have not yet added any items to your Shopping Cart.
+    </div>
+<% } %>
+    
 
 <% if (links.placeOrder) { %>
 <form action="<%= links.placeOrder %>" method="POST" class="mt-5 row align-items-start">
