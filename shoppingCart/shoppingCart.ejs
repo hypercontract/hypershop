@@ -104,10 +104,13 @@
 
         <% userProfile.paymentOptions.forEach(function (paymentOption, index) { %>
         <div class="form-check mb-3">
-            <input class="form-check-input" type="radio" name="payment" id="payment-<%= index %>" value="<%= paymentOption._id %>" <%= (index === 0) ? ' checked' : '' %> />
+            <input class="form-check-input" type="radio" name="payment" id="paymentOption-<%= index %>" value="<%= paymentOption._id %>" <%= (index === 0) ? ' checked' : '' %> />
             <label class="form-check-label" for="paymentOption-<%= index %>">
                 <%= paymentOption.accountOwner %><br />
-                <small><%= paymentOption.iban %></small>
+                <small>
+                    <%= paymentOption.iban %><br />
+                    <%= paymentOption.bic %>
+                </small>
             </label>
         </div>
         <% }) %>

@@ -40,24 +40,30 @@
     <address class="col-3">
         <h3 class="h6">Billing Address</h3>
         <%= order.billingAddress.name %><br />
-        <%= order.billingAddress.street %><br />
-        <%= order.billingAddress.zipCode %>
-        <%= order.billingAddress.city %><br />
-        <%= order.billingAddress.country %>
+        <small>
+            <%= order.billingAddress.street %><br />
+            <%= order.billingAddress.zipCode %>
+            <%= order.billingAddress.city %><br />
+            <%= order.billingAddress.country %>
+        </small>
     </address>
     <address class="col-3">
         <h3 class="h6">Shipping Address</h3>
         <%= order.shippingAddress.name %><br />
-        <%= order.shippingAddress.street %><br />
-        <%= order.shippingAddress.zipCode %>
-        <%= order.shippingAddress.city %><br />
-        <%= order.shippingAddress.country %>
+        <small>
+            <%= order.shippingAddress.street %><br />
+            <%= order.shippingAddress.zipCode %>
+            <%= order.shippingAddress.city %><br />
+            <%= order.shippingAddress.country %>
+        </small>
     </address>
     <div class="payment col-3">
         <h3 class="h6">Payment</h3>
         <%= order.payment.accountOwner %><br />
-        IBAN: <%= order.payment.iban %><br />
-        BIC: <%= order.payment.bic %>
+        <small>
+            <%= order.payment.iban %><br />
+            <%= order.payment.bic %>
+        </small>
     </div>
 </div>
 
