@@ -4,6 +4,8 @@ import { UserProfile } from '../userProfile/model';
 import { ShoppingCart } from './model';
 import { getShoppingCartItemUri } from './uris';
 
+const activeNavItem = 'shoppingCart';
+
 export function fromShoppingCart(shoppingCart: ShoppingCart, userProfile: UserProfile) {
     const links: { [key: string]: string | string[] } = {
         product: shoppingCart.items.map(
@@ -24,6 +26,7 @@ export function fromShoppingCart(shoppingCart: ShoppingCart, userProfile: UserPr
     return [
         'shoppingCart/shoppingCart',
         {
+            activeNavItem,
             shoppingCart,
             userProfile,
             links

@@ -2,10 +2,13 @@ import moment from 'moment';
 import { Order } from './model';
 import { getOrderUri } from './uris';
 
+const activeNavItem = 'orders';
+
 export function fromOrders(orders: Order[]) {
     return [
         'orders/orders',
         {
+            activeNavItem,
             orders,
             links: {
                 order: orders.map(order => getOrderUri(order._id!))
@@ -27,6 +30,7 @@ export function fromOrder(order: Order) {
     return [
         'orders/order',
         {
+            activeNavItem,
             order,
             links,
             formatDate

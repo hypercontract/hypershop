@@ -12,16 +12,16 @@
             <div class="container">
                 <a class="navbar-brand" href="<%= navigation.root %>">hypershop</a>
                 <ul class="navbar-nav">
-                    <li class="nav-item">
+                    <li class="nav-item<%= (activeNavItem === 'products' ? ' active' : '') %>">
                         <a class="nav-link" href="<%= navigation.catalog %>">Catalog</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item<%= (activeNavItem === 'shoppingCart' ? ' active' : '') %>">
                         <a class="nav-link" href="<%= navigation.shoppingCart %>">Shopping Cart</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item<%= (activeNavItem === 'orders' ? ' active' : '') %>">
                         <a class="nav-link" href="<%= navigation.orders %>">Orders</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item<%= (activeNavItem === 'userProfile' ? ' active' : '') %>">
                         <a class="nav-link" href="<%= navigation.userProfile %>">User Profile</a>
                     </li>
                 </ul>
