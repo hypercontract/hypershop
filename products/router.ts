@@ -28,6 +28,7 @@ router.get(getProductPath(), (request, response) => {
         .then(product => sendResponse(response, {
             json: product,
             html: html.fromProduct(product),
+            [jsonHalWithProfile]: hal.fromProduct(product),
             [jsonLdWithProfile]: ld.fromProduct(product)
         }));
 });
