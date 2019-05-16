@@ -23,16 +23,17 @@
             <td style="width: 15%">
                 <form action="<%= links.updateQuantity[index] %>" method="POST" class="input-group">
                     <input type="hidden" name="_method" value="PATCH" />
-                    <input type="number" name="quantity" value="<%= shoppingCartItem.quantity %>" class="form-control text-right">
+                    <label for="quantity" class="sr-only">Quantity</label>
+                    <input type="number" name="quantity" title="Quantity" value="<%= shoppingCartItem.quantity %>" class="form-control text-right">
                     <div class="input-group-append">
-                        <button type="submit" class="btn btn-primary">Update</button>
+                        <button type="submit" class="btn btn-primary" title="Update Quantity">Update</button>
                     </div>
                 </form>
             </td>
             <td>
                 <form action="<%= links.remove[index] %>" method="POST">
                     <input type="hidden" name="_method" value="DELETE" />
-                    <button type="submit" class="btn btn-danger">Remove</button>
+                    <button type="submit" class="btn btn-danger" title="Remove from Shopping Cart">Remove</button>
                 </form>
             </td>
         </tr>

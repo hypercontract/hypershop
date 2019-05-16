@@ -4,7 +4,8 @@
 
 <form action="<%= links.searchCatalog %>" class="row form-inline" method="GET">
     <div class="form-group mx-sm-3">
-        <input type="text" class="form-control" id="query" name="query" placeholder="Search Catalog...">
+        <label for="query" class="sr-only">Search Query</label>
+        <input type="text" name="query" title="Search Query" class="form-control" placeholder="Search Catalog...">
     </div>
     <button type="submit" class="btn btn-primary">Search Products</button>
 </form>
