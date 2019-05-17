@@ -1,0 +1,9 @@
+{
+    "application": {
+        "buildName": "local"
+    },
+    "http": {
+        "port": 3000
+    }
+}
+
