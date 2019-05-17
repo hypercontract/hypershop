@@ -9,7 +9,7 @@ describe('server', () => {
             return request(server)
                 .get('/')
                 .expect('X-Application-Version', expectedApplicationVersion)
-                .expect(200, 'Hello World!');
+                .expect(200, 'Hello, World!');
         });
     });
 
