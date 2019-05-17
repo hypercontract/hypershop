@@ -1,0 +1,80 @@
+trigger:
+- master
+
+pool:
+  name: Hosted Ubuntu 1604
+  demands: npm
+
+steps:
+- task: YodLabs.VariableTasks.SetVariableFromJSON.SetValueFromJSON@0
+  displayName: 'Read version from package.json'
+  inputs:
+    variableName: application.version
+    jsonPathExpression: '$.version'
+    jsonFile: package.json
+
+- task: YodLabs.VariableTasks.SetVariable.SetVariable@0
+  displayName: 'Set application.buildName'
+  inputs:
+    variableName: application.buildName
+    value: '$(application.version)-$(Build.BuildNumber)'
+
+- task: Npm@1
+  displayName: 'npm ci'
+  inputs:
+    command: custom
+    verbose: false
+    customCommand: ci
+
+- task: Npm@1
+  displayName: 'npm run ci-test'
+  inputs:
+    command: custom
+    verbose: false
+    customCommand: 'run ci-test'
+
+- task: PublishTestResults@2
+  displayName: 'Publish Test Results'
+  inputs:
+    testResultsFiles: junit.xml
+
+- task: PublishCodeCoverageResults@1
+  displayName: 'Publish code coverage'
+  inputs:
+    codeCoverageTool: Cobertura
+    summaryFileLocation: '$(System.DefaultWorkingDirectory)/coverage/cobertura-coverage.xml'
+
+- task: FileTransform@1
+  displayName: 'Write version to configuration'
+  inputs:
+    folderPath: '$(System.DefaultWorkingDirectory)'
+    fileType: json
+    targetFiles: config/default.json
+
+- task: Npm@1
+  displayName: 'npm run ci-build'
+  inputs:
+    command: custom
+    verbose: false
+    customCommand: 'run ci-build'
+
+- task: Docker@0
+  displayName: 'Build an image'
+  inputs:
+    azureSubscription: 'Nutzungsbasierte Zahlung (b2be2f9a-6dc9-49a0-9679-f7600ea3d523)'
+    azureContainerRegistry: '{"loginServer":"hypercontract.azurecr.io", "id" : "/subscriptions/b2be2f9a-6dc9-49a0-9679-f7600ea3d523/resourceGroups/hypercontract/providers/Microsoft.ContainerRegistry/registries/hypercontract"}'
+    imageName: '$(Build.Repository.Name)'
+    additionalImageTags: '$(application.buildName)'
+    includeSourceTags: true
+    includeLatestTag: true
+
+- task: Docker@0
+  displayName: 'Push an image'
+  inputs:
+    azureSubscription: 'Nutzungsbasierte Zahlung (b2be2f9a-6dc9-49a0-9679-f7600ea3d523)'
+    azureContainerRegistry: '{"loginServer":"hypercontract.azurecr.io", "id" : "/subscriptions/b2be2f9a-6dc9-49a0-9679-f7600ea3d523/resourceGroups/hypercontract/providers/Microsoft.ContainerRegistry/registries/hypercontract"}'
+    action: 'Push an image'
+    imageName: '$(Build.Repository.Name)'
+    additionalImageTags: '$(application.buildName)'
+    includeSourceTags: true
+    includeLatestTag: true
